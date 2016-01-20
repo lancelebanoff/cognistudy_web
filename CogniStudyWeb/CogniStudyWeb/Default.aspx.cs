@@ -17,10 +17,10 @@ namespace CogniTutor
 
         protected override async Task OnStart()
         {
-            ParseObject gameScore = new ParseObject("GameScore");
-            gameScore["score"] = 1337;
-            gameScore["playerName"] = "Sean Plott";
-            await gameScore.SaveAsync();
+            //ParseObject gameScore = new ParseObject("GameScore");
+            //gameScore["score"] = 1337;
+            //gameScore["playerName"] = "Sean Plott";
+            //await gameScore.SaveAsync();
             //RegisterAsyncTask(new PageAsyncTask(GetGizmosSvcAsync));
         }
     }

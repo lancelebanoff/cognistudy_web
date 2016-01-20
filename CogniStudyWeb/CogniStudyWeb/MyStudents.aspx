@@ -1,6 +1,7 @@
-﻿<%@ Page Language="C#" Async="true" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="CogniTutor.Dashboard" %>
+﻿<%@ Page Language="C#" Async="true" AutoEventWireup="true" CodeBehind="MyStudents.aspx.cs" Inherits="CogniTutor.MyStudents" %>
 
 <%@ Register TagPrefix="COG" TagName="NavigationBar" Src="~/UserControls/NavigationBar.ascx" %>
+<%@ Register TagPrefix="COG" TagName="Footer" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="COG" TagName="LoginWindow" Src="~/UserControls/LoginWindow.ascx" %>
 
 <!DOCTYPE html>
@@ -69,11 +70,11 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h1 class="page-header">
-                                        Dashboard
+                                        My Students
                                     </h1>
                                     <ol class="breadcrumb hidden">
                                         <li class="active">
-                                            <i class="fa fa-dashboard"></i> Dashboard
+                                            <i class="fa fa-dashboard"></i> My Students
                                         </li>
                                     </ol>
                                 </div>
@@ -108,6 +109,9 @@
         </div>
         <hr>
     </div>
+            
+    <!-- Footer -->
+    <COG:Footer runat="server" />
     </form>
 
 </body>
