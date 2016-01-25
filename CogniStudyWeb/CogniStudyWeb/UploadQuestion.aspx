@@ -139,7 +139,7 @@
                                     Answer4:<br /><asp:TextBox runat="server" ID="tbAnswer4" Width="500"></asp:TextBox>
                                     <asp:RadioButton runat="server" ID="rbAnswer4" GroupName="Answers" Text="Select as correct"/><br /><br />
                                     <asp:CheckBox id="cbAnswer5" runat="server" Text="Use 5 answers" onclick="$('#divAnswer5').toggleClass('hidden');"/><br /><br />
-                                    <div id="divAnswer5">
+                                    <div id="divAnswer5" class="hidden">
                                         Answer5:<br /><asp:TextBox runat="server" ID="tbAnswer5" Width="500"></asp:TextBox>
                                         <asp:RadioButton runat="server" ID="rbAnswer5" GroupName="Answers" Text="Select as correct"/><br /><br />
                                     </div>
@@ -158,7 +158,7 @@
                                         <asp:TextBox runat="server" ID="tb2Answer4" Width="500"></asp:TextBox>
                                         <asp:RadioButton runat="server" ID="rb2Answer4" GroupName="Answers2" Text="Select as correct"/><br /><br />
                                         <asp:CheckBox id="cb2Answer5" runat="server" Text="Use 5 answers" onclick="$('#div2Answer5').toggleClass('hidden');"/><br /><br />
-                                        <div id="div2Answer5">
+                                        <div id="div2Answer5" class="hidden">
                                             <asp:TextBox runat="server" ID="tb2Answer5" Width="500"></asp:TextBox>
                                             <asp:RadioButton runat="server" ID="rb2Answer5" GroupName="Answers2" Text="Select as correct"/><br /><br />
                                         </div>
@@ -176,7 +176,7 @@
                                         <asp:TextBox runat="server" ID="tb3Answer4" Width="500"></asp:TextBox>
                                         <asp:RadioButton runat="server" ID="rb3Answer4" GroupName="Answers3" Text="Select as correct"/><br /><br />
                                         <asp:CheckBox id="cb3Answer5" runat="server" Text="Use 5 answers" onclick="$('#div3Answer5').toggleClass('hidden');"/><br /><br />
-                                        <div id="div3Answer5">
+                                        <div id="div3Answer5" class="hidden">
                                             <asp:TextBox runat="server" ID="tb3Answer5" Width="500"></asp:TextBox>
                                             <asp:RadioButton runat="server" ID="rb3Answer5" GroupName="Answers2" Text="Select as correct"/><br /><br />
                                         </div>
