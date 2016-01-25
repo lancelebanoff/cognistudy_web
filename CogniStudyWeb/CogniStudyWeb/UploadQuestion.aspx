@@ -63,9 +63,11 @@
             $('#ddlCategory').on('change', function () {
                 if (this.value == '<%= CogniTutor.Constants.Category.PASSAGE_READING %>') {
                     $("#divPassageExtraQuestions").removeClass('hidden');
+                    $("#divPassage").removeClass('hidden');
                 }
                 else {
-                    $("#divPassageExtraQuestions").removeClass('hidden');
+                    $("#divPassageExtraQuestions").addClass('hidden');
+                    $("#divPassage").addClass('hidden');
                 }
             });
         });
@@ -110,34 +112,39 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     
-        <asp:Label runat="server" Text="Subject"/><br />
-        <asp:DropDownList ID="ddlSubject" runat="server" AutoPostBack="true" 
-            OnSelectedIndexChanged="ddlSubject_SelectedIndexChanged"></asp:DropDownList><br /><br />
-        <asp:Label runat="server" Text="Category"/><br />
-        <asp:DropDownList ID="ddlCategory" runat="server"></asp:DropDownList><br /><br />
+                                    <asp:Label runat="server" Text="Subject"/><br />
+                                    <asp:DropDownList ID="ddlSubject" runat="server" AutoPostBack="true" 
+                                        OnSelectedIndexChanged="ddlSubject_SelectedIndexChanged"></asp:DropDownList><br /><br />
+                                    <asp:Label runat="server" Text="Category"/><br />
+                                    <asp:DropDownList ID="ddlCategory" runat="server"></asp:DropDownList><br /><br />
 
 
-                                    <asp:CheckBox runat="server" ID="cbImage" onclick="$('#divImage').toggleClass('hidden');" Text="Include Image"/><br />
+                                    <asp:CheckBox runat="server" ID="cbImage" onclick="$('#divImage').toggleClass('hidden');" Text="Include Image"/><br /><br />
                                     <div id="divImage" class="hidden">
                                         <asp:FileUpload ID="FileUpload1" runat="server" onchange="fileChosen()" />
-                                        <asp:Button class="hidden" ID="btnUpload" runat="server" Text="Upload" OnClick="Upload" />
+                                        <asp:Button class="hidden" ID="btnUpload" runat="server" Text="Upload" OnClick="Upload" /><br />
                                     </div>
-                                    <asp:TextBox CssClass="hidden" runat="server" ID="tbPassage" Width="700" Height="100" TextMode="MultiLine"></asp:TextBox><br /><br />
+                                    <div id="divPassage" class="hidden">
+                                        Passage:<br /><asp:TextBox runat="server" ID="tbPassage" Width="700" Height="100" TextMode="MultiLine"></asp:TextBox><br /><br />
+                                    </div>
 
-                                    <asp:TextBox runat="server" ID="tbQuestion" Width="700" Height="100" TextMode="MultiLine"></asp:TextBox><br /><br />
+                                    Question:<br /><asp:TextBox runat="server" ID="tbQuestion" Width="700" Height="100" TextMode="MultiLine"></asp:TextBox><br /><br />
                                     
-                                    <asp:TextBox runat="server" ID="tbAnswer1" Width="500"></asp:TextBox>
+                                    Answer1:<br /><asp:TextBox runat="server" ID="tbAnswer1" Width="500"></asp:TextBox>
                                     <asp:RadioButton runat="server" ID="rbAnswer1" GroupName="Answers" Text="Select as correct"/><br /><br />
-                                    <asp:TextBox runat="server" ID="tbAnswer2" Width="500"></asp:TextBox>
+                                    Answer2:<br /><asp:TextBox runat="server" ID="tbAnswer2" Width="500"></asp:TextBox>
                                     <asp:RadioButton runat="server" ID="rbAnswer2" GroupName="Answers" Text="Select as correct"/><br /><br />
-                                    <asp:TextBox runat="server" ID="tbAnswer3" Width="500"></asp:TextBox>
+                                    Answer3:<br /><asp:TextBox runat="server" ID="tbAnswer3" Width="500"></asp:TextBox>
                                     <asp:RadioButton runat="server" ID="rbAnswer3" GroupName="Answers" Text="Select as correct"/><br /><br />
-                                    <asp:TextBox runat="server" ID="tbAnswer4" Width="500"></asp:TextBox>
+                                    Answer4:<br /><asp:TextBox runat="server" ID="tbAnswer4" Width="500"></asp:TextBox>
                                     <asp:RadioButton runat="server" ID="rbAnswer4" GroupName="Answers" Text="Select as correct"/><br /><br />
-                                    <asp:TextBox runat="server" ID="tbAnswer5" Width="500"></asp:TextBox>
-                                    <asp:RadioButton runat="server" ID="rbAnswer5" GroupName="Answers" Text="Select as correct"/><br /><br />
+                                    <asp:CheckBox id="cbAnswer5" runat="server" Text="Use 5 answers" onclick="$('#divAnswer5').toggleClass('hidden');"/><br /><br />
+                                    <div id="divAnswer5">
+                                        Answer5:<br /><asp:TextBox runat="server" ID="tbAnswer5" Width="500"></asp:TextBox>
+                                        <asp:RadioButton runat="server" ID="rbAnswer5" GroupName="Answers" Text="Select as correct"/><br /><br />
+                                    </div>
                                     
-                                    <asp:TextBox runat="server" ID="tbExplanation" Width="700" Height="100" TextMode="MultiLine"></asp:TextBox><br /><br />
+                                    Explanation:<br /><asp:TextBox runat="server" ID="tbExplanation" Width="700" Height="100" TextMode="MultiLine"></asp:TextBox><br /><br />
 
                                     <div id="divPassageExtraQuestions" class="hidden">
                                         <asp:TextBox runat="server" ID="tbQuestion2" Width="700" Height="100" TextMode="MultiLine"></asp:TextBox><br /><br />
@@ -150,8 +157,11 @@
                                         <asp:RadioButton runat="server" ID="rb2Answer3" GroupName="Answers2" Text="Select as correct"/><br /><br />
                                         <asp:TextBox runat="server" ID="tb2Answer4" Width="500"></asp:TextBox>
                                         <asp:RadioButton runat="server" ID="rb2Answer4" GroupName="Answers2" Text="Select as correct"/><br /><br />
-                                        <asp:TextBox runat="server" ID="tb2Answer5" Width="500"></asp:TextBox>
-                                        <asp:RadioButton runat="server" ID="rb2Answer5" GroupName="Answers2" Text="Select as correct"/><br /><br />
+                                        <asp:CheckBox id="cb2Answer5" runat="server" Text="Use 5 answers" onclick="$('#div2Answer5').toggleClass('hidden');"/><br /><br />
+                                        <div id="div2Answer5">
+                                            <asp:TextBox runat="server" ID="tb2Answer5" Width="500"></asp:TextBox>
+                                            <asp:RadioButton runat="server" ID="rb2Answer5" GroupName="Answers2" Text="Select as correct"/><br /><br />
+                                        </div>
                                     
                                         <asp:TextBox runat="server" ID="tbExplanation2" Width="700" Height="100" TextMode="MultiLine"></asp:TextBox><br /><br />
                                         
@@ -165,8 +175,11 @@
                                         <asp:RadioButton runat="server" ID="rb3Answer3" GroupName="Answers3" Text="Select as correct"/><br /><br />
                                         <asp:TextBox runat="server" ID="tb3Answer4" Width="500"></asp:TextBox>
                                         <asp:RadioButton runat="server" ID="rb3Answer4" GroupName="Answers3" Text="Select as correct"/><br /><br />
-                                        <asp:TextBox runat="server" ID="tb3Answer5" Width="500"></asp:TextBox>
-                                        <asp:RadioButton runat="server" ID="rb3Answer5" GroupName="Answers3" Text="Select as correct"/><br /><br />
+                                        <asp:CheckBox id="cb3Answer5" runat="server" Text="Use 5 answers" onclick="$('#div3Answer5').toggleClass('hidden');"/><br /><br />
+                                        <div id="div3Answer5">
+                                            <asp:TextBox runat="server" ID="tb3Answer5" Width="500"></asp:TextBox>
+                                            <asp:RadioButton runat="server" ID="rb3Answer5" GroupName="Answers2" Text="Select as correct"/><br /><br />
+                                        </div>
                                     
                                         <asp:TextBox runat="server" ID="tbExplanation3" Width="700" Height="100" TextMode="MultiLine"></asp:TextBox><br /><br />
                                     </div>

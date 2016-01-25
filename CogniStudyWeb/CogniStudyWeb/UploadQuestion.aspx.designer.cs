@@ -166,6 +166,15 @@ namespace CogniTutor {
         protected global::System.Web.UI.WebControls.RadioButton rbAnswer4;
         
         /// <summary>
+        /// cbAnswer5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbAnswer5;
+        
+        /// <summary>
         /// tbAnswer5 control.
         /// </summary>
         /// <remarks>
@@ -274,6 +283,15 @@ namespace CogniTutor {
         protected global::System.Web.UI.WebControls.RadioButton rb2Answer4;
         
         /// <summary>
+        /// cb2Answer5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cb2Answer5;
+        
+        /// <summary>
         /// tb2Answer5 control.
         /// </summary>
         /// <remarks>
@@ -380,6 +398,15 @@ namespace CogniTutor {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton rb3Answer4;
+        
+        /// <summary>
+        /// cb3Answer5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cb3Answer5;
         
         /// <summary>
         /// tb3Answer5 control.

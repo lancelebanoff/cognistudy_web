@@ -32,19 +32,13 @@
             <% } else { %>
             <ul class="nav navbar-nav navbar-left">
                 <li class="dropdown">
-                    <a href="../Subjects.aspx">Subjects</a>
+                    <a href="../Analytics.aspx">Analytics</a>
                 </li>
                 <li>
-                    <a href="../Students.aspx">Students</a>
+                    <a href="../QuestionArena.aspx">Question Arena</a>
                 </li>
                 <li>
-                    <a href="../Tutors.aspx">Tutors</a>
-                </li>
-                <li>
-                    <a href="../TestPrepStudents.aspx">Test Prep</a>
-                </li>
-                <li>
-                    <a href="/Pay.aspx">Pay</a>
+                    <a href="../SuggestQuestion.aspx">Suggest Question</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -57,11 +51,11 @@
                         <li>
                                 <a href="Profile.aspx"><i class="fa fa-fw fa-user"></i> Edit Profile</a>
                         </li>
-                        <li class="hidden">
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                        <li>
+                            <a href="Messages"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                         </li>
-                        <li class="hidden">
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                        <li>
+                            <a href="Settings"><i class="fa fa-fw fa-gear"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li>
