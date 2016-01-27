@@ -42,17 +42,20 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="Messages"><i class="fa fa-fw fa-envelope"></i></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-fw fa-bell"></i></a>
+                </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= Parse.ParseUser.CurrentUser.Email %> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= mPage.Name %> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="Dashboard.aspx"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
                                 <a href="Profile.aspx"><i class="fa fa-fw fa-user"></i> Edit Profile</a>
-                        </li>
-                        <li>
-                            <a href="Messages"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                         </li>
                         <li>
                             <a href="Settings"><i class="fa fa-fw fa-gear"></i> Settings</a>

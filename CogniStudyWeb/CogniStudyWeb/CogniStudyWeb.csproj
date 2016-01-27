@@ -262,9 +262,11 @@
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
     <Content Include="UploadQuestion.aspx" />
+    <Content Include="UserControls\DoughnutChart.ascx" />
     <Content Include="UserControls\Footer.ascx" />
     <Content Include="UserControls\LoginWindow.ascx" />
     <Content Include="UserControls\NavigationBar.ascx" />
+    <Content Include="UserControls\SingleBarChart.ascx" />
     <Content Include="UserControls\SubjectCategoryDropdown.ascx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
@@ -368,6 +370,13 @@
     <Compile Include="UploadQuestion.aspx.designer.cs">
       <DependentUpon>UploadQuestion.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DoughnutChart.ascx.cs">
+      <DependentUpon>DoughnutChart.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\DoughnutChart.ascx.designer.cs">
+      <DependentUpon>DoughnutChart.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Footer.ascx.cs">
       <DependentUpon>Footer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -388,6 +397,13 @@
     </Compile>
     <Compile Include="UserControls\NavigationBar.ascx.designer.cs">
       <DependentUpon>NavigationBar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SingleBarChart.ascx.cs">
+      <DependentUpon>SingleBarChart.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\SingleBarChart.ascx.designer.cs">
+      <DependentUpon>SingleBarChart.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SubjectCategoryDropdown.ascx.cs">
       <DependentUpon>SubjectCategoryDropdown.ascx</DependentUpon>

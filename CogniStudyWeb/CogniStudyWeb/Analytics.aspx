@@ -5,6 +5,8 @@
 <%@ Register TagPrefix="COG" TagName="NavigationBar" Src="~/UserControls/NavigationBar.ascx" %>
 <%@ Register TagPrefix="COG" TagName="Footer" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="COG" TagName="LoginWindow" Src="~/UserControls/LoginWindow.ascx" %>
+<%@ Register TagPrefix="COG" TagName="DoughnutChart" Src="~/UserControls/DoughnutChart.ascx" %>
+<%@ Register TagPrefix="COG" TagName="SingleBarChart" Src="~/UserControls/SingleBarChart.ascx" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -81,66 +83,48 @@
                                     </ol>
                                 </div>
                             </div>
-                            <!-- /.row -->
-                            <asp:Chart ID="Chart2" runat="server">
-                                <Series>
-                                    <asp:Series Name="Series1"></asp:Series>
-                                </Series>
-                                <ChartAreas>
-                                    <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
-                                </ChartAreas>
-                            </asp:Chart>
+                            
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <asp:DropDownList ID="ddlFilterSubject" runat="server" OnSelectedIndexChanged="ddlFilterSubject_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-                                    <asp:CHART id="Chart1" runat="server" Palette="BrightPastel" BackColor="#D3DFF0" Height="296px" 
-                                        Width="412px" BorderlineDashStyle="Solid" BackGradientStyle="TopBottom" BorderWidth="2" 
-                                        BorderColor="26, 59, 105" IsSoftShadows="False" ImageLocation="~/TempImages/ChartPic_#SEQ(300,3)">
-							            <legends>
-								            <asp:Legend TitleFont="Microsoft Sans Serif, 8pt, style=Bold" BackColor="Transparent" 
-                                                IsEquallySpacedItems="True" Font="Trebuchet MS, 8pt, style=Bold" IsTextAutoFit="False" 
-                                                Name="Default"></asp:Legend>
-							            </legends>
-							            <borderskin SkinStyle="Emboss"></borderskin>
-							            <series>
-								            <asp:Series ChartArea="Area1" XValueType="String" Name="Series1" ChartType="Doughnut" IsValueShownAsLabel="True"
-                                                Font="Trebuchet MS, 8.25pt, style=Bold" 
-                                                CustomProperties="DoughnutRadius=60, PieDrawingStyle=Concave, CollectedLabel=Other, MinimumRelativePieSize=20" 
-                                                MarkerStyle="Circle" BorderColor="64, 64, 64, 64" Color="180, 65, 140, 240" YValueType="Int32" Label="#LABEL">
-									            <points>
-										            <asp:DataPoint LegendText="Correct" YValues="40" Color="LightGreen" Label="#VAL Correct" />
-										            <asp:DataPoint LegendText="Incorrect" YValues="60" Color="red" Label="#VAL Incorrect" />
-									            </points>
-								            </asp:Series>
-							            </series>
-							            <chartareas>
-								            <asp:ChartArea Name="Area1" BorderColor="64, 64, 64, 64" BackSecondaryColor="Transparent" 
-                                                BackColor="Transparent" ShadowColor="Transparent" BackGradientStyle="TopBottom">
-								            </asp:ChartArea>
-							            </chartareas>
-						            </asp:CHART>
+                                    <asp:UpdatePanel ID="UpdatePanel11" runat="server">
+                                        <ContentTemplate>
+                                            <asp:DropDownList ID="ddlFilterSubject" runat="server" OnSelectedIndexChanged="ddlFilterSubject_SelectedIndexChanged" 
+                                                AutoPostBack="true"></asp:DropDownList>
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
+                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server"></asp:UpdatePanel>
+                                    <asp:UpdatePanel ID="UpdatePanel2" runat="server"></asp:UpdatePanel>
+                                    <asp:UpdatePanel ID="UpdatePanel3" runat="server"></asp:UpdatePanel>
+                                    <asp:UpdatePanel ID="UpdatePanel4" runat="server"></asp:UpdatePanel>
+                                    <asp:UpdatePanel ID="UpdatePanel5" runat="server"></asp:UpdatePanel>
+                                    <asp:UpdatePanel ID="UpdatePanel6" runat="server"></asp:UpdatePanel>
+                                    <asp:UpdatePanel ID="UpdatePanel7" runat="server"></asp:UpdatePanel>
+                                    <asp:UpdatePanel ID="UpdatePanel8" runat="server"></asp:UpdatePanel>
+                                    <asp:UpdatePanel ID="UpdatePanel9" runat="server"></asp:UpdatePanel>
+                                    <asp:UpdatePanel ID="UpdatePanel10" runat="server"></asp:UpdatePanel>
+                                </div>
+                            </div>
 
+                            <div class="row">
+                                <div class="col-lg-12">
                                     
-						<asp:CHART id="Chart3" runat="server" Height="296px" Width="412px" BackColor="#D3DFF0" Palette="BrightPastel" BorderlineDashStyle="Solid" BackGradientStyle="TopBottom" BorderWidth="2" BorderColor="26, 59, 105">
+
+                        <asp:CHART id="Chart4" runat="server" Palette="BrightPastel" BackColor="#F3DFC1" ImageType="Png" ImageLocation="~/TempImages/ChartPic_#SEQ(300,3)" Width="412px" Height="296px" BorderlineDashStyle="Solid" BackGradientStyle="TopBottom" BorderWidth="2" BorderColor="181, 64, 1">
 							<legends>
-								<asp:Legend TitleFont="Microsoft Sans Serif, 8pt, style=Bold" BackColor="Transparent" Font="Trebuchet MS, 8.25pt, style=Bold" IsTextAutoFit="False" Enabled="False" Name="Default"></asp:Legend>
-							</legends>							
+								<asp:Legend Enabled="False" IsTextAutoFit="False" Name="Default" BackColor="Transparent" Font="Trebuchet MS, 8.25pt, style=Bold"></asp:Legend>
+							</legends>
 							<borderskin SkinStyle="Emboss"></borderskin>
 							<series>
-								<asp:Series Name="Series1" ChartType="StackedArea100" BorderColor="180, 26, 59, 105" Color="220, 65, 140, 240"></asp:Series>
-								<asp:Series Name="Series2" ChartType="StackedArea100" BorderColor="180, 26, 59, 105" Color="220, 252, 180, 65"></asp:Series>
-								<asp:Series Name="Series3" ChartType="StackedArea100" BorderColor="180, 26, 59, 105" Color="220, 224, 64, 10"></asp:Series>
-								<asp:Series Name="Series4" ChartType="StackedArea100" BorderColor="180, 26, 59, 105" Color="220, 5, 100, 146"></asp:Series>
+								<asp:Series MarkerSize="8" BorderWidth="3" XValueType="Double" Name="Series1" ChartType="Line" MarkerStyle="Circle" ShadowColor="Black" BorderColor="180, 26, 59, 105" Color="220, 65, 140, 240" ShadowOffset="2" YValueType="Double"></asp:Series>
 							</series>
 							<chartareas>
-								<asp:ChartArea Name="ChartArea1" BorderColor="64, 64, 64, 64" BorderDashStyle="Solid" BackSecondaryColor="Transparent" BackColor="64, 165, 191, 228" ShadowColor="Transparent" BackGradientStyle="TopBottom">
-									<area3dstyle Rotation="10" Inclination="15" WallWidth="0" />
-									<position Y="3" Height="92" Width="92" X="2"></position>
-									<axisy LineColor="64, 64, 64, 64"  LabelAutoFitMaxFontSize="8">
+								<asp:ChartArea Name="ChartArea1" BorderColor="64, 64, 64, 64" BorderDashStyle="Solid" BackSecondaryColor="White" BackColor="OldLace" ShadowColor="Transparent" BackGradientStyle="TopBottom">
+									<area3dstyle Rotation="25" Perspective="9" LightStyle="Realistic" Inclination="40" IsRightAngleAxes="False" WallWidth="3" IsClustered="False" />
+									<axisy LineColor="64, 64, 64, 64">
 										<LabelStyle Font="Trebuchet MS, 8.25pt, style=Bold" />
 										<MajorGrid LineColor="64, 64, 64, 64" />
 									</axisy>
-									<axisx LineColor="64, 64, 64, 64"  LabelAutoFitMaxFontSize="8">
+									<axisx LineColor="64, 64, 64, 64">
 										<LabelStyle Font="Trebuchet MS, 8.25pt, style=Bold" />
 										<MajorGrid LineColor="64, 64, 64, 64" />
 									</axisx>

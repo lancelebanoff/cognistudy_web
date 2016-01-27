@@ -43,7 +43,7 @@ namespace CogniTutor
             t1.Wait(); 
             Task t2 = user.SignUpAsync();
             t2.Wait();
-            Response.Redirect("RegisterSuccess.aspx?UserID=" + UserID);
+            Response.Redirect("RegisterSuccess.aspx");
         }
 
         #region This Code used to Insert data and Send Email

@@ -38,7 +38,11 @@ namespace CogniTutor
         {
             ParseClient.Initialize("iT8NyJO0dChjLyfVsHUTM8UZQLSBBJLxd43AX9IY", "SvmmmluPjmLblmNrgqnUmylInkyiXzoWBk9ZxeZH");
             if (LoggedIn)
+            {
                 await ParseUser.LogInAsync(Session["Email"].ToString(), Session["Password"].ToString());
+                PublicUserData = ParseUser.CurrentUser.Get<ParseObject>("publicUserData");
+                await PublicUserData.FetchAsync();
+            }
             await OnStart();
         }
         protected abstract Task OnStart();
@@ -106,10 +110,13 @@ namespace CogniTutor
                     ErrorMessage += exc.StackTrace;
                 }
                 ErrorMessage += "\n\n\n" + exc.ToString();
-
-                string insert = "insert into errors"
-                    + " (UserID, ErrorMessage, Date)"
-                    + " values(" + UserID + ", @Message, '" + DateTime.Now.ToString() + "')";
+                ParseObject error = new ParseObject("Error");
+                error["errorMessage"] = ErrorMessage;
+                if (LoggedIn)
+                {
+                    error["user"] = ParseUser.CurrentUser;
+                }
+                error.SaveAsync();
             }
             catch
             { }
@@ -120,6 +127,17 @@ namespace CogniTutor
             configurationAppSettings = new System.Configuration.AppSettingsReader();
             return (configurationAppSettings.GetValue(conf, typeof(string)) as string);
         }
+        public ParseObject PublicUserData
+        {
+            get
+            {
+                return (ParseObject)Session["PublicUserData"];
+            }
+            set
+            {
+                Session["PublicUserData"] = value;
+            }
+        }
         public bool LoggedIn
         {
             get
@@ -127,25 +145,11 @@ namespace CogniTutor
                 return (Session["Email"] != null);
             }
         }
-        public int UserID
+        public string Name
         {
             get
             {
-                return Convert.ToInt32(Session["UserID"]);
-            }
-        }
-        public string FirstName
-        {
-            get
-            {
-                return Session["FirstName"].ToString();
-            }
-        }
-        public string LastName
-        {
-            get
-            {
-                return Session["LastName"].ToString();
+                return PublicUserData.Get<string>("displayName");
             }
         }
         public static bool IsTestMode

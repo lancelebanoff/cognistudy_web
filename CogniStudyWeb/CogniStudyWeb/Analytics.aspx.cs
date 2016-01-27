@@ -8,51 +8,48 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Parse;
 using System.Web.UI.DataVisualization.Charting;
+using System.Drawing;
+using CogniTutor.UserControls;
 
 namespace CogniTutor
 {
     public partial class Analytics : CogniPage
     {
+        UpdatePanel[] updatePanels;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         protected override async Task OnStart()
         {
+            updatePanels = new UpdatePanel[] {UpdatePanel1, UpdatePanel2, UpdatePanel3, UpdatePanel4, 
+                    UpdatePanel5, UpdatePanel6, UpdatePanel7, UpdatePanel8, UpdatePanel9, UpdatePanel10};
             if(!IsPostBack)
             {
                 ddlFilterSubject.DataSource = Constants.GetPublicStringProperties(typeof(Constants.Subject));
                 ddlFilterSubject.DataBind();
+                ddlFilterSubject.Items.Insert(0, "All Subjects");
+                await FilterSubject();
 
-                // Populate series data
                 Random random = new Random();
                 for (int pointIndex = 0; pointIndex < 10; pointIndex++)
                 {
-                    Chart3.Series["Series1"].Points.AddY(random.Next(45, 95));
-                    Chart3.Series["Series2"].Points.AddY(random.Next(45, 95));
-                    Chart3.Series["Series3"].Points.AddY(random.Next(45, 95));
-                    Chart3.Series["Series4"].Points.AddY(random.Next(45, 95));
+                    Chart4.Series["Series1"].Points.AddY(random.Next(45, 95));
                 }
 
-                // Set chart type
-                Chart3.Series["Series1"].ChartType = SeriesChartType.StackedBar100;
-                Chart3.Series["Series2"].ChartType = SeriesChartType.StackedBar100;
-                Chart3.Series["Series3"].ChartType = SeriesChartType.StackedBar100;
-                Chart3.Series["Series4"].ChartType = SeriesChartType.StackedBar100;
+                // Set series chart type
+                Chart4.Series["Series1"].ChartType = SeriesChartType.Line;
 
-                // Show point labels
-                Chart3.Series["Series1"].IsValueShownAsLabel = true;
-                Chart3.Series["Series2"].IsValueShownAsLabel = true;
-                Chart3.Series["Series3"].IsValueShownAsLabel = true;
-                Chart3.Series["Series4"].IsValueShownAsLabel = true;
+                // Set point labels
+                Chart4.Series["Series1"].IsValueShownAsLabel = true;
 
-                // Disable X axis margin
-                Chart3.ChartAreas["ChartArea1"].AxisX.IsMarginVisible = false;
+                // Enable X axis margin
+                Chart4.ChartAreas["ChartArea1"].AxisX.IsMarginVisible = true;
 
-                // Enable 3D
-                Chart3.ChartAreas["ChartArea1"].Area3DStyle.Enable3D = true;
-                Chart3.DataBind();
+                // Enable 3D, and show data point marker lines
+                //Chart4.ChartAreas["ChartArea1"].Area3DStyle.Enable3D = true;
+                Chart4.Series["Series1"]["ShowMarkerLines"] = "True";
             }
         }
 
@@ -63,19 +60,59 @@ namespace CogniTutor
 
         private async Task FilterSubject()
         {
-            ParseObject subject = await GetSubject();
-            int a = subject.Get<int>("totalResponses");
-            int b = subject.Get<int>("correctResponses");
-            Chart1.Series[0].Points[0].YValues[0] = subject.Get<int>("correctResponses");
-            Chart1.Series[0].Points[1].YValues[0] = subject.Get<int>("totalResponses") - subject.Get<int>("correctResponses");
-            Chart1.DataBind();
+            if (ddlFilterSubject.Text == "All Subjects")
+            {
+                int totalResponses = 0;
+                int correctResponses = 0;
+                List<string> subjects = Constants.GetPublicStringProperties(typeof(Constants.Subject));
+                foreach (string subjectName in subjects)
+                {
+                    ParseObject subject = await GetSubject(subjectName);
+                    totalResponses += subject.Get<int>("totalResponses");
+                    correctResponses += subject.Get<int>("correctResponses");
+                }
+                DoughnutChart subjectChart = (DoughnutChart)LoadControl("~/UserControls/DoughnutChart.ascx");
+                subjectChart.Chart.Series[0].Points[0].YValues[0] = correctResponses;
+                subjectChart.Chart.Series[0].Points[1].YValues[0] = totalResponses;
+                subjectChart.Chart.DataBind();
+                updatePanels[0].ContentTemplateContainer.Controls.Add(subjectChart);
+            }
+            else
+            {
+                DoughnutChart subjectChart = (DoughnutChart)LoadControl("~/UserControls/DoughnutChart.ascx");
+                ParseObject subject = await GetSubject(ddlFilterSubject.Text);
+                subjectChart.Chart.Series[0].Points[0].YValues[0] = subject.Get<int>("correctResponses");
+                subjectChart.Chart.Series[0].Points[1].YValues[0] = subject.Get<int>("totalResponses") - subject.Get<int>("correctResponses");
+                subjectChart.Chart.DataBind();
+                updatePanels[0].ContentTemplateContainer.Controls.Add(subjectChart);
+
+                string[] categories = Constants.SubjectToCategory[ddlFilterSubject.Text];
+                int i = 1;
+                foreach (string catName in categories)
+                {
+                    SingleBarChart catChart = (SingleBarChart)LoadControl("~/UserControls/SingleBarChart.ascx");
+                    ParseObject category = await GetCategory(catName);
+                    catChart.Chart.Series["Series1"].Points.AddY(category.Get<int>("correctResponses"));
+                    catChart.Chart.Series["Series2"].Points.AddY(category.Get<int>("totalResponses") - category.Get<int>("correctResponses"));
+                    catChart.Chart.DataBind();
+                    updatePanels[i++].ContentTemplateContainer.Controls.Add(catChart);
+                }
+            }
         }
 
-        private async Task<ParseObject> GetSubject()
+        private async Task<ParseObject> GetSubject(string subjectName)
         {
             var query = from subj in ParseObject.GetQuery("SubjectStats")
-                        where subj.Get<string>("subject") == ddlFilterSubject.Text
+                        where subj.Get<string>("subject") == subjectName
                         select subj;
+            return await query.FirstAsync();
+        }
+
+        private async Task<ParseObject> GetCategory(string catName)
+        {
+            var query = from cat in ParseObject.GetQuery("CategoryStats")
+                        where cat.Get<string>("category") == catName
+                        select cat;
             return await query.FirstAsync();
         }
     }
