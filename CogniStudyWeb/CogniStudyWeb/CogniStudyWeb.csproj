@@ -182,7 +182,8 @@
     <Content Include="js\jqBootstrapValidation.js" />
     <Content Include="js\jquery.js" />
     <Content Include="js\MonthCalendar.js" />
-    <Content Include="MyStudents.aspx" />
+    <Content Include="Messages.aspx" />
+    <Content Include="Dashboard.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -260,8 +261,12 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Settings.aspx" />
     <Content Include="Site.Master" />
+    <Content Include="StudentProfile.aspx" />
+    <Content Include="SuggestQuestion.aspx" />
     <Content Include="UploadQuestion.aspx" />
+    <Content Include="UserControls\ConversationPanel.ascx" />
     <Content Include="UserControls\DoughnutChart.ascx" />
     <Content Include="UserControls\Footer.ascx" />
     <Content Include="UserControls\LoginWindow.ascx" />
@@ -311,13 +316,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="MyStudents.aspx.cs">
-      <DependentUpon>MyStudents.aspx</DependentUpon>
+    <Compile Include="Messages.aspx.cs">
+      <DependentUpon>Messages.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MyStudents.aspx.designer.cs">
-      <DependentUpon>MyStudents.aspx</DependentUpon>
+    <Compile Include="Messages.aspx.designer.cs">
+      <DependentUpon>Messages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
@@ -348,6 +360,13 @@
     <Compile Include="RegisterSuccess.aspx.designer.cs">
       <DependentUpon>RegisterSuccess.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Settings.aspx.cs">
+      <DependentUpon>Settings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Settings.aspx.designer.cs">
+      <DependentUpon>Settings.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -363,12 +382,33 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="StudentProfile.aspx.cs">
+      <DependentUpon>StudentProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentProfile.aspx.designer.cs">
+      <DependentUpon>StudentProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuggestQuestion.aspx.cs">
+      <DependentUpon>SuggestQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuggestQuestion.aspx.designer.cs">
+      <DependentUpon>SuggestQuestion.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UploadQuestion.aspx.cs">
       <DependentUpon>UploadQuestion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UploadQuestion.aspx.designer.cs">
       <DependentUpon>UploadQuestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ConversationPanel.ascx.cs">
+      <DependentUpon>ConversationPanel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\ConversationPanel.ascx.designer.cs">
+      <DependentUpon>ConversationPanel.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\DoughnutChart.ascx.cs">
       <DependentUpon>DoughnutChart.ascx</DependentUpon>

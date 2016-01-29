@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CogniTutor
 {
-    public partial class MyStudents : CogniPage
+    public partial class Dashboard : CogniPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

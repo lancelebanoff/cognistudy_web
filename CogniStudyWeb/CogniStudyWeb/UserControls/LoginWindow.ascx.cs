@@ -36,7 +36,7 @@ namespace CogniTutor.UserControls
                 // Login was successful.
                 mPage.Session["Email"] = tbLoginEmail.Text.ToLower();
                 mPage.Session["Password"] = tbLoginPassword.Text;
-                mPage.Redirect("MyStudents.aspx");
+                mPage.Redirect("Dashboard.aspx");
             }
             catch (Exception ex)
             {

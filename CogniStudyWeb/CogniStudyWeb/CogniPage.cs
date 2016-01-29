@@ -37,6 +37,11 @@ namespace CogniTutor
         protected async Task StartPage()
         {
             ParseClient.Initialize("iT8NyJO0dChjLyfVsHUTM8UZQLSBBJLxd43AX9IY", "SvmmmluPjmLblmNrgqnUmylInkyiXzoWBk9ZxeZH");
+            if (IsTestMode)
+            {
+                Session["Email"] = "loganlebanoff@knights.ucf.edu";
+                Session["Password"] = "poi";
+            }
             if (LoggedIn)
             {
                 await ParseUser.LogInAsync(Session["Email"].ToString(), Session["Password"].ToString());
@@ -52,10 +57,10 @@ namespace CogniTutor
 
             base.OnUnload(e);
         }
-        protected void Page_Error(object sender, EventArgs e)
-        {
-            ErrorToUserLog();
-        }
+        //protected void Page_Error(object sender, EventArgs e)
+        //{
+        //    //ErrorToUserLog();
+        //}
 
         protected bool isExpired()
         {
@@ -126,6 +131,13 @@ namespace CogniTutor
             System.Configuration.AppSettingsReader configurationAppSettings;
             configurationAppSettings = new System.Configuration.AppSettingsReader();
             return (configurationAppSettings.GetValue(conf, typeof(string)) as string);
+        }
+        public string UserID
+        {
+            get
+            {
+                return ParseUser.CurrentUser.ObjectId;
+            }
         }
         public ParseObject PublicUserData
         {

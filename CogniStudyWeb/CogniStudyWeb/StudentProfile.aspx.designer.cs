@@ -10,7 +10,7 @@
 namespace CogniTutor {
     
     
-    public partial class Messages {
+    public partial class StudentProfile {
         
         /// <summary>
         /// form1 control.
@@ -31,57 +31,57 @@ namespace CogniTutor {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
-        /// repConversations control.
+        /// Image1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repConversations;
+        protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
-        /// pnlMessages control.
+        /// edit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel pnlMessages;
+        protected global::System.Web.UI.WebControls.Image edit;
         
         /// <summary>
-        /// pnlScroll control.
+        /// FileUpload1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlScroll;
+        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
         
         /// <summary>
-        /// repMessages control.
+        /// btnUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repMessages;
+        protected global::System.Web.UI.WebControls.Button btnUpload;
         
         /// <summary>
-        /// tbType control.
+        /// btnRequestStudent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbType;
+        protected global::System.Web.UI.WebControls.Button btnRequestStudent;
         
         /// <summary>
-        /// btnSend control.
+        /// btnSendMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSend;
+        protected global::System.Web.UI.WebControls.Button btnSendMessage;
     }
 }

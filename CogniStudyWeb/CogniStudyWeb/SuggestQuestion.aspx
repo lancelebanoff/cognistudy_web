@@ -1,4 +1,4 @@
-﻿<%@ Page Async="true" Language="C#" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="CogniTutor.Profile" %>
+﻿<%@ Page Async="true" Language="C#" AutoEventWireup="true" CodeBehind="SuggestQuestion.aspx.cs" Inherits="CogniTutor.SuggestQuestion" %>
 
 <%@ Register TagPrefix="COG" TagName="NavigationBar" Src="~/UserControls/NavigationBar.ascx" %>
 <%@ Register TagPrefix="COG" TagName="Footer" Src="~/UserControls/Footer.ascx" %>
@@ -63,7 +63,8 @@
                 <div id="wrapper">
 
                     <div id="page-wrapper">
-
+                        
+                        
                         <div class="container-fluid">
 
                             <!-- Page Heading -->
@@ -74,14 +75,13 @@
                                     </h1>
                                 </div>
                             </div>
-                            
 
                         </div>
                         <!-- /.container-fluid -->
 
                     </div>
                     <!-- /#page-wrapper -->
-
+                      
                 </div>
                 <!-- /#wrapper -->
 
@@ -90,8 +90,6 @@
         <hr>
     </div>
             
-    <!-- Footer -->
-    <COG:Footer runat="server" />
     </form>
 
 </body>

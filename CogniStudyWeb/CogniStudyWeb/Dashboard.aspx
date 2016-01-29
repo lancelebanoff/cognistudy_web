@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Async="true" AutoEventWireup="true" CodeBehind="MyStudents.aspx.cs" Inherits="CogniTutor.MyStudents" %>
+﻿<%@ Page Language="C#" Async="true" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="CogniTutor.Dashboard" %>
 
 <%@ Register TagPrefix="COG" TagName="NavigationBar" Src="~/UserControls/NavigationBar.ascx" %>
 <%@ Register TagPrefix="COG" TagName="Footer" Src="~/UserControls/Footer.ascx" %>

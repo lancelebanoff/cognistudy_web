@@ -10,7 +10,7 @@
 namespace CogniTutor {
     
     
-    public partial class Profile {
+    public partial class SuggestQuestion {
         
         /// <summary>
         /// form1 control.
