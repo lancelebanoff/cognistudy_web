@@ -12,7 +12,7 @@ namespace CogniTutor
 {
     public partial class UploadQuestion : CogniPage
     {
-        public bool HasPassage { get { return ddlCategory.Text == Constants.Category.PASSAGE_READING; } }
+        public bool IsBundle { get { return cbInBundle.Checked; } }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -44,17 +44,17 @@ namespace CogniTutor
             ParseObject data1 = CreateData1();
             ParseObject question1 = CreateQuestion1(contents1, data1);
 
-            if(HasPassage)
+            if (IsBundle)
             {
-                ParseObject passage = SavePassage();
-                question1["hasPassage"] = true;
-                contents1["passage"] = passage;
-                ParseObject contents2 = CreateContents2(passage);
+                ParseObject bundle = SaveBundle();
+                question1["inBundle"] = true;
+                question1["bundle"] = bundle;
+                ParseObject contents2 = CreateContents2();
                 ParseObject data2 = CreateData2();
-                ParseObject question2 = CreateQuestion2(contents2, data2);
-                ParseObject contents3 = CreateContents3(passage);
+                ParseObject question2 = CreateQuestion2(contents2, data2, bundle);
+                ParseObject contents3 = CreateContents3();
                 ParseObject data3 = CreateData3();
-                ParseObject question3 = CreateQuestion3(contents3, data3);
+                ParseObject question3 = CreateQuestion3(contents3, data3, bundle);
                 tasks.Add(contents1.SaveAsync());
                 tasks.Add(contents2.SaveAsync());
                 tasks.Add(contents3.SaveAsync());
@@ -66,8 +66,8 @@ namespace CogniTutor
                 Task t2 = question2.SaveAsync();
                 Task t3 = question3.SaveAsync();
                 t1.Wait(); t2.Wait(); t3.Wait();
-                passage["questions"] = new ParseObject[] { question1, question2, question3 };
-                Task t4 = passage.SaveAsync();
+                bundle["questions"] = new ParseObject[] { question1, question2, question3 };
+                Task t4 = bundle.SaveAsync();
                 t4.Wait();
             }
             else
@@ -80,13 +80,13 @@ namespace CogniTutor
             }
         }
 
-        private ParseObject SavePassage()
+        private ParseObject SaveBundle()
         {
-            ParseObject p = new ParseObject("Passage");
-            p["passageText"] = tbPassage.Text;
-            Task t1 = p.SaveAsync();
+            ParseObject b = new ParseObject("QuestionBundle");
+            b["passageText"] = tbPassage.Text;
+            Task t1 = b.SaveAsync();
             t1.Wait();
-            return p;
+            return b;
         }
 
         private ParseObject CreateData3()
@@ -97,7 +97,7 @@ namespace CogniTutor
             return qd3;
         }
 
-        private ParseObject CreateContents3(ParseObject passage)
+        private ParseObject CreateContents3()
         {
             ParseObject qc3 = new ParseObject("QuestionContents");
             qc3["correctAnswer"] = CorrectIndex(3);
@@ -106,19 +106,19 @@ namespace CogniTutor
             if (cb2Answer5.Checked) qc3["answers"] = new string[] { tb3Answer1.Text, tb3Answer2.Text, tb3Answer3.Text, tb3Answer4.Text, tb3Answer5.Text };
             else qc3["answers"] = new string[] { tb3Answer1.Text, tb3Answer2.Text, tb3Answer3.Text, tb3Answer4.Text };
             qc3["explanation"] = tbExplanation3.Text;
-            qc3["passage"] = passage;
             return qc3;
         }
 
-        private ParseObject CreateQuestion3(ParseObject qc3, ParseObject qd3)
+        private ParseObject CreateQuestion3(ParseObject qc3, ParseObject qd3, ParseObject bundle)
         {
             ParseObject q3 = new ParseObject("Question");
             q3["subject"] = ddlSubject.Text;
             q3["category"] = ddlCategory.Text;
-            q3["hasPassage"] = true;
+            q3["inBundle"] = true;
             q3["questionContents"] = qc3;
             q3["questionData"] = qd3;
             q3["reviewStatus"] = Constants.ReviewStatusType.PENDING;
+            q3["bundle"] = bundle;
             return q3;
         }
 
@@ -130,7 +130,7 @@ namespace CogniTutor
             return qd2;
         }
 
-        private ParseObject CreateContents2(ParseObject passage)
+        private ParseObject CreateContents2()
         {
             ParseObject qc2 = new ParseObject("QuestionContents");
             qc2["correctAnswer"] = CorrectIndex(2);
@@ -139,19 +139,19 @@ namespace CogniTutor
             if(cb2Answer5.Checked) qc2["answers"] = new string[] { tb2Answer1.Text, tb2Answer2.Text, tb2Answer3.Text, tb2Answer4.Text, tb2Answer5.Text };
             else qc2["answers"] = new string[] { tb2Answer1.Text, tb2Answer2.Text, tb2Answer3.Text, tb2Answer4.Text };
             qc2["explanation"] = tbExplanation2.Text;
-            qc2["passage"] = passage;
             return qc2;
         }
 
-        private ParseObject CreateQuestion2(ParseObject qc2, ParseObject qd2)
+        private ParseObject CreateQuestion2(ParseObject qc2, ParseObject qd2, ParseObject bundle)
         {
             ParseObject q2 = new ParseObject("Question");
             q2["subject"] = ddlSubject.Text;
             q2["category"] = ddlCategory.Text;
-            q2["hasPassage"] = true;
+            q2["inBundle"] = true;
             q2["questionContents"] = qc2;
             q2["questionData"] = qd2;
             q2["reviewStatus"] = Constants.ReviewStatusType.PENDING;
+            q2["bundle"] = bundle;
             return q2;
         }
 
@@ -180,7 +180,7 @@ namespace CogniTutor
             ParseObject q = new ParseObject("Question");
             q["subject"] = ddlSubject.Text;
             q["category"] = ddlCategory.Text;
-            q["hasPassage"] = false;
+            q["inBundle"] = false;
             q["questionContents"] = qc;
             q["questionData"] = qd;
             q["reviewStatus"] = Constants.ReviewStatusType.PENDING;

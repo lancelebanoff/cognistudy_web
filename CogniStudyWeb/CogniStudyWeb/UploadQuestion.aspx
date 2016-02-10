@@ -45,11 +45,11 @@
 
     <script>
         function showhide(checkboxid, layerid) {
-            if ($get(checkboxid).checked == true) {
-                $get(layerid).display = "none";
+            if ($('#' + checkboxid).checked == true) {
+                $('#' + layerid).removeClass('hidden');
             }
             else {
-                $get(layerid).style.display = "";
+                $('#' + layerid).addClass('hidden');
             }
         }
         function fileChosen() {
@@ -57,20 +57,6 @@
                 $('#btnUpload').click();
             }
         }
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('#ddlCategory').on('change', function () {
-                if (this.value == '<%= CogniTutor.Constants.Category.PASSAGE_READING %>') {
-                    $("#divPassageExtraQuestions").removeClass('hidden');
-                    $("#divPassage").removeClass('hidden');
-                }
-                else {
-                    $("#divPassageExtraQuestions").addClass('hidden');
-                    $("#divPassage").addClass('hidden');
-                }
-            });
-        });
     </script>
 
 </head>
@@ -117,7 +103,8 @@
                                         OnSelectedIndexChanged="ddlSubject_SelectedIndexChanged"></asp:DropDownList><br /><br />
                                     <asp:Label runat="server" Text="Category"/><br />
                                     <asp:DropDownList ID="ddlCategory" runat="server"></asp:DropDownList><br /><br />
-
+                                    
+                                    <asp:CheckBox runat="server" ID="cbInBundle" onclick="$('#divPassage').toggleClass('hidden'); $('#divPassageExtraQuestions').toggleClass('hidden');" Text="Make 3-question bundle"/><br /><br />
 
                                     <asp:CheckBox runat="server" ID="cbImage" onclick="$('#divImage').toggleClass('hidden');" Text="Include Image"/><br /><br />
                                     <div id="divImage" class="hidden">
