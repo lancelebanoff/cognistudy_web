@@ -1,0 +1,3 @@
+automatically  generate questions
+after answer, show percentage of correct
+sat changed english

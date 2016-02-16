@@ -45,6 +45,12 @@
     <!-- Morris Charts CSS -->
     <link href="css/plugins/morris.css" rel="stylesheet">
 
+    <script type="text/javascript" async
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <link href="css/question.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -74,7 +80,11 @@
                                     </h1>
                                 </div>
                             </div>
-                            
+
+                            <asp:TextBox ID="tb" runat="server" TextMode="MultiLine"></asp:TextBox>
+                            <asp:Button ID="btn" runat="server" OnClick="btn_Click" />
+                            <asp:Label ID="lb" runat="server"></asp:Label>
+                            aaaaaaaaaaaaaaaa\(\frac{a}{b}+2 = a i^2\)bababababa
 
                         </div>
                         <!-- /.container-fluid -->

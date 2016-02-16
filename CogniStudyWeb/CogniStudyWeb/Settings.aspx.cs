@@ -18,5 +18,10 @@ namespace CogniTutor
         protected override async Task OnStart()
         {
         }
+
+        protected void btn_Click(object sender, EventArgs e)
+        {
+            lb.Text = tb.Text;
+        }
     }
 }

@@ -1,0 +1,8 @@
+sb admin dashboard bootstrap 		apache
+
+Microsoft Chart Controls		license agreement
+
+MathJax					apache
+
+http://ckeditor.com/addon/eqneditor	GPL/LGPL/MPL
+
