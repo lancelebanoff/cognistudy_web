@@ -39,7 +39,7 @@ namespace CogniTutor
             ParseClient.Initialize("iT8NyJO0dChjLyfVsHUTM8UZQLSBBJLxd43AX9IY", "SvmmmluPjmLblmNrgqnUmylInkyiXzoWBk9ZxeZH");
             if (IsTestMode)
             {
-                Session["Email"] = "loganlebanoff@knights.ucf.edu";
+                Session["Email"] = "loganlebanoff@yahoo.com";
                 Session["Password"] = "poi";
             }
             if (LoggedIn)
@@ -47,6 +47,10 @@ namespace CogniTutor
                 await ParseUser.LogInAsync(Session["Email"].ToString(), Session["Password"].ToString());
                 PublicUserData = ParseUser.CurrentUser.Get<ParseObject>("publicUserData");
                 await PublicUserData.FetchAsync();
+                Tutor = PublicUserData.Get<ParseObject>("tutor");
+                await Tutor.FetchAsync();
+                PrivateTutorData = Tutor.Get<ParseObject>("privateTutorData");
+                await PrivateTutorData.FetchAsync();
             }
             await OnStart();
         }
@@ -69,14 +73,6 @@ namespace CogniTutor
 
         protected void EndPage()
         {
-            if (mStarted)
-            {
-                if (mSqlConnection != null)
-                {
-                    mSqlConnection.Close();
-                }
-                mStarted = false;
-            }
         }
 
         private void ErrorToUserLog()
@@ -139,6 +135,14 @@ namespace CogniTutor
                 return ParseUser.CurrentUser.ObjectId;
             }
         }
+        public UserTypes UserType
+        {
+            get
+            {
+                string userType = PublicUserData.Get<string>("userType");
+                return Common.ParseEnum<UserTypes>(userType);
+            }
+        }
         public ParseObject PublicUserData
         {
             get
@@ -148,6 +152,28 @@ namespace CogniTutor
             set
             {
                 Session["PublicUserData"] = value;
+            }
+        }
+        public ParseObject Tutor
+        {
+            get
+            {
+                return (ParseObject)Session["Tutor"];
+            }
+            set
+            {
+                Session["Tutor"] = value;
+            }
+        }
+        public ParseObject PrivateTutorData
+        {
+            get
+            {
+                return (ParseObject)Session["PrivateTutorData"];
+            }
+            set
+            {
+                Session["PrivateTutorData"] = value;
             }
         }
         public bool LoggedIn
@@ -180,18 +206,13 @@ namespace CogniTutor
             EndPage();
             this.Response.Redirect(link);
         }
-        protected SqlConnection SqlConnection1
-        {
-            get { return mSqlConnection; }
-        }
-        protected SqlConnection mSqlConnection;
-        protected bool mStarted;
-        public int HitID;
         public enum UserTypes
         {
-            Student,
-            Tutor,
-            NotLoggedIn
+            NotLoggedIn = 0,
+            Student = 1,
+            Tutor = 2,
+            Moderator = 3,
+            Admin = 4
         }
 
         public static IList<T> GetAllControlsRecusrvive<T>(Control control) where T : Control

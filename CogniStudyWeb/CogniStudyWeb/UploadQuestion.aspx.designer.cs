@@ -58,31 +58,13 @@ namespace CogniTutor {
         protected global::System.Web.UI.WebControls.CheckBox cbInBundle;
         
         /// <summary>
-        /// cbImage control.
+        /// FileUpload0 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbImage;
-        
-        /// <summary>
-        /// FileUpload1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
-        
-        /// <summary>
-        /// btnUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpload;
+        protected global::System.Web.UI.WebControls.FileUpload FileUpload0;
         
         /// <summary>
         /// tbPassage control.
@@ -92,6 +74,15 @@ namespace CogniTutor {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::CogniTutor.UserControls.LatexEditor tbPassage;
+        
+        /// <summary>
+        /// FileUpload1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
         
         /// <summary>
         /// tbQuestion control.
@@ -211,6 +202,15 @@ namespace CogniTutor {
         protected global::CogniTutor.UserControls.LatexEditor tbExplanation;
         
         /// <summary>
+        /// FileUpload2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload FileUpload2;
+        
+        /// <summary>
         /// tbQuestion2 control.
         /// </summary>
         /// <remarks>
@@ -326,6 +326,15 @@ namespace CogniTutor {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::CogniTutor.UserControls.LatexEditor tbExplanation2;
+        
+        /// <summary>
+        /// FileUpload3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload FileUpload3;
         
         /// <summary>
         /// tbQuestion3 control.

@@ -1,12 +1,13 @@
-﻿<%@ Page Async="true" Language="C#" AutoEventWireup="true" CodeBehind="QuestionArena.aspx.cs" Inherits="CogniTutor.QuestionArena" %>
+﻿<%@ Page Async="true" Language="C#" AutoEventWireup="true" CodeBehind="ReviewQuestion.aspx.cs" Inherits="CogniTutor.ReviewQuestion" %>
 
 <%@ Register TagPrefix="COG" TagName="NavigationBar" Src="~/UserControls/NavigationBar.ascx" %>
 <%@ Register TagPrefix="COG" TagName="Footer" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="COG" TagName="LoginWindow" Src="~/UserControls/LoginWindow.ascx" %>
+<%@ Register TagPrefix="COG" TagName="QuestionBlock" Src="~/UserControls/QuestionBlock.ascx" %>
 
 <!DOCTYPE html>
 <html lang="en">
-
+     
 <head>
 
     <meta charset="utf-8">
@@ -41,6 +42,24 @@
     
     <!-- Our custom javascript -->
     <script src="js/Custom.js"></script>
+
+    <script>
+        function showhide(checkboxid, layerid) {
+            if ($('#' + checkboxid).checked == true) {
+                $('#' + layerid).removeClass('hidden');
+            }
+            else {
+                $('#' + layerid).addClass('hidden');
+            }
+        }
+    </script>
+
+    <link href="css/question.css" rel="stylesheet">
+
+    <script type="text/javascript" async
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
 
 </head>
 
@@ -77,44 +96,37 @@
                                 </div>
                             </div>
                             <!-- /.row -->
-                            
-                            <div class="row">
+                            <asp:Label ID="lbNoResults" runat="server" Visible="false" class="large-text" Text="No questions to be reviewed."></asp:Label>
+                            <asp:Panel ID="pnlAll" runat="server" class="row">
                                 <div class="col-lg-12">
-                                    <a href="UploadQuestion.aspx" class="btn btn-success">Upload New Question</a>
-                                    <a href="ReviewQuestion.aspx" class="btn btn-success">Review Questions</a>
+                                    <% if(Bundle != null) { %>
+                                    <div class="row">
+                                        <div class="col-lg-3"></div>
+                                        <div class="col-lg-6">
+                                            <h3 class="align-center">Passage</h3><br />
+                                            <p><%= passageText %></p>
+                                            <hr />
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                    <asp:Panel runat="server" id="pnlQuestions"></asp:Panel>
+                                    
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <asp:TextBox runat="server" ID="tbComments" placeholder="Type your comments here..." 
+                                                    CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                            </div>
+                                            <br />
+                                            <div class="row align-center">
+                                                <asp:Button runat="server" id="btnApprove" CssClass="btn btn-success btn-lg" Width="150" Text="Approve" OnClick="btnApprove_Click" />
+                                                <asp:Button runat="server" id="btnDeny" CssClass="btn btn-danger btn-lg" Width="150" Text="Deny" OnClick="btnDeny_Click" />
+                                                <asp:Button runat="server" id="btnSkip" CssClass="btn btn-default btn-lg" Width="150" Text="Skip" OnClick="btnSkip_Click" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- /.row -->
-                            
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <h3 class="page-header">My Question Status</h3>
-                                    <asp:GridView ID="grdStatus" runat="server" OnDataBinding="grdStatus_DataBinding" CssClass="table table-striped" AutoGenerateColumns="false">
-                                        <Columns>
-                                            <asp:TemplateField HeaderText="Subject/Category">
-                                                <ItemTemplate>
-                                                    <%# Eval("subject") + " - " + Eval("category") %>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Question">
-                                                <ItemTemplate>
-                                                    <%# Eval("questionText") %>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Answers">
-                                                <ItemTemplate>
-                                                    <%# Eval("answers") %>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Status">
-                                                <ItemTemplate>
-                                                    <%# Eval("reviewStatus") %>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                    </asp:GridView>
-                                </div>
-                            </div>
+                            </asp:Panel>
                             <!-- /.row -->
 
 

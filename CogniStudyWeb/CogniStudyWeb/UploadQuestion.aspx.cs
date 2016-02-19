@@ -84,6 +84,8 @@ namespace CogniTutor
         {
             ParseObject b = new ParseObject("QuestionBundle");
             b["passageText"] = tbPassage.Text;
+            if (FileUpload0.HasFile)
+                b["image"] = Upload(FileUpload0);
             Task t1 = b.SaveAsync();
             t1.Wait();
             return b;
@@ -94,6 +96,7 @@ namespace CogniTutor
             ParseObject qd3 = new ParseObject("QuestionData");
             qd3["correctResponses"] = 0;
             qd3["totalResponses"] = 0;
+            qd3["reviewStatus"] = Constants.ReviewStatusType.PENDING;
             return qd3;
         }
 
@@ -106,6 +109,8 @@ namespace CogniTutor
             if (cb2Answer5.Checked) qc3["answers"] = new string[] { tb3Answer1.Text, tb3Answer2.Text, tb3Answer3.Text, tb3Answer4.Text, tb3Answer5.Text };
             else qc3["answers"] = new string[] { tb3Answer1.Text, tb3Answer2.Text, tb3Answer3.Text, tb3Answer4.Text };
             qc3["explanation"] = tbExplanation3.Text;
+            if (FileUpload3.HasFile)
+                qc3["image"] = Upload(FileUpload3);
             return qc3;
         }
 
@@ -117,7 +122,6 @@ namespace CogniTutor
             q3["inBundle"] = true;
             q3["questionContents"] = qc3;
             q3["questionData"] = qd3;
-            q3["reviewStatus"] = Constants.ReviewStatusType.PENDING;
             q3["bundle"] = bundle;
             return q3;
         }
@@ -127,6 +131,7 @@ namespace CogniTutor
             ParseObject qd2 = new ParseObject("QuestionData");
             qd2["correctResponses"] = 0;
             qd2["totalResponses"] = 0;
+            qd2["reviewStatus"] = Constants.ReviewStatusType.PENDING;
             return qd2;
         }
 
@@ -139,6 +144,8 @@ namespace CogniTutor
             if(cb2Answer5.Checked) qc2["answers"] = new string[] { tb2Answer1.Text, tb2Answer2.Text, tb2Answer3.Text, tb2Answer4.Text, tb2Answer5.Text };
             else qc2["answers"] = new string[] { tb2Answer1.Text, tb2Answer2.Text, tb2Answer3.Text, tb2Answer4.Text };
             qc2["explanation"] = tbExplanation2.Text;
+            if (FileUpload2.HasFile)
+                qc2["image"] = Upload(FileUpload2);
             return qc2;
         }
 
@@ -150,7 +157,6 @@ namespace CogniTutor
             q2["inBundle"] = true;
             q2["questionContents"] = qc2;
             q2["questionData"] = qd2;
-            q2["reviewStatus"] = Constants.ReviewStatusType.PENDING;
             q2["bundle"] = bundle;
             return q2;
         }
@@ -160,6 +166,7 @@ namespace CogniTutor
             ParseObject qd = new ParseObject("QuestionData");
             qd["correctResponses"] = 0;
             qd["totalResponses"] = 0;
+            qd["reviewStatus"] = Constants.ReviewStatusType.PENDING;
             return qd;
         }
 
@@ -172,6 +179,8 @@ namespace CogniTutor
             if(cbAnswer5.Checked) qc["answers"] = new string[] { tbAnswer1.Text, tbAnswer2.Text, tbAnswer3.Text, tbAnswer4.Text, tbAnswer5.Text };
             else qc["answers"] = new string[] { tbAnswer1.Text, tbAnswer2.Text, tbAnswer3.Text, tbAnswer4.Text };
             qc["explanation"] = tbExplanation.Text;
+            if (FileUpload1.HasFile)
+                qc["image"] = Upload(FileUpload1);
             return qc;
         }
 
@@ -183,7 +192,6 @@ namespace CogniTutor
             q["inBundle"] = false;
             q["questionContents"] = qc;
             q["questionData"] = qd;
-            q["reviewStatus"] = Constants.ReviewStatusType.PENDING;
             return q;
         }
 
@@ -218,17 +226,21 @@ namespace CogniTutor
             }
         }
 
-        protected void Upload(object sender, EventArgs e)
+        protected ParseFile Upload(FileUpload fupload)
         {
-            if (FileUpload1.HasFile)
-            {
-                string uploadFileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
-                //string downloadFileName = "user" + Request.QueryString["TutorID"].ToString();
-                //FileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/profile pictures/") + downloadFileName + ".png");
-                //Common.ExecuteCommand("update users set PictureFileName='" + downloadFileName
-                //    + "' where UserID=" + Request.QueryString["TutorID"]);
-                //ReloadPage();
-            }
+            string uploadFileName = Path.GetFileName(fupload.PostedFile.FileName);
+            FileInfo Finfo = new FileInfo(fupload.PostedFile.FileName);
+            string extension = Finfo.Extension.ToLower();
+            byte[] data = fupload.FileBytes;
+            ParseFile file = new ParseFile("question" + Tutor.Get<int>("numQuestionsCreated") + extension, data);
+            Task t = file.SaveAsync();
+            t.Wait();
+            return file;
+            //string downloadFileName = "user" + Request.QueryString["TutorID"].ToString();
+            //FileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/profile pictures/") + downloadFileName + ".png");
+            //Common.ExecuteCommand("update users set PictureFileName='" + downloadFileName
+            //    + "' where UserID=" + Request.QueryString["TutorID"]);
+            //ReloadPage();
         }
     }
 }

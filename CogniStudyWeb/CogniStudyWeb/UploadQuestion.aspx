@@ -53,14 +53,14 @@
                 $('#' + layerid).addClass('hidden');
             }
         }
-        function fileChosen() {
-            if (this.value !== '') {
-                $('#btnUpload').click();
-            }
-        }
+        //function fileChosen() {
+        //    if (this.value !== '') {
+        //        $('#btnUpload').click();
+        //    }
+        //}
     </script>
 
-    <link href="css/question.css" rel="stylesheet">
+    <%--<link href="css/question.css" rel="stylesheet">--%>
 
     <script type="text/javascript" async
         src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
@@ -105,74 +105,79 @@
                             <div class="row">
                                 <div class="col-lg-12"><!--aaaaaaaaaaaaaaaa\(\frac{a}{b}+2 = a\)bababababa-->
 
-                                    <asp:Label runat="server" Text="Subject"/><br />
-                                    <asp:DropDownList ID="ddlSubject" runat="server" AutoPostBack="true" 
-                                        OnSelectedIndexChanged="ddlSubject_SelectedIndexChanged"></asp:DropDownList><br /><br />
-                                    <asp:Label runat="server" Text="Category"/><br />
-                                    <asp:DropDownList ID="ddlCategory" runat="server"></asp:DropDownList><br /><br />
+                                    <asp:UpdatePanel runat="server">
+                                        <ContentTemplate>
+                                            <asp:Label runat="server" Text="Subject"/><br />
+                                            <asp:DropDownList ID="ddlSubject" runat="server" AutoPostBack="true" 
+                                                OnSelectedIndexChanged="ddlSubject_SelectedIndexChanged"></asp:DropDownList><br /><br />
+                                            <asp:Label runat="server" Text="Category"/><br />
+                                            <asp:DropDownList ID="ddlCategory" runat="server"></asp:DropDownList><br /><br />
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
                                     
                                     <asp:CheckBox runat="server" ID="cbInBundle" onclick="$('#divPassage').toggleClass('hidden'); $('#divPassageExtraQuestions').toggleClass('hidden');" Text="Make 3-question bundle"/><br /><br />
 
-                                    <asp:CheckBox runat="server" ID="cbImage" onclick="$('#divImage').toggleClass('hidden');" Text="Include Image"/><br /><br />
-                                    <div id="divImage" class="hidden">
-                                        <asp:FileUpload ID="FileUpload1" runat="server" onchange="fileChosen()" />
-                                        <asp:Button class="hidden" ID="btnUpload" runat="server" Text="Upload" OnClick="Upload" /><br />
-                                    </div>
                                     <div id="divPassage" class="hidden">
+                                        Image (Optional):<br /><asp:FileUpload ID="FileUpload0" runat="server" /><br />
                                         Passage:<br /><COG:LatexEditor runat="server" ID="tbPassage" Width="700" Height="100" TextMode="MultiLine"></COG:LatexEditor><br /><br />
                                     </div>
-
+                                    <hr />
+                                    Image (Optional):<br /><asp:FileUpload ID="FileUpload1" runat="server" /><br />
                                     Question:<br /><COG:LatexEditor runat="server" id="tbQuestion" Width="700" Height="100"></COG:LatexEditor><br /><br />
                                     
                                     
-                                    Answer1:<br /><COG:LatexEditor runat="server" ID="tbAnswer1" Width="500"></COG:LatexEditor>
+                                    Answer1:<br /><COG:LatexEditor runat="server" ID="tbAnswer1" Width="500" Height="50"></COG:LatexEditor>
                                     <asp:RadioButton runat="server" ID="rbAnswer1" GroupName="Answers" Text="Select as correct"/><br /><br />
-                                    Answer2:<br /><COG:LatexEditor runat="server" ID="tbAnswer2" Width="500"></COG:LatexEditor>
+                                    Answer2:<br /><COG:LatexEditor runat="server" ID="tbAnswer2" Width="500" Height="50"></COG:LatexEditor>
                                     <asp:RadioButton runat="server" ID="rbAnswer2" GroupName="Answers" Text="Select as correct"/><br /><br />
-                                    Answer3:<br /><COG:LatexEditor runat="server" ID="tbAnswer3" Width="500"></COG:LatexEditor>
+                                    Answer3:<br /><COG:LatexEditor runat="server" ID="tbAnswer3" Width="500" Height="50"></COG:LatexEditor>
                                     <asp:RadioButton runat="server" ID="rbAnswer3" GroupName="Answers" Text="Select as correct"/><br /><br />
-                                    Answer4:<br /><COG:LatexEditor runat="server" ID="tbAnswer4" Width="500"></COG:LatexEditor>
+                                    Answer4:<br /><COG:LatexEditor runat="server" ID="tbAnswer4" Width="500" Height="50"></COG:LatexEditor>
                                     <asp:RadioButton runat="server" ID="rbAnswer4" GroupName="Answers" Text="Select as correct"/><br /><br />
                                     <asp:CheckBox id="cbAnswer5" runat="server" Text="Use 5 answers" onclick="$('#divAnswer5').toggleClass('hidden');"/><br /><br />
                                     <div id="divAnswer5" class="hidden">
-                                        Answer5:<br /><COG:LatexEditor runat="server" ID="tbAnswer5" Width="500"></COG:LatexEditor>
+                                        Answer5:<br /><COG:LatexEditor runat="server" ID="tbAnswer5" Width="500" Height="50"></COG:LatexEditor>
                                         <asp:RadioButton runat="server" ID="rbAnswer5" GroupName="Answers" Text="Select as correct"/><br /><br />
                                     </div>
                                     
                                     Explanation:<br /><COG:LatexEditor runat="server" ID="tbExplanation" Width="700" Height="100" TextMode="MultiLine"></COG:LatexEditor><br /><br />
 
                                     <div id="divPassageExtraQuestions" class="hidden">
+                                        <hr />
+                                        Image (Optional):<br /><asp:FileUpload ID="FileUpload2" runat="server" /><br />
                                         Question:<br /><COG:LatexEditor runat="server" ID="tbQuestion2" Width="700" Height="100" TextMode="MultiLine"></COG:LatexEditor><br /><br />
                                     
-                                        Answer1:<br /><COG:LatexEditor runat="server" ID="tb2Answer1" Width="500"></COG:LatexEditor>
+                                        Answer1:<br /><COG:LatexEditor runat="server" ID="tb2Answer1" Width="500" Height="50"></COG:LatexEditor>
                                         <asp:RadioButton runat="server" ID="rb2Answer1" GroupName="Answers2" Text="Select as correct"/><br /><br />
-                                        Answer2:<br /><COG:LatexEditor runat="server" ID="tb2Answer2" Width="500"></COG:LatexEditor>
+                                        Answer2:<br /><COG:LatexEditor runat="server" ID="tb2Answer2" Width="500" Height="50"></COG:LatexEditor>
                                         <asp:RadioButton runat="server" ID="rb2Answer2" GroupName="Answers2" Text="Select as correct"/><br /><br />
-                                        Answer3:<br /><COG:LatexEditor runat="server" ID="tb2Answer3" Width="500"></COG:LatexEditor>
+                                        Answer3:<br /><COG:LatexEditor runat="server" ID="tb2Answer3" Width="500" Height="50"></COG:LatexEditor>
                                         <asp:RadioButton runat="server" ID="rb2Answer3" GroupName="Answers2" Text="Select as correct"/><br /><br />
-                                        Answer4:<br /><COG:LatexEditor runat="server" ID="tb2Answer4" Width="500"></COG:LatexEditor>
+                                        Answer4:<br /><COG:LatexEditor runat="server" ID="tb2Answer4" Width="500" Height="50"></COG:LatexEditor>
                                         <asp:RadioButton runat="server" ID="rb2Answer4" GroupName="Answers2" Text="Select as correct"/><br /><br />
                                         <asp:CheckBox id="cb2Answer5" runat="server" Text="Use 5 answers" onclick="$('#div2Answer5').toggleClass('hidden');"/><br /><br />
                                         <div id="div2Answer5" class="hidden">
-                                            Answer5:<br /><COG:LatexEditor runat="server" ID="tb2Answer5" Width="500"></COG:LatexEditor>
+                                            Answer5:<br /><COG:LatexEditor runat="server" ID="tb2Answer5" Width="500" Height="50"></COG:LatexEditor>
                                             <asp:RadioButton runat="server" ID="rb2Answer5" GroupName="Answers2" Text="Select as correct"/><br /><br />
                                         </div>
                                     
                                         Explanation:<br /><COG:LatexEditor runat="server" ID="tbExplanation2" Width="700" Height="100" TextMode="MultiLine"></COG:LatexEditor><br /><br />
                                         
+                                        <hr />
+                                        Image (Optional):<br /><asp:FileUpload ID="FileUpload3" runat="server" /><br />
                                         Question:<br /><COG:LatexEditor runat="server" ID="tbQuestion3" Width="700" Height="100" TextMode="MultiLine"></COG:LatexEditor><br /><br />
                                     
-                                        Answer1:<br /><COG:LatexEditor runat="server" ID="tb3Answer1" Width="500"></COG:LatexEditor>
+                                        Answer1:<br /><COG:LatexEditor runat="server" ID="tb3Answer1" Width="500" Height="50"></COG:LatexEditor>
                                         <asp:RadioButton runat="server" ID="rb3Answer1" GroupName="Answers3" Text="Select as correct"/><br /><br />
-                                        Answer2:<br /><COG:LatexEditor runat="server" ID="tb3Answer2" Width="500"></COG:LatexEditor>
+                                        Answer2:<br /><COG:LatexEditor runat="server" ID="tb3Answer2" Width="500" Height="50"></COG:LatexEditor>
                                         <asp:RadioButton runat="server" ID="rb3Answer2" GroupName="Answers3" Text="Select as correct"/><br /><br />
-                                        Answer3:<br /><COG:LatexEditor runat="server" ID="tb3Answer3" Width="500"></COG:LatexEditor>
+                                        Answer3:<br /><COG:LatexEditor runat="server" ID="tb3Answer3" Width="500" Height="50"></COG:LatexEditor>
                                         <asp:RadioButton runat="server" ID="rb3Answer3" GroupName="Answers3" Text="Select as correct"/><br /><br />
-                                        Answer4:<br /><COG:LatexEditor runat="server" ID="tb3Answer4" Width="500"></COG:LatexEditor>
+                                        Answer4:<br /><COG:LatexEditor runat="server" ID="tb3Answer4" Width="500" Height="50"></COG:LatexEditor>
                                         <asp:RadioButton runat="server" ID="rb3Answer4" GroupName="Answers3" Text="Select as correct"/><br /><br />
                                         <asp:CheckBox id="cb3Answer5" runat="server" Text="Use 5 answers" onclick="$('#div3Answer5').toggleClass('hidden');"/><br /><br />
                                         <div id="div3Answer5" class="hidden">
-                                            Answer5:<br /><COG:LatexEditor runat="server" ID="tb3Answer5" Width="500"></COG:LatexEditor>
+                                            Answer5:<br /><COG:LatexEditor runat="server" ID="tb3Answer5" Width="500" Height="50"></COG:LatexEditor>
                                             <asp:RadioButton runat="server" ID="rb3Answer5" GroupName="Answers2" Text="Select as correct"/><br /><br />
                                         </div>
                                     

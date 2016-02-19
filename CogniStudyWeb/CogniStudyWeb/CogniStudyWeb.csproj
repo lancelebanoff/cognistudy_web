@@ -2563,6 +2563,7 @@
     <Content Include="QuestionArena.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="RegisterSuccess.aspx" />
+    <Content Include="ReviewQuestion.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -2612,6 +2613,7 @@
     <Content Include="UserControls\LatexEditor.ascx" />
     <Content Include="UserControls\LoginWindow.ascx" />
     <Content Include="UserControls\NavigationBar.ascx" />
+    <Content Include="UserControls\QuestionBlock.ascx" />
     <Content Include="UserControls\SingleBarChart.ascx" />
     <Content Include="UserControls\SubjectCategoryDropdown.ascx" />
     <Content Include="ViewSwitcher.ascx" />
@@ -2701,6 +2703,13 @@
     <Compile Include="RegisterSuccess.aspx.designer.cs">
       <DependentUpon>RegisterSuccess.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ReviewQuestion.aspx.cs">
+      <DependentUpon>ReviewQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReviewQuestion.aspx.designer.cs">
+      <DependentUpon>ReviewQuestion.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Settings.aspx.cs">
       <DependentUpon>Settings.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2785,6 +2794,13 @@
     </Compile>
     <Compile Include="UserControls\NavigationBar.ascx.designer.cs">
       <DependentUpon>NavigationBar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\QuestionBlock.ascx.cs">
+      <DependentUpon>QuestionBlock.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\QuestionBlock.ascx.designer.cs">
+      <DependentUpon>QuestionBlock.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SingleBarChart.ascx.cs">
       <DependentUpon>SingleBarChart.ascx</DependentUpon>

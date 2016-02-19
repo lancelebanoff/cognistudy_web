@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Parse;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -17,12 +19,55 @@ namespace CogniTutor
 
         protected override async Task OnStart()
         {
-
+            DataTable dt = CreateStatusTable();
+            IEnumerable<ParseObject> myQuestions = await GetMyQuestions();
+            foreach (ParseObject question in myQuestions)
+            {
+                await question.FetchIfNeededAsync();
+                ParseObject contents = await question.Get<ParseObject>("questionContents").FetchIfNeededAsync();
+                ParseObject data = await question.Get<ParseObject>("questionData").FetchIfNeededAsync();
+                DataRow dr = dt.NewRow();
+                dr["subject"] = question.Get<string>("subject");
+                dr["category"] = question.Get<string>("category");
+                dr["questionText"] = contents.Get<string>("questionText");
+                List<object> answers = contents.Get<List<object>>("answers");
+                string strAnswers = String.Join("\r\n", answers);
+                dr["answers"] = strAnswers;
+                dr["reviewStatus"] = data.Get<string>("reviewStatus");
+                dt.Rows.Add(dr);
+            }
+            grdStatus.DataSource = dt;
+            grdStatus.DataBind();
         }
 
-        protected void btnUploadQuestion_Click(object sender, EventArgs e)
+        protected void grdStatus_DataBinding(object sender, EventArgs e)
         {
-
         }
+
+        protected async Task<IEnumerable<ParseObject>> GetMyQuestions()
+        {
+            var contentsQuery = from contents in ParseObject.GetQuery("QuestionContents")
+                                where contents["author"] == PublicUserData
+                                select contents;
+            var questionQuery = from question in ParseObject.GetQuery("Question").Include("questionContents").Include("questionData")
+                                orderby question.CreatedAt descending
+                                //join data in dataQuery on question["questionData"] equals data
+                                join contents in contentsQuery on question["questionContents"] equals contents
+                                select question;
+            return await questionQuery.FindAsync();
+        }
+
+        protected DataTable CreateStatusTable()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("subject", typeof(string));
+            dt.Columns.Add("category", typeof(string));
+            dt.Columns.Add("questionText", typeof(string));
+            dt.Columns.Add("answers", typeof(string));
+            dt.Columns.Add("reviewStatus", typeof(string));
+            return dt;
+        }
+
+
     }
 }

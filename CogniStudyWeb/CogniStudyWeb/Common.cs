@@ -15,6 +15,13 @@ namespace CogniTutor
 {
     public class Common
     {
-
+        public static T ParseEnum<T>(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return (T)Enum.ToObject(typeof(T), 0);
+            }
+            return (T)Enum.Parse(typeof(T), value, true);
+        }
     }
 }

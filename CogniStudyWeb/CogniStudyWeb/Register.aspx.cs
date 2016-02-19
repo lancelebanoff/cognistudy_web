@@ -23,16 +23,33 @@ namespace CogniTutor
 
         private async Task SignUp()
         {
-            ParseObject publicUserData = new ParseObject("PublicUserData");
-            publicUserData["userType"] = Constants.UserType.TUTOR;
-            Task t1 = publicUserData.SaveAsync();
-
             var user = new ParseUser()
             {
                 Username = tbEmail.Text.ToLower(),
                 Password = tbPassword.Text,
                 Email = tbEmail.Text.ToLower()
             };
+            Task t1 = user.SignUpAsync();
+            t1.Wait();
+            ParseObject privateTutorData = new ParseObject("PrivateTutorData");
+            privateTutorData["baseUserId"] = user.ObjectId;
+            Task t2 = privateTutorData.SaveAsync();
+            t2.Wait();
+            ParseObject tutor = new ParseObject("Tutor");
+            tutor["numQuestionsCreated"] = 0;
+            tutor["numQuestionsReviewed"] = 0;
+            tutor["baseUserId"] = user.ObjectId;
+            tutor["privateTutorData"] = privateTutorData;
+            Task t3 = tutor.SaveAsync();
+            t3.Wait();
+            ParseObject publicUserData = new ParseObject("PublicUserData");
+            publicUserData["userType"] = Constants.UserType.TUTOR;
+            publicUserData["displayName"] = tbFirstName.Text.Trim() + " " + tbLastName.Text.Trim();
+            publicUserData["searchableDisplayName"] = tbFirstName.Text.Trim().ToLower() + tbLastName.Text.Trim().ToLower();
+            publicUserData["baseUserId"] = user.ObjectId;
+            publicUserData["tutor"] = tutor;
+            Task t4 = publicUserData.SaveAsync();
+            t4.Wait();
             user["publicUserData"] = publicUserData;
             //user["phoneNumber"] = tbPhoneNumber.Text;
             //user["zipCode"] = tbZipCode.Text;
@@ -40,9 +57,8 @@ namespace CogniTutor
             //user["address2"] = tbAddress2.Text;
             //user["city"] = tbCity.Text;
             //user["state"] = ddState.SelectedValue;
-            t1.Wait(); 
-            Task t2 = user.SignUpAsync();
-            t2.Wait();
+            Task t5 = user.SaveAsync();
+            t5.Wait();
             Response.Redirect("RegisterSuccess.aspx");
         }
 
