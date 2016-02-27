@@ -107,15 +107,20 @@
 
                                     <asp:UpdatePanel runat="server">
                                         <ContentTemplate>
-                                            <asp:Label runat="server" Text="Subject"/><br />
-                                            <asp:DropDownList ID="ddlSubject" runat="server" AutoPostBack="true" 
-                                                OnSelectedIndexChanged="ddlSubject_SelectedIndexChanged"></asp:DropDownList><br /><br />
-                                            <asp:Label runat="server" Text="Category"/><br />
-                                            <asp:DropDownList ID="ddlCategory" runat="server"></asp:DropDownList><br /><br />
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <asp:Label runat="server" Text="Subject"/><br />
+                                                    <asp:DropDownList ID="ddlSubject" runat="server" AutoPostBack="true" CssClass="form-control"
+                                                        OnSelectedIndexChanged="ddlSubject_SelectedIndexChanged"></asp:DropDownList><br />
+                                                    <asp:Label runat="server" Text="Category"/><br />
+                                                    <asp:DropDownList ID="ddlCategory" runat="server" CssClass="form-control"></asp:DropDownList><br />
+                                                
+                                                </div>
+                                            </div>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
-                                    
-                                    <asp:CheckBox runat="server" ID="cbInBundle" onclick="$('#divPassage').toggleClass('hidden'); $('#divPassageExtraQuestions').toggleClass('hidden');" Text="Make 3-question bundle"/><br /><br />
+                                    <asp:CheckBox runat="server" CssClass="form-control" ID="cbInBundle" onclick="$('#divPassage').toggleClass('hidden'); $('#divPassageExtraQuestions').toggleClass('hidden');" Text="Make 3-question bundle"/><br /><br />
+
 
                                     <div id="divPassage" class="hidden">
                                         Image (Optional):<br /><asp:FileUpload ID="FileUpload0" runat="server" /><br />

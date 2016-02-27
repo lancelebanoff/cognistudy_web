@@ -93,13 +93,13 @@ namespace CogniTutor
 
         private async Task<ParseObject> GetQuestion()
         {
-            //var contentsQuery = from contents in ParseObject.GetQuery("QuestionContents")
+            //var contentsQuery = from contents in new ParseQuery<QuestionContents>()
             //                    where contents.Get<ParseObject>("author") != PublicUserData
             //                    select contents;
-            var dataQuery = from data in ParseObject.GetQuery("QuestionData")
+            var dataQuery = from data in new ParseQuery<QuestionData>()
                             where data.Get<string>("reviewStatus") == Constants.ReviewStatusType.PENDING
                             select data;
-            var questionQuery = from question in ParseObject.GetQuery("Question")
+            var questionQuery = from question in new ParseQuery<Question>()
                         //where question.Get<bool>("isActive")
                         where !AlreadyVisited.ToArray().Contains(question.ObjectId)
                         orderby question.CreatedAt descending

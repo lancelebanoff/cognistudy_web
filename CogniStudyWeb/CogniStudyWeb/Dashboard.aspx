@@ -3,6 +3,7 @@
 <%@ Register TagPrefix="COG" TagName="NavigationBar" Src="~/UserControls/NavigationBar.ascx" %>
 <%@ Register TagPrefix="COG" TagName="Footer" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="COG" TagName="LoginWindow" Src="~/UserControls/LoginWindow.ascx" %>
+<%@ Register Assembly="DelayedSubmit" Namespace="DelayedSubmit" TagPrefix="cc1"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +49,7 @@
 </head>
 
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" autocomplete="false">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
                     <!--Login modal-->
         <COG:LoginWindow runat="server" />
@@ -83,14 +84,58 @@
 
                             <div class="row">
                                 <div class="col-lg-12">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-6">
                                     <p class="large-text">
-                                        Hi !
+                                        Hi <%= PublicUserData.DisplayName %>!
                                     </p>
                                     <asp:Label ID="lblText" runat="server" Text=""></asp:Label>
                                     <br />
                                     <p class="medium-text">
-                                        You can edit your profile by clicking your name in the top right corner of the screen.
+                                        
                                     </p>
+                                    <asp:GridView CssClass="table table-hover table-striped" GridLines="None" ID="grdMyStudents" runat="server" 
+                                        OnRowCommand="grdMyStudents_RowCommand" DataKeyNames="ObjectId" AutoGenerateColumns="false">
+                                        <Columns>
+                                            <asp:BoundField DataField="DisplayName" HeaderText="Student Name"/>
+                                            <asp:ButtonField Text="Message" CommandName="Message" ButtonType="Button" ControlStyle-CssClass="btn btn-default align-center btn"/>
+                                            <asp:ButtonField Text="See Profile" CommandName="SeeProfile" ButtonType="Button" ControlStyle-CssClass="btn btn-default align-center"  />
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                                <div class="col-lg-1">
+                                </div>
+                                <div class="col-lg-4">
+                                    <h4 class="h4">Search for Students</h4>
+                                    <cc1:DelayedSubmitExtender ID="DisableButtonExtender1" runat="server" Timeout="1" TargetControlID="TextBox1"/>
+                                    <asp:TextBox ID="TextBox1" CssClass="form-control input-lg fill-parent-width" placeholder="Type Student's Name..." runat="server" AutoPostBack="True" OnTextChanged="TextBox1_TextChanged" Columns="50" autocomplete="false"></asp:TextBox>        
+                                    <br />
+                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                        <Triggers>
+                                            <asp:AsyncPostBackTrigger ControlID="TextBox1" />
+                                        </Triggers>
+                                        <ContentTemplate>
+                                            <asp:Repeater ID="Repeater1" runat="server">
+                                                <HeaderTemplate><table class="table"></HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="StudentProfile.aspx?StudentId=<%# Eval("ObjectId") %>" class="btn btn-default fill-parent-width">
+                                                                <div class="pull-left">
+                                                                    <asp:Image Height="75" Width="75" runat="server" ImageUrl='<%# Eval("profilePic.Url") ?? "Images/default_prof_pic.png" %>' />
+                                                                    <%# Eval("DisplayName") %>
+                                                                </div>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </ItemTemplate>
+                                                <FooterTemplate></table></FooterTemplate>
+                                            </asp:Repeater>
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
                                 </div>
                             </div>
 

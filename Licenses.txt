@@ -6,3 +6,6 @@ MathJax					apache
 
 http://ckeditor.com/addon/eqneditor	GPL/LGPL/MPL
 
+http://www.codeproject.com/Articles/25173/See-search-results-as-you-type-An-ASP-NET-AJAX-con
+					Open license
+

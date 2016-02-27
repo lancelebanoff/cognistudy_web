@@ -56,27 +56,24 @@
         <!-- Navigation bar -->
         <COG:NavigationBar runat="server"/>
 
-    
-        <div class="col-lg-1"></div>
-        <div class="container target col-lg-11">
-            <hr class="">
-            <div class="row float-bottom">
-                <div class="col-sm-2 col-xs-5">
-                    <!--<asp:Image ID="Image1" class='<!--<%# "img-rounded img-responsive" + (EditMode ? " cursor-pointer" : "") %>' runat="server"
-                        onclick='<!--<%# EditMode ? "picClick()":"" %>' onmouseenter='<!--<%# EditMode ? "mouseOverProfilePicture()":"" %>' onmouseleave="mouseLeaveProfilePicture()" />
-                    <asp:Image class="hidden cursor-pointer" ID="edit" src="Images/edit.png" Style="position: absolute; bottom: 5px; right: 20px;" runat="server"
-                        onclick="picClick()" onmouseenter="mouseOverProfilePicture()" onmouseleave="mouseLeaveProfilePicture()" />
-                    <asp:FileUpload class="hidden" ID="FileUpload1" runat="server" onchange="fileChosen()" />
-                    <!--<asp:Button class="hidden" ID="btnUpload" runat="server" Text="Upload" />-->
-                </div>
-                <div class="col-sm-10 col-xs-7">
-                    <h1><%= StudentName %></h1>
-                    <asp:Button runat="server" ID="btnRequestStudent" OnClick="btnRequestStudent_Click" class="btn btn-success" Text="Request as friend" />
-                    <asp:Button runat="server" ID="btnSendMessage" OnClick="btnSendMessage_Click" class="btn btn-info" Text="Send a message" />
-                    <br>
-                    <p class="small-text">
-                        Interested in lessons with this tutor? Email us at support@cognitutor.com and we'll set you up!
-                    </p>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="container target col-lg-11">
+                <hr class="">
+                <div class="row float-bottom">
+                    <div class="col-sm-2 col-xs-5">
+                        <asp:Image ID="Image1" class="img-rounded img-responsive" runat="server" />
+                        <asp:Image class="hidden cursor-pointer" ID="edit" src="Images/edit.png" Style="position: absolute; bottom: 5px; right: 20px;" runat="server"
+                            onclick="picClick()" onmouseenter="mouseOverProfilePicture()" onmouseleave="mouseLeaveProfilePicture()" />
+                        <asp:FileUpload class="hidden" ID="FileUpload1" runat="server" onchange="fileChosen()" />
+                        <!--<asp:Button class="hidden" ID="btnUpload" runat="server" Text="Upload" />-->
+                    </div>
+                    <div class="col-sm-10 col-xs-7">
+                        <h1><%= StudentName %></h1>
+                        <asp:Button runat="server" ID="btnRequestStudent" OnClick="btnRequestStudent_Click" class="btn btn-success" Text="Add student" />
+                        <asp:Button runat="server" ID="btnSendMessage" OnClick="btnSendMessage_Click" class="btn btn-info" Text="Send a message" />
+                        <asp:Button runat="server" ID="btnBlockStudent" OnClick="btnBlockStudent_Click" class="btn btn-danger" Text="Block student" />
+                    </div>
                 </div>
             </div>
         </div>

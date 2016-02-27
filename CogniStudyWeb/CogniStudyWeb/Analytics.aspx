@@ -86,12 +86,24 @@
                             
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <asp:UpdatePanel ID="UpdatePanel11" runat="server">
+                                    <asp:UpdatePanel ID="UpdatePanel11" runat="server" class="hidden">
                                         <ContentTemplate>
-                                            <asp:DropDownList ID="ddlFilterSubject" runat="server" OnSelectedIndexChanged="ddlFilterSubject_SelectedIndexChanged" 
-                                                AutoPostBack="true"></asp:DropDownList>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
+                                            <asp:Button runat="server" ID="btnUpdatePanels" OnClick="btnUpdatePanels_SelectedIndexChanged" />
+                                            <asp:DropDownList ID="ddlFilterStudent" runat="server" AutoPostBack="true"
+                                                DataTextField="studentName" DataValueField="objectId" onchange="$('#btnUpdatePanels').click();"></asp:DropDownList>
+                                            <br/>
+                                            <asp:DropDownList ID="ddlFilterSubject" runat="server"  AutoPostBack="true"
+                                                  onchange="$('#btnUpdatePanels').click();"></asp:DropDownList>
+                                            <br />
+                                            <asp:DropDownList ID="ddlFilterTime" runat="server" AutoPostBack="true"
+                                                onchange="$('#btnUpdatePanels').click();">
+                                                <asp:ListItem Text="Past Week" Value="PastWeek"></asp:ListItem>
+                                                <asp:ListItem Text="Past Month" Value="PastMonth"></asp:ListItem>
+                                                <asp:ListItem Text="All Time" Value="AllTime"></asp:ListItem>
+                                                    </asp:DropDownList>
+                                    <asp:Panel ID="pnlTest" runat="server"></asp:Panel>
                                     <asp:UpdatePanel ID="UpdatePanel1" runat="server"></asp:UpdatePanel>
                                     <asp:UpdatePanel ID="UpdatePanel2" runat="server"></asp:UpdatePanel>
                                     <asp:UpdatePanel ID="UpdatePanel3" runat="server"></asp:UpdatePanel>

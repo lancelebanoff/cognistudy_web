@@ -46,10 +46,10 @@ namespace CogniTutor
 
         protected async Task<IEnumerable<ParseObject>> GetMyQuestions()
         {
-            var contentsQuery = from contents in ParseObject.GetQuery("QuestionContents")
-                                where contents["author"] == PublicUserData
+            var contentsQuery = from contents in new ParseQuery<QuestionContents>()
+                                where contents.Author == PublicUserData
                                 select contents;
-            var questionQuery = from question in ParseObject.GetQuery("Question").Include("questionContents").Include("questionData")
+            var questionQuery = from question in new ParseQuery<Question>()
                                 orderby question.CreatedAt descending
                                 //join data in dataQuery on question["questionData"] equals data
                                 join contents in contentsQuery on question["questionContents"] equals contents

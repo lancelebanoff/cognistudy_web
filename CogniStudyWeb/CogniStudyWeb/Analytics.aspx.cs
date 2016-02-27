@@ -10,6 +10,7 @@ using Parse;
 using System.Web.UI.DataVisualization.Charting;
 using System.Drawing;
 using CogniTutor.UserControls;
+using System.Data;
 
 namespace CogniTutor
 {
@@ -25,13 +26,13 @@ namespace CogniTutor
         {
             updatePanels = new UpdatePanel[] {UpdatePanel1, UpdatePanel2, UpdatePanel3, UpdatePanel4, 
                     UpdatePanel5, UpdatePanel6, UpdatePanel7, UpdatePanel8, UpdatePanel9, UpdatePanel10};
+            if (!IsPostBack)
+            {
+                await FillFilterDropdowns();
+            }
+            await BuildCharts();
             if(!IsPostBack)
             {
-                ddlFilterSubject.DataSource = Constants.GetPublicStringProperties(typeof(Constants.Subject));
-                ddlFilterSubject.DataBind();
-                ddlFilterSubject.Items.Insert(0, "All Subjects");
-                await FilterSubject();
-
                 Random random = new Random();
                 for (int pointIndex = 0; pointIndex < 10; pointIndex++)
                 {
@@ -53,49 +54,154 @@ namespace CogniTutor
             }
         }
 
-        protected void ddlFilterSubject_SelectedIndexChanged(object sender, EventArgs e)
+        private async Task FillFilterDropdowns()
         {
-            RegisterAsyncTask(new PageAsyncTask(FilterSubject));
+            ddlFilterSubject.DataSource = Constants.GetPublicStringProperties(typeof(Constants.Subject));
+            ddlFilterSubject.DataBind();
+            ddlFilterSubject.Items.Insert(0, "All Subjects");
+            ddlFilterStudent.DataSource = await GetStudentDataSource();
+            ddlFilterStudent.DataBind();
+            ddlFilterStudent.Items.Insert(0, "All Students");
         }
 
-        private async Task FilterSubject()
+        private async Task<object> GetStudentDataSource()
         {
-            if (ddlFilterSubject.Text == "All Subjects")
+            DataTable dt = new DataTable();
+            dt.Columns.Add("studentName", typeof(string));
+            dt.Columns.Add("objectId", typeof(string));
+            IList<PublicUserData> students = PrivateTutorData.Students;
+            await students.FetchAllIfNeededAsync();
+            foreach (PublicUserData student in students)
             {
-                int totalResponses = 0;
-                int correctResponses = 0;
-                List<string> subjects = Constants.GetPublicStringProperties(typeof(Constants.Subject));
-                foreach (string subjectName in subjects)
+                DataRow dr = dt.NewRow();
+                dr["studentName"] = student.DisplayName;
+                dr["objectId"] = student.ObjectId;
+                dt.Rows.Add(dr);
+            }
+            return dt;
+        }
+
+        private async Task BuildCharts()
+        {
+            if (ddlFilterStudent.Text == "All Students")
+            {
+                if (ddlFilterSubject.Text == "All Subjects")
                 {
-                    ParseObject subject = await GetSubject(subjectName);
-                    totalResponses += subject.Get<int>("totalResponses");
-                    correctResponses += subject.Get<int>("correctResponses");
+                    int totalResponses = 0;
+                    int correctResponses = 0;
+                    List<string> subjects = Constants.GetPublicStringProperties(typeof(Constants.Subject));
+                    foreach (string subjectName in subjects)
+                    {
+                        ParseObject subject = await GetSubject(subjectName);
+                        totalResponses += subject.Get<int>("totalResponses");
+                        correctResponses += subject.Get<int>("correctResponses");
+                    }
+                    DoughnutChart subjectChart = (DoughnutChart)LoadControl("~/UserControls/DoughnutChart.ascx");
+                    subjectChart.NumCorrect = correctResponses;
+                    subjectChart.NumIncorrect = totalResponses - correctResponses;
+                    subjectChart.Chart.DataBind();
+                    pnlTest.Controls.Add(subjectChart);
                 }
-                DoughnutChart subjectChart = (DoughnutChart)LoadControl("~/UserControls/DoughnutChart.ascx");
-                subjectChart.Chart.Series[0].Points[0].YValues[0] = correctResponses;
-                subjectChart.Chart.Series[0].Points[1].YValues[0] = totalResponses;
-                subjectChart.Chart.DataBind();
-                updatePanels[0].ContentTemplateContainer.Controls.Add(subjectChart);
+                else
+                {
+                    DoughnutChart subjectChart = (DoughnutChart)LoadControl("~/UserControls/DoughnutChart.ascx");
+                    ParseObject subject = await GetSubject(ddlFilterSubject.Text);
+                    subjectChart.NumCorrect = subject.Get<int>("correctResponses");
+                    subjectChart.NumIncorrect = subject.Get<int>("totalResponses") - subject.Get<int>("correctResponses");
+                    subjectChart.Chart.DataBind();
+                    pnlTest.Controls.Add(subjectChart);
+
+                    string[] categories = Constants.SubjectToCategory[ddlFilterSubject.Text];
+                    int i = 1;
+                    foreach (string catName in categories)
+                    {
+                        SingleBarChart catChart = (SingleBarChart)LoadControl("~/UserControls/SingleBarChart.ascx");
+                        ParseObject category = await GetCategory(catName);
+                        catChart.SetCorrectIncorrect(category.Get<int>("correctResponses"), category.Get<int>("totalResponses") - category.Get<int>("correctResponses"));
+                        catChart.Chart.DataBind();
+                        pnlTest.Controls.Add(catChart);
+                    }
+                }
             }
             else
             {
-                DoughnutChart subjectChart = (DoughnutChart)LoadControl("~/UserControls/DoughnutChart.ascx");
-                ParseObject subject = await GetSubject(ddlFilterSubject.Text);
-                subjectChart.Chart.Series[0].Points[0].YValues[0] = subject.Get<int>("correctResponses");
-                subjectChart.Chart.Series[0].Points[1].YValues[0] = subject.Get<int>("totalResponses") - subject.Get<int>("correctResponses");
-                subjectChart.Chart.DataBind();
-                updatePanels[0].ContentTemplateContainer.Controls.Add(subjectChart);
-
-                string[] categories = Constants.SubjectToCategory[ddlFilterSubject.Text];
-                int i = 1;
-                foreach (string catName in categories)
+                PublicUserData publicUserData = await PublicUserData.GetById(ddlFilterStudent.SelectedValue);
+                Student student = await publicUserData.Student.FetchIfNeededAsync();
+                //PrivateStudentData privateStudentData = await student.PrivateStudentData.FetchIfNeededAsync();
+                
+                if (ddlFilterSubject.Text == "All Subjects")
                 {
-                    SingleBarChart catChart = (SingleBarChart)LoadControl("~/UserControls/SingleBarChart.ascx");
-                    ParseObject category = await GetCategory(catName);
-                    catChart.Chart.Series["Series1"].Points.AddY(category.Get<int>("correctResponses"));
-                    catChart.Chart.Series["Series2"].Points.AddY(category.Get<int>("totalResponses") - category.Get<int>("correctResponses"));
-                    catChart.Chart.DataBind();
-                    updatePanels[i++].ContentTemplateContainer.Controls.Add(catChart);
+                    StudentTotalRollingStats studentTotalRollingStats = await student.StudentTotalRollingStats.FetchIfNeededAsync();
+                    int totalResponses =  0;
+                    int correctResponses = 0;
+                    if(ddlFilterTime.SelectedValue == "PastWeek") {
+                        totalResponses =  studentTotalRollingStats.TotalPastWeek;
+                        correctResponses = studentTotalRollingStats.CorrectPastWeek;
+                    }
+                    else if(ddlFilterTime.SelectedValue == "PastMonth") {
+                        totalResponses =  studentTotalRollingStats.TotalPastMonth;
+                        correctResponses = studentTotalRollingStats.CorrectPastMonth;
+                    }
+                    else {
+                        totalResponses =  studentTotalRollingStats.TotalAllTime;
+                        correctResponses = studentTotalRollingStats.CorrectAllTime;
+                    }
+                    DoughnutChart subjectChart = (DoughnutChart)LoadControl("~/UserControls/DoughnutChart.ascx");
+                    subjectChart.NumCorrect = correctResponses;
+                    subjectChart.NumIncorrect = totalResponses - correctResponses;
+                    subjectChart.Chart.DataBind();
+                    pnlTest.Controls.Add(subjectChart);
+                }
+                else
+                {
+                    DoughnutChart subjectChart = (DoughnutChart)LoadControl("~/UserControls/DoughnutChart.ascx");
+                    string subjectName = ddlFilterSubject.Text;
+                    IEnumerable<StudentSubjectRollingStats> studentAllSubjectRollingStats = await student.StudentSubjectRollingStats.FetchAllIfNeededAsync();
+                    StudentSubjectRollingStats studentSubjectRollingStats = studentAllSubjectRollingStats.Single(x => x.Subject == subjectName);
+                    
+                    int totalResponses =  0;
+                    int correctResponses = 0;
+                    if(ddlFilterTime.SelectedValue == "PastWeek") {
+                        totalResponses =  studentSubjectRollingStats.TotalPastWeek;
+                        correctResponses = studentSubjectRollingStats.CorrectPastWeek;
+                    }
+                    else if(ddlFilterTime.SelectedValue == "PastMonth") {
+                        totalResponses =  studentSubjectRollingStats.TotalPastMonth;
+                        correctResponses = studentSubjectRollingStats.CorrectPastMonth;
+                    }
+                    else {
+                        totalResponses =  studentSubjectRollingStats.TotalAllTime;
+                        correctResponses = studentSubjectRollingStats.CorrectAllTime;
+                    }
+                    subjectChart.NumCorrect = correctResponses;
+                    subjectChart.NumIncorrect = totalResponses - correctResponses;
+                    subjectChart.Chart.DataBind();
+                    pnlTest.Controls.Add(subjectChart);
+
+                    string[] categories = Constants.SubjectToCategory[ddlFilterSubject.Text];
+                    IEnumerable<StudentCategoryRollingStats> studentAllCategoryRollingStats = await student.StudentCategoryRollingStats.FetchAllIfNeededAsync();
+                    int i = 1;
+                    foreach (string catName in categories)
+                    {
+                        SingleBarChart catChart = (SingleBarChart)LoadControl("~/UserControls/SingleBarChart.ascx");
+                        StudentCategoryRollingStats categoryStats = studentAllCategoryRollingStats.First(x => x.Category == catName);
+                        
+                        if(ddlFilterTime.SelectedValue == "PastWeek") {
+                            totalResponses =  categoryStats.TotalPastWeek;
+                            correctResponses = categoryStats.CorrectPastWeek;
+                        }
+                        else if(ddlFilterTime.SelectedValue == "PastMonth") {
+                            totalResponses =  categoryStats.TotalPastMonth;
+                            correctResponses = categoryStats.CorrectPastMonth;
+                        }
+                        else {
+                            totalResponses =  categoryStats.TotalAllTime;
+                            correctResponses = categoryStats.CorrectAllTime;
+                        }
+                        catChart.SetCorrectIncorrect(correctResponses, totalResponses - correctResponses);
+                        catChart.Chart.DataBind();
+                        pnlTest.Controls.Add(catChart);
+                    }
                 }
             }
         }
@@ -114,6 +220,11 @@ namespace CogniTutor
                         where cat.Get<string>("category") == catName
                         select cat;
             return await query.FirstAsync();
+        }
+
+        protected void btnUpdatePanels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BuildCharts().Wait();
         }
     }
 }

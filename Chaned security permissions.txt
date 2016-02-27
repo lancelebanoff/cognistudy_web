@@ -1,3 +1,9 @@
 Review: added update
 QuestionData: added find
 QuestionContents: added find
+
+
+
+
+
+added columns for stats: all relations

@@ -116,7 +116,7 @@ namespace CogniTutor
 
         private async Task<ParseObject> GetStudentPublicData(string studentID)
         {
-            ParseQuery<ParseObject> query = ParseObject.GetQuery("PublicUserData");
+            ParseQuery<PublicUserData> query = new ParseQuery<PublicUserData>();
             ParseObject student = await query.GetAsync(studentID);
             return student;
         }

@@ -40,6 +40,24 @@ namespace CogniTutor {
         protected global::System.Web.UI.UpdatePanel UpdatePanel11;
         
         /// <summary>
+        /// btnUpdatePanels control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUpdatePanels;
+        
+        /// <summary>
+        /// ddlFilterStudent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFilterStudent;
+        
+        /// <summary>
         /// ddlFilterSubject control.
         /// </summary>
         /// <remarks>
@@ -47,6 +65,24 @@ namespace CogniTutor {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlFilterSubject;
+        
+        /// <summary>
+        /// ddlFilterTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFilterTime;
+        
+        /// <summary>
+        /// pnlTest control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlTest;
         
         /// <summary>
         /// UpdatePanel1 control.

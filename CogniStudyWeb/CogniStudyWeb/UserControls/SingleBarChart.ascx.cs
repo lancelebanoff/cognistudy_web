@@ -16,5 +16,11 @@ namespace CogniTutor.UserControls
         {
 
         }
+
+        public void SetCorrectIncorrect(int correct, int incorrect)
+        {
+            Chart.Series["Series1"].Points.AddY(correct);
+            Chart.Series["Series2"].Points.AddY(incorrect);
+        }
     }
 }

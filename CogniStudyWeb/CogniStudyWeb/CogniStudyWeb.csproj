@@ -38,6 +38,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=3.5.11119.20050, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="DelayedSubmit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\DelayedSubmit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Parse">
       <HintPath>..\packages\parse.1.7.0\lib\net45\Parse.dll</HintPath>
@@ -177,6 +185,7 @@
     <Content Include="font-awesome\css\font-awesome.min.css" />
     <Content Include="font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Images\default_prof_pic.png" />
     <Content Include="Images\underline2.jpg" />
     <Content Include="Images\underline3.jpg" />
     <Content Include="Images\underline1.jpg" />
@@ -2674,6 +2683,26 @@
     <Compile Include="Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ParseObjectSubclasses\PrivateStudentData.cs" />
+    <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentSubjectMonthStats.cs" />
+    <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentSubjectTridayStats.cs" />
+    <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentSubjectDayStats.cs" />
+    <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentSubjectStats.cs" />
+    <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentCategoryTridayStats.cs" />
+    <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentCategoryStats.cs" />
+    <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentCategoryMonthStats.cs" />
+    <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentCategoryDayStats.cs" />
+    <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentCategoryRollingStats.cs" />
+    <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentSubjectRollingStats.cs" />
+    <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentTotalRollingStats.cs" />
+    <Compile Include="ParseObjectSubclasses\Student.cs" />
+    <Compile Include="ParseObjectSubclasses\QuestionBundle.cs" />
+    <Compile Include="ParseObjectSubclasses\QuestionData.cs" />
+    <Compile Include="ParseObjectSubclasses\QuestionContents.cs" />
+    <Compile Include="ParseObjectSubclasses\Question.cs" />
+    <Compile Include="ParseObjectSubclasses\PrivateTutorData.cs" />
+    <Compile Include="ParseObjectSubclasses\Tutor.cs" />
+    <Compile Include="ParseObjectSubclasses\PublicUserData.cs" />
     <Compile Include="Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
