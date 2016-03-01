@@ -31,7 +31,7 @@ namespace CogniTutor
         }
         protected override void OnLoad(EventArgs e)
         {
-            RegisterAsyncTask(new PageAsyncTask(StartPage));
+            AsyncHelpers.RunSync(StartPage);
             base.OnLoad(e);
         }
         protected async Task StartPage()

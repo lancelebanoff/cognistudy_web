@@ -34,10 +34,10 @@ namespace CogniTutor
             set { SetProperty<PublicUserData>(value); }
         }
         [ParseFieldName("answers")]
-        public List<string> Answers
+        public IList<string> Answers
         {
-            get { return GetProperty<List<string>>(); }
-            set { SetProperty<List<string>>(value); }
+            get { return GetProperty<IList<string>>(); }
+            set { SetProperty<IList<string>>(value); }
         }
         [ParseFieldName("correctAnswer")]
         public int CorrectAnswer
@@ -51,5 +51,12 @@ namespace CogniTutor
             get { return GetProperty<string>(); }
             set { SetProperty<string>(value); }
         }
+
+        public string Answer1 { get { return Answers[0]; } }
+        public string Answer2 { get { return Answers[1]; } }
+        public string Answer3 { get { return Answers[2]; } }
+        public string Answer4 { get { return Answers[3]; } }
+        public string Answer5 { get { return Answers.Count >= 5 ? Answers[4] : ""; } }
+        public string ImageUrl { get { return Image == null ? "" : Image.Url.ToString(); } set { } }
     }
 }

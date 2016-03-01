@@ -169,6 +169,7 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\cognitutor_green2.css" />
+    <Content Include="css\customtooltip.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\forms.css" />
@@ -186,11 +187,14 @@
     <Content Include="font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Images\default_prof_pic.png" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\magnify.gif" />
     <Content Include="Images\underline2.jpg" />
     <Content Include="Images\underline3.jpg" />
     <Content Include="Images\underline1.jpg" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\bs.pagination.js" />
     <Content Include="js\ckeditor\build-config.js" />
     <Content Include="js\ckeditor\ckeditor.js" />
     <Content Include="js\ckeditor\config.js" />
@@ -2482,7 +2486,24 @@
     <Content Include="js\ckeditor\styles.js" />
     <Content Include="js\contact_me.js" />
     <Content Include="js\Custom.js" />
+    <Content Include="js\customtooltip.js" />
     <Content Include="js\jqBootstrapValidation.js" />
+    <Content Include="js\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
+    <Content Include="js\jquery-ui-1.11.4.custom\images\ui-icons_444444_256x240.png" />
+    <Content Include="js\jquery-ui-1.11.4.custom\images\ui-icons_555555_256x240.png" />
+    <Content Include="js\jquery-ui-1.11.4.custom\images\ui-icons_777620_256x240.png" />
+    <Content Include="js\jquery-ui-1.11.4.custom\images\ui-icons_777777_256x240.png" />
+    <Content Include="js\jquery-ui-1.11.4.custom\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="js\jquery-ui-1.11.4.custom\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="js\jquery-ui-1.11.4.custom\index.html" />
+    <Content Include="js\jquery-ui-1.11.4.custom\jquery-ui.css" />
+    <Content Include="js\jquery-ui-1.11.4.custom\jquery-ui.js" />
+    <Content Include="js\jquery-ui-1.11.4.custom\jquery-ui.min.css" />
+    <Content Include="js\jquery-ui-1.11.4.custom\jquery-ui.min.js" />
+    <Content Include="js\jquery-ui-1.11.4.custom\jquery-ui.structure.css" />
+    <Content Include="js\jquery-ui-1.11.4.custom\jquery-ui.structure.min.css" />
+    <Content Include="js\jquery-ui-1.11.4.custom\jquery-ui.theme.css" />
+    <Content Include="js\jquery-ui-1.11.4.custom\jquery-ui.theme.min.css" />
     <Content Include="js\jquery.js" />
     <Content Include="js\MonthCalendar.js" />
     <Content Include="Messages.aspx" />
@@ -2614,7 +2635,8 @@
     <Content Include="Settings.aspx" />
     <Content Include="Site.Master" />
     <Content Include="StudentProfile.aspx" />
-    <Content Include="SuggestQuestion.aspx" />
+    <Content Include="AssignQuestion.aspx" />
+    <Content Include="TestPage.aspx" />
     <Content Include="UploadQuestion.aspx" />
     <Content Include="UserControls\ConversationPanel.ascx" />
     <Content Include="UserControls\DoughnutChart.ascx" />
@@ -2652,6 +2674,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="AsyncHelpers.cs" />
     <Compile Include="CogniPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -2768,12 +2791,19 @@
     <Compile Include="StudentProfile.aspx.designer.cs">
       <DependentUpon>StudentProfile.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SuggestQuestion.aspx.cs">
-      <DependentUpon>SuggestQuestion.aspx</DependentUpon>
+    <Compile Include="AssignQuestion.aspx.cs">
+      <DependentUpon>AssignQuestion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SuggestQuestion.aspx.designer.cs">
-      <DependentUpon>SuggestQuestion.aspx</DependentUpon>
+    <Compile Include="AssignQuestion.aspx.designer.cs">
+      <DependentUpon>AssignQuestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestPage.aspx.cs">
+      <DependentUpon>TestPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestPage.aspx.designer.cs">
+      <DependentUpon>TestPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="UploadQuestion.aspx.cs">
       <DependentUpon>UploadQuestion.aspx</DependentUpon>

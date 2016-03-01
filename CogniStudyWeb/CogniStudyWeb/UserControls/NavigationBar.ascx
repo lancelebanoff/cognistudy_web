@@ -38,7 +38,7 @@
                     <a href="../QuestionArena.aspx">Question Arena</a>
                 </li>
                 <li>
-                    <a href="../SuggestQuestion.aspx">Suggest Question</a>
+                    <a href="../AssignQuestion.aspx">Assign Question</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

@@ -28,12 +28,17 @@ namespace CogniTutor
                 string studentID = Request.QueryString["StudentId"];
                 StudentPublicData = await PublicUserData.GetById(studentID);
                 Image1.ImageUrl = StudentPublicData.ProfilePic != null ? StudentPublicData.ProfilePic.Url.ToString() : "Images/default_prof_pic.png";
+                if ((await PrivateTutorData.RequestsFromStudents.FetchAllIfNeededAsync()).Contains(StudentPublicData))
+                    btnRequestStudent.Text = "Accept student request";
             }
         }
 
         protected void btnRequestStudent_Click(object sender, EventArgs e)
         {
-            
+            if (PrivateTutorData.RequestsFromStudents.Contains(StudentPublicData))
+            {
+                PrivateTutorData.AddStudent(StudentPublicData);
+            }
         }
 
         protected void btnSendMessage_Click(object sender, EventArgs e)
@@ -42,9 +47,9 @@ namespace CogniTutor
             Response.Redirect("Messages");
         }
 
-        protected void btnBlockStudent_Click(object sender, EventArgs e)
-        {
+        //protected void btnBlockStudent_Click(object sender, EventArgs e)
+        //{
 
-        }
+        //}
     }
 }

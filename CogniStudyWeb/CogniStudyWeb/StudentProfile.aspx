@@ -72,7 +72,6 @@
                         <h1><%= StudentName %></h1>
                         <asp:Button runat="server" ID="btnRequestStudent" OnClick="btnRequestStudent_Click" class="btn btn-success" Text="Add student" />
                         <asp:Button runat="server" ID="btnSendMessage" OnClick="btnSendMessage_Click" class="btn btn-info" Text="Send a message" />
-                        <asp:Button runat="server" ID="btnBlockStudent" OnClick="btnBlockStudent_Click" class="btn btn-danger" Text="Block student" />
                     </div>
                 </div>
             </div>

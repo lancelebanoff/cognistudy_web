@@ -15,7 +15,7 @@ namespace CogniTutor
         public ParseObject[] Questions { get { return (ParseObject[])Session["Questions"]; } set { Session["Questions"] = value; } }
         public ParseObject[] QuestionContents { get { return (ParseObject[])Session["QuestionContents"]; } set { Session["QuestionContents"] = value; } }
         public ParseObject[] QuestionData { get { return (ParseObject[])Session["QuestionData"]; } set { Session["QuestionData"] = value; } }
-        public ParseObject Bundle = null;
+        public QuestionBundle Bundle = null;
         public string passageText = "";
         public List<string> AlreadyVisited
         {
@@ -78,7 +78,7 @@ namespace CogniTutor
             if (question1 == null) return null;
             if (question1.Get<bool>("inBundle"))
             {
-                Bundle = question1.Get<ParseObject>("bundle");
+                Bundle = question1.Get<QuestionBundle>("bundle");
                 await Bundle.FetchAsync();
                 IList<ParseObject> questions = Bundle.Get<IList<ParseObject>>("questions");
                 foreach (ParseObject question in questions)
@@ -163,7 +163,7 @@ namespace CogniTutor
                 QuestionData[i].AddToList("reviews", review);
                 tasks.Add(QuestionData[i].SaveAsync());
                 Questions[i]["isActive"] = true;
-                tasks.Add(QuestionData[i].SaveAsync());
+                tasks.Add(Questions[i].SaveAsync());
             }
             Task.WaitAll(tasks.ToArray());
             RegisterAsyncTask(new PageAsyncTask(NewQuestion));

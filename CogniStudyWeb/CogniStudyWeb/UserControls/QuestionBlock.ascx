@@ -18,6 +18,7 @@
 <div class="row">
     <h3 class="align-center">Question</h3><br />
     <div class="col-lg-6 text-center" style="padding-right:20px; border-right: 1px solid #ccc;">
+        <img src="<%= QuestionContents.Keys.Contains("image") ? QuestionContents.Get<Parse.ParseFile>("image").Url.ToString() : "" %>" style="max-width:100%; max-height:100%;"/>
         <%= QuestionContents.Get<string>("questionText") %>
     </div>
     <div class="col-lg-6" id="divAnswers<%= Index %>">

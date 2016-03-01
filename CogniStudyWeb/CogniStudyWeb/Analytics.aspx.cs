@@ -222,7 +222,7 @@ namespace CogniTutor
             return await query.FirstAsync();
         }
 
-        protected void btnUpdatePanels_SelectedIndexChanged(object sender, EventArgs e)
+        protected void btnUpdatePanels_Click(object sender, EventArgs e)
         {
             BuildCharts().Wait();
         }

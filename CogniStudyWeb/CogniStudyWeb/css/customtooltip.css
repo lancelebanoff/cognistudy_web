@@ -1,0 +1,35 @@
+﻿dl {
+     margin: 0;
+     padding: 0;
+ }
+ #detailedData {
+     background-color: #ffffff;
+     border: 1px solid #d4d4d4;
+     border-radius: 3px;
+     position: absolute;
+     width: 750px;
+     box-shadow: 8px 8px 5px #888888;
+ }
+ dl dt {
+     color: #333;
+     float: left;
+     font-weight: bold;
+     margin-left: 10px;
+     margin-right: 2px;
+     padding: 5px;
+     width: 66px;
+ }
+ dl dd {
+     margin: 2px 0;
+     padding: 5px 0;
+ }
+ .hideIT {
+     display: none;
+ }
+ .row_dd:hover {
+     background-color: #eee !important;
+     color: #333;
+ }
+ td, th {
+     padding: 4px;
+ }

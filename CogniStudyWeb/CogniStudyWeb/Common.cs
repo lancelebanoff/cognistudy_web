@@ -23,5 +23,11 @@ namespace CogniTutor
             }
             return (T)Enum.Parse(typeof(T), value, true);
         }
+
+        public static string EscapeHTML(object o)
+        {
+            string s = o.ToString();
+            return s.Replace("\"", "&quot;");
+        }
     }
 }

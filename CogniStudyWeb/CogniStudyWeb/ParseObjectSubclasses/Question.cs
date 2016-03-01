@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace CogniTutor
@@ -45,5 +46,64 @@ namespace CogniTutor
             get { return GetProperty<QuestionContents>(); }
             set { SetProperty<QuestionContents>(value); }
         }
+
+        public static async Task<IEnumerable<Question>> QueryQuestions2(string subject, string category)
+        {
+            if (subject == null)
+            {
+                var query = from ques in new ParseQuery<Question>()
+                            where ques.ObjectId != ""
+                            select ques;
+                return await query.FindAsync();
+            }
+            else if (category == null)
+            {
+                var query = from ques in new ParseQuery<Question>()
+                            where ques.IsActive
+                            where ques.Subject == subject
+                            select ques;
+                return await query.FindAsync();
+            }
+            else
+            {
+                var query = from ques in new ParseQuery<Question>()
+                            where ques.IsActive
+                            where ques.Subject == subject
+                            where ques.Category == category
+                            select ques;
+                return await query.FindAsync();
+            }
+        }
+
+        public static List<Question> QueryQuestions(string subject, string category)
+        {
+            Task<IEnumerable<Question>> t;
+            if (subject == null)
+            {
+                var query = from ques in new ParseQuery<Question>().Include("questionContents").Include("questionData")
+                            where ques.Get<bool>("isActive")
+                            select ques;
+                t = query.FindAsync();
+            }
+            else if (category == null)
+            {
+                var query = from ques in new ParseQuery<Question>().Include("questionContents").Include("questionData")
+                            where ques.Get<bool>("isActive")
+                            where ques.Subject == subject
+                            select ques;
+                t = query.FindAsync();
+            }
+            else
+            {
+                var query = from ques in new ParseQuery<Question>().Include("questionContents").Include("questionData")
+                            where ques.Get<bool>("isActive")
+                            where ques.Subject == subject
+                            where ques.Category == category
+                            select ques;
+                t = query.FindAsync();
+            }
+            t.Wait();
+            return t.Result.ToList();
+        } 
     }
 }

@@ -40,21 +40,21 @@ namespace CogniTutor
         protected void btnSubmitQuestion_Click(object sender, EventArgs e)
         {
             List<Task> tasks = new List<Task>();
-            ParseObject contents1 = CreateContents1();
-            ParseObject data1 = CreateData1();
-            ParseObject question1 = CreateQuestion1(contents1, data1);
+            QuestionContents contents1 = CreateContents1();
+            QuestionData data1 = CreateData1();
+            Question question1 = CreateQuestion1(contents1, data1);
 
             if (IsBundle)
             {
-                ParseObject bundle = SaveBundle();
+                QuestionBundle bundle = SaveBundle();
                 question1["inBundle"] = true;
                 question1["bundle"] = bundle;
-                ParseObject contents2 = CreateContents2();
-                ParseObject data2 = CreateData2();
-                ParseObject question2 = CreateQuestion2(contents2, data2, bundle);
-                ParseObject contents3 = CreateContents3();
-                ParseObject data3 = CreateData3();
-                ParseObject question3 = CreateQuestion3(contents3, data3, bundle);
+                QuestionContents contents2 = CreateContents2();
+                QuestionData data2 = CreateData2();
+                Question question2 = CreateQuestion2(contents2, data2, bundle);
+                QuestionContents contents3 = CreateContents3();
+                QuestionData data3 = CreateData3();
+                Question question3 = CreateQuestion3(contents3, data3, bundle);
                 tasks.Add(contents1.SaveAsync());
                 tasks.Add(contents2.SaveAsync());
                 tasks.Add(contents3.SaveAsync());
@@ -80,9 +80,9 @@ namespace CogniTutor
             }
         }
 
-        private ParseObject SaveBundle()
+        private QuestionBundle SaveBundle()
         {
-            ParseObject b = new ParseObject("QuestionBundle");
+            QuestionBundle b = new QuestionBundle();
             b["passageText"] = tbPassage.Text;
             if (FileUpload0.HasFile)
                 b["image"] = Upload(FileUpload0);
@@ -91,18 +91,18 @@ namespace CogniTutor
             return b;
         }
 
-        private ParseObject CreateData3()
+        private QuestionData CreateData3()
         {
-            ParseObject qd3 = new ParseObject("QuestionData");
+            QuestionData qd3 = new QuestionData();;
             qd3["correctResponses"] = 0;
             qd3["totalResponses"] = 0;
             qd3["reviewStatus"] = Constants.ReviewStatusType.PENDING;
             return qd3;
         }
 
-        private ParseObject CreateContents3()
+        private QuestionContents CreateContents3()
         {
-            ParseObject qc3 = new ParseObject("QuestionContents");
+            QuestionContents qc3 = new QuestionContents();;
             qc3["correctAnswer"] = CorrectIndex(3);
             qc3["author"] = ParseUser.CurrentUser.Get<ParseObject>("publicUserData");
             qc3["questionText"] = tbQuestion3.Text;
@@ -114,9 +114,9 @@ namespace CogniTutor
             return qc3;
         }
 
-        private ParseObject CreateQuestion3(ParseObject qc3, ParseObject qd3, ParseObject bundle)
+        private Question CreateQuestion3(QuestionContents qc3, QuestionData qd3, ParseObject bundle)
         {
-            ParseObject q3 = new ParseObject("Question");
+            Question q3 = new Question();;
             q3["subject"] = ddlSubject.Text;
             q3["category"] = ddlCategory.Text;
             q3["inBundle"] = true;
@@ -126,18 +126,18 @@ namespace CogniTutor
             return q3;
         }
 
-        private ParseObject CreateData2()
+        private QuestionData CreateData2()
         {
-            ParseObject qd2 = new ParseObject("QuestionData");
+            QuestionData qd2 = new QuestionData();;
             qd2["correctResponses"] = 0;
             qd2["totalResponses"] = 0;
             qd2["reviewStatus"] = Constants.ReviewStatusType.PENDING;
             return qd2;
         }
 
-        private ParseObject CreateContents2()
+        private QuestionContents CreateContents2()
         {
-            ParseObject qc2 = new ParseObject("QuestionContents");
+            QuestionContents qc2 = new QuestionContents();;
             qc2["correctAnswer"] = CorrectIndex(2);
             qc2["author"] = ParseUser.CurrentUser.Get<ParseObject>("publicUserData");
             qc2["questionText"] = tbQuestion2.Text;
@@ -149,9 +149,9 @@ namespace CogniTutor
             return qc2;
         }
 
-        private ParseObject CreateQuestion2(ParseObject qc2, ParseObject qd2, ParseObject bundle)
+        private Question CreateQuestion2(QuestionContents qc2, QuestionData qd2, ParseObject bundle)
         {
-            ParseObject q2 = new ParseObject("Question");
+            Question q2 = new Question();;
             q2["subject"] = ddlSubject.Text;
             q2["category"] = ddlCategory.Text;
             q2["inBundle"] = true;
@@ -161,18 +161,18 @@ namespace CogniTutor
             return q2;
         }
 
-        private ParseObject CreateData1()
+        private QuestionData CreateData1()
         {
-            ParseObject qd = new ParseObject("QuestionData");
+            QuestionData qd = new QuestionData();;
             qd["correctResponses"] = 0;
             qd["totalResponses"] = 0;
             qd["reviewStatus"] = Constants.ReviewStatusType.PENDING;
             return qd;
         }
 
-        private ParseObject CreateContents1()
+        private QuestionContents CreateContents1()
         {
-            ParseObject qc = new ParseObject("QuestionContents");
+            QuestionContents qc = new QuestionContents();
             qc["correctAnswer"] = CorrectIndex(1);
             qc["author"] = ParseUser.CurrentUser.Get<ParseObject>("publicUserData");
             qc["questionText"] = tbQuestion.Text;
@@ -184,9 +184,9 @@ namespace CogniTutor
             return qc;
         }
 
-        private ParseObject CreateQuestion1(ParseObject qc, ParseObject qd)
+        private Question CreateQuestion1(QuestionContents qc, QuestionData qd)
         {
-            ParseObject q = new ParseObject("Question");
+            Question q = new Question();;
             q["subject"] = ddlSubject.Text;
             q["category"] = ddlCategory.Text;
             q["inBundle"] = false;

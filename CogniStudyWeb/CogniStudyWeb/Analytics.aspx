@@ -90,7 +90,7 @@
                                         <ContentTemplate>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
-                                            <asp:Button runat="server" ID="btnUpdatePanels" OnClick="btnUpdatePanels_SelectedIndexChanged" />
+                                            <asp:Button runat="server" ID="btnUpdatePanels" OnClick="btnUpdatePanels_Click" />
                                             <asp:DropDownList ID="ddlFilterStudent" runat="server" AutoPostBack="true"
                                                 DataTextField="studentName" DataValueField="objectId" onchange="$('#btnUpdatePanels').click();"></asp:DropDownList>
                                             <br/>

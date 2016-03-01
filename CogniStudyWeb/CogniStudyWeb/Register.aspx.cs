@@ -1,5 +1,6 @@
 ﻿using Parse;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -33,6 +34,7 @@ namespace CogniTutor
             t1.Wait();
             ParseObject privateTutorData = new ParseObject("PrivateTutorData");
             privateTutorData["baseUserId"] = user.ObjectId;
+            privateTutorData["requestsFromStudents"] = new List<PublicUserData>();
             Task t2 = privateTutorData.SaveAsync();
             t2.Wait();
             ParseObject tutor = new ParseObject("Tutor");

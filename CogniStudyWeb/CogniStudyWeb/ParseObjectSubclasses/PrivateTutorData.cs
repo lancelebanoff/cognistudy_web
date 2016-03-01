@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace CogniTutor
@@ -32,6 +33,12 @@ namespace CogniTutor
         {
             get { return GetProperty<IList<PublicUserData>>(); }
             set { SetProperty<IList<PublicUserData>>(value); }
+        }
+
+        public async Task AddStudent(PublicUserData StudentPublicData)
+        {
+            Students.Add(StudentPublicData);
+            await this.SaveAsync();
         }
     }
 }
