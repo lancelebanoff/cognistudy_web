@@ -18,8 +18,17 @@
 
     <title>Assign Question</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
     <!-- Custom CSS -->
     <link href="css/modern-business.css" rel="stylesheet">
@@ -34,12 +43,6 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-    
     <!-- Our custom javascript -->
     <script src="js/Custom.js"></script>
 
@@ -48,6 +51,8 @@
     <script type="text/javascript" async
         src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
     </script>
+
+    <link href="css/modal.css" rel="stylesheet" type="text/css" /> 
 
     <script type="text/javascript" src="js/bs.pagination.js"></script>
 
@@ -65,6 +70,8 @@
             var explanation = self.attr("data-explanation");
             var correctAnswer = self.attr("data-correctAnswer");
             var image = self.attr("data-image");
+            var bundleText = self.attr("data-bundleText");
+            var bundleImage = self.attr("data-bundleImage");
 
             $("#p_question").html(question);
             $("#b_answer1").html(answer1);
@@ -73,7 +80,9 @@
             $("#b_answer4").html(answer4);
             $("#b_answer5").html(answer5);
             $("#p_explanation").html(explanation);
-            $("#img_image").attr("src",image);
+            $("#p_bundletext").html(bundleText);
+            $("#img_image").attr("src", image);
+            $("#img_bundleimage").attr("src", bundleImage);
             if (answer5 == "") {
                 $("#b_answer5").hide();
             }
@@ -109,10 +118,10 @@
 <body>
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
-                    <!--Login modal-->
-        <COG:LoginWindow runat="server" />
         <!-- Navigation bar -->
         <COG:NavigationBar runat="server"/>
+                    <!--Login modal-->
+        <COG:LoginWindow runat="server" />
 
     <!-- Page Content -->
     <div class="container">
@@ -132,6 +141,8 @@
                                     <h1 class="page-header">
                                         Assign Question
                                     </h1>
+                                </div>
+                            </div>
                                     
                             <div class="row">
                                 <div class="col-lg-8">
@@ -148,16 +159,23 @@
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
                                     
-                                    
                                     <asp:UpdatePanel runat="server">
                                         <ContentTemplate>
                                             <asp:GridView ID="grdQuestions" runat="server" CssClass="table table-striped" AutoGenerateColumns="False"
                                                 RowStyle-CssClass="row_dd" HeaderStyle-CssClass="header_dd" AllowPaging="True" 
-                                                DataSourceID="ObjectDataSource1" PagerStyle-CssClass="bs-pagination">
+                                                DataSourceID="ObjectDataSource1" PagerStyle-CssClass="bs-pagination" OnRowCommand="grdQuestions_RowCommand"
+                                                DataKeyNames="ObjectId" OnRowDataBound="grdQuestions_RowDataBound">
                                                 <Columns>
                                                     <asp:TemplateField HeaderText="Subject/Category">
                                                         <ItemTemplate>
                                                             <%# Eval("subject") + " - " + Eval("category") %>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="">
+                                                        <ItemTemplate>
+                                                            <asp:Button CommandName="Assign" runat="server" Text="Assign" id="btnAssign"
+                                                                CommandArgument='<%# Eval("ObjectId") %>'
+                                                                />
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderStyle-CssClass="hideIT">
@@ -171,8 +189,10 @@
                                                                 data-answer4="<%# CogniTutor.Common.EscapeHTML(Eval("questionContents.Answer4")) %>"
                                                                 data-answer5="<%# CogniTutor.Common.EscapeHTML(Eval("questionContents.Answer5")) %>" 
                                                                 data-explanation="<%# CogniTutor.Common.EscapeHTML(Eval("questionContents.explanation")) %>"
-                                                                data-correctAnswer="<%# CogniTutor.Common.EscapeHTML(Convert.ToInt32(Eval("questionContents.correctAnswer"))+1) %>"
+                                                                data-correctAnswer="<%# Convert.ToInt32(Eval("questionContents.correctAnswer"))+1 %>"
                                                                 data-image="<%# CogniTutor.Common.EscapeHTML(Eval("questionContents.ImageUrl")) %>" 
+                                                                data-bundleText="<%# Convert.ToBoolean(Eval("inBundle")) ? CogniTutor.Common.EscapeHTML(Eval("bundle.passageText")) : "" %>" 
+                                                                data-bundleImage="<%# Convert.ToBoolean(Eval("inBundle")) ? CogniTutor.Common.EscapeHTML(Eval("bundle.ImageUrl")) : "" %>" 
                                                                 ></div>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
@@ -182,18 +202,33 @@
                                             
                                             <div id="detailedData" style="display: none; padding: 15px;">
                                                 <div class="row">
-                                                <h3 class="align-center">Question</h3><br />
-                                                <div class="col-lg-6 text-center" style="padding-right:20px; border-right: 1px solid #ccc;">
-                                                    <img id="img_image" style="max-width:100%; max-height:100%;"/>
-                                                    <p id="p_question"></p>
-                                                </div>
-                                                <div class="col-lg-6" id="divAnswers">
-                                                    <a class="btn btn-danger btn-block" id="b_answer1"></a>
-                                                    <a class="btn btn-danger btn-block" id="b_answer2"></a>
-                                                    <a class="btn btn-danger btn-block" id="b_answer3"></a>
-                                                    <a class="btn btn-danger btn-block" id="b_answer4"></a>
-                                                    <a class="btn btn-danger btn-block" id="b_answer5"></a>
-                                                </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-lg-offset-3">
+                                                                <br />
+                                                                <img id="img_bundleimage" style="max-width:100%; max-height:100%;"/>
+                                                                <p id="p_bundletext"></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center">
+                                                                <h3>Question</h3>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6 text-center" style="padding-right:20px; border-right: 1px solid #ccc;">
+                                                                <img id="img_image" style="max-width:100%; max-height:100%;"/>
+                                                                <p id="p_question"></p>
+                                                            </div>
+                                                            <div class="col-lg-6" id="divAnswers">
+                                                                <a class="btn btn-danger btn-block" id="b_answer1"></a>
+                                                                <a class="btn btn-danger btn-block" id="b_answer2"></a>
+                                                                <a class="btn btn-danger btn-block" id="b_answer3"></a>
+                                                                <a class="btn btn-danger btn-block" id="b_answer4"></a>
+                                                                <a class="btn btn-danger btn-block" id="b_answer5"></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <br />
                                                 <div class="row" id="divExplanation">
@@ -205,9 +240,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-            
+                                            
+                                            <asp:Panel ID="pnlSend" runat="server" CssClass="modalPopup" style = "display:none">
+                                                <asp:CheckBoxList runat="server" ID="cblMyStudents" DataTextField="DisplayName" DataValueField="ObjectId"></asp:CheckBoxList>
+                                                <asp:Button runat="server" ID="btnSend" Text="Send to students" OnClick="btnSend_Click" />
+                                                <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClientClick = "return Hidepopup()"/>
+                                            </asp:Panel>
+                                            <asp:Button id="btnFake" runat="server" CssClass="hidden" />
+                                            <ajax:ModalPopupExtender ID="popup" runat="server" DropShadow="false"
+                                            PopupControlID="pnlSend" TargetControlID = "btnFake"
+                                            BackgroundCssClass="modalBackground">
+                                            </ajax:ModalPopupExtender>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
+
                                     <asp:ObjectDataSource ID="ObjectDataSource1" runat="server"
                                         SelectMethod="QueryQuestions" TypeName="CogniTutor.Question">
                                         <SelectParameters>
@@ -215,8 +261,7 @@
                                             <asp:ControlParameter ControlID="ddlCategory" Name="category" PropertyName="SelectedValue" Type="String" />
                                         </SelectParameters>
                                     </asp:ObjectDataSource>
-                                </div>
-                            </div>
+            
                                 </div>
                             </div>
 

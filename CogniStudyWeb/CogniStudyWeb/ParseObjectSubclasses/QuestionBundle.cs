@@ -27,5 +27,7 @@ namespace CogniTutor
             get { return GetProperty<List<Question>>(); }
             set { SetProperty<List<Question>>(value); }
         }
+
+        public string ImageUrl { get { return Image == null ? "" : Image.Url.ToString(); } set { } }
     }
 }

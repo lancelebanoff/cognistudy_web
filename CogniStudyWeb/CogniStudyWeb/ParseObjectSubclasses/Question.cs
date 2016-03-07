@@ -22,6 +22,12 @@ namespace CogniTutor
             get { return GetProperty<string>(); }
             set { SetProperty<string>(value); }
         }
+        [ParseFieldName("bundle")]
+        public QuestionBundle Bundle
+        {
+            get { return GetProperty<QuestionBundle>(); }
+            set { SetProperty<QuestionBundle>(value); }
+        }
         [ParseFieldName("inBundle")]
         public bool InBundle
         {
@@ -80,14 +86,14 @@ namespace CogniTutor
             Task<IEnumerable<Question>> t;
             if (subject == null)
             {
-                var query = from ques in new ParseQuery<Question>().Include("questionContents").Include("questionData")
+                var query = from ques in new ParseQuery<Question>().Include("questionContents").Include("questionData").Include("bundle")
                             where ques.Get<bool>("isActive")
                             select ques;
                 t = query.FindAsync();
             }
             else if (category == null)
             {
-                var query = from ques in new ParseQuery<Question>().Include("questionContents").Include("questionData")
+                var query = from ques in new ParseQuery<Question>().Include("questionContents").Include("questionData").Include("bundle")
                             where ques.Get<bool>("isActive")
                             where ques.Subject == subject
                             select ques;
@@ -95,7 +101,7 @@ namespace CogniTutor
             }
             else
             {
-                var query = from ques in new ParseQuery<Question>().Include("questionContents").Include("questionData")
+                var query = from ques in new ParseQuery<Question>().Include("questionContents").Include("questionData").Include("bundle")
                             where ques.Get<bool>("isActive")
                             where ques.Subject == subject
                             where ques.Category == category

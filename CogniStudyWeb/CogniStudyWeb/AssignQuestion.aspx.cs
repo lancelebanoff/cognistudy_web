@@ -1,4 +1,5 @@
 ﻿using AjaxControlToolkit;
+using Parse;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,10 +14,13 @@ namespace CogniTutor
 {
     public partial class SuggestQuestion : CogniPage
     {
+        public string SelectedQuestionId { get { return Session["SelectedQuestionId"].ToString(); } set { Session["SelectedQuestionId"] = value; } }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+
             }
         }
 
@@ -27,6 +31,8 @@ namespace CogniTutor
                 ddlSubject.DataSource = Constants.GetPublicStringProperties(typeof(Constants.Subject));
                 ddlSubject.DataBind();
                 ddlSubject.Items.Insert(0, "");
+                cblMyStudents.DataSource = await ParseObject.FetchAllIfNeededAsync(PrivateTutorData.Students);
+                cblMyStudents.DataBind();
             }
         }
 
@@ -50,10 +56,55 @@ namespace CogniTutor
         {
         }
 
-        protected void grdQuestions_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void grdQuestions_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-
+            if (e.CommandName == "Assign")
+            {
+                SelectedQuestionId = e.CommandArgument.ToString();
+                popup.Show();
+            }
         }
 
+        protected void btnSend_Click(object sender, EventArgs e)
+        {
+            foreach (ListItem item in cblMyStudents.Items)
+            {
+                if (item.Selected)
+                {
+                    RegisterAsyncTask(new PageAsyncTask(() => AssignQuestionToStudent(questionObjectId: SelectedQuestionId, studentObjectId: item.Value)));
+                }
+            }
+            popup.Hide();
+        }
+
+        protected async Task AssignQuestionToStudent(string questionObjectId, string studentObjectId)
+        {
+            var query = new ParseQuery<PublicUserData>();
+            PublicUserData pud = await query.GetAsync(studentObjectId);
+            Student student = await pud.Student.FetchIfNeededAsync();
+            PrivateStudentData psd = await student.PrivateStudentData.FetchIfNeededAsync();
+            IList<Question> list = psd.AssignedQuestions;
+            list.Add(Question.CreateWithoutData<Question>(questionObjectId));
+            psd.AssignedQuestions = list;
+            await psd.SaveAsync();
+        }
+
+        protected void grdQuestions_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            //LinkButton lb = e.Row.FindControl("btnAssign") as LinkButton;
+            //ScriptManager.GetCurrent(this).RegisterAsyncPostBackControl(lb);  
+        }
+
+    }
+
+    public class TwoString
+    {
+        public string questionObjectId;
+        public string studentObjectId;
+        public TwoString(string questionObjectId, string studentObjectId)
+        {
+            this.questionObjectId = questionObjectId;
+            this.studentObjectId = studentObjectId;
+        }
     }
 }

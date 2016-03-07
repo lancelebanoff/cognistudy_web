@@ -16,34 +16,34 @@ namespace CogniTutor
             set { SetProperty<int>(value); }
         }
         [ParseFieldName("friends")]
-        public List<PublicUserData> Friends
+        public IList<PublicUserData> Friends
         {
-            get { return GetProperty<List<PublicUserData>>(); }
-            set { SetProperty<List<PublicUserData>>(value); }
+            get { return GetProperty<IList<PublicUserData>>(); }
+            set { SetProperty<IList<PublicUserData>>(value); }
         }
         [ParseFieldName("tutors")]
-        public List<PublicUserData> Tutors
+        public IList<PublicUserData> Tutors
         {
-            get { return GetProperty<List<PublicUserData>>(); }
-            set { SetProperty<List<PublicUserData>>(value); }
+            get { return GetProperty<IList<PublicUserData>>(); }
+            set { SetProperty<IList<PublicUserData>>(value); }
         }
         [ParseFieldName("blocked")]
-        public List<ParseUser> Blocked
+        public IList<ParseUser> Blocked
         {
-            get { return GetProperty<List<ParseUser>>(); }
-            set { SetProperty<List<ParseUser>>(value); }
+            get { return GetProperty<IList<ParseUser>>(); }
+            set { SetProperty<IList<ParseUser>>(value); }
         }
         [ParseFieldName("recentChallenges")]
-        public List<ParseObject> RecentChallenges
+        public IList<ParseObject> RecentChallenges
         {
-            get { return GetProperty<List<ParseObject>>(); }
-            set { SetProperty<List<ParseObject>>(value); }
+            get { return GetProperty<IList<ParseObject>>(); }
+            set { SetProperty<IList<ParseObject>>(value); }
         }
         [ParseFieldName("requestsFromTutors")]
-        public List<Tutor> RequestsFromTutors
+        public IList<Tutor> RequestsFromTutors
         {
-            get { return GetProperty<List<Tutor>>(); }
-            set { SetProperty<List<Tutor>>(value); }
+            get { return GetProperty<IList<Tutor>>(); }
+            set { SetProperty<IList<Tutor>>(value); }
         }
         [ParseFieldName("baseUserId")]
         public string BaseUserId
@@ -56,6 +56,12 @@ namespace CogniTutor
         {
             get { return GetProperty<ParseRelation<ParseObject>>(); }
             set { SetProperty<ParseRelation<ParseObject>>(value); }
+        }
+        [ParseFieldName("assignedQuestions")]
+        public IList<Question> AssignedQuestions
+        {
+            get { return GetProperty<IList<Question>>(); }
+            set { SetProperty<IList<Question>>(value); }
         }
     }
 }

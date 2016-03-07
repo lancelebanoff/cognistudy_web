@@ -104,7 +104,7 @@
                                         <div class="col-lg-3"></div>
                                         <div class="col-lg-6">
                                             <h3 class="align-center">Passage</h3><br />
-                                            <img src="<%= Bundle.Image.Url.ToString() %>" style="max-width:100%; max-height:100%;" />
+                                            <img src="<%= Bundle.Image == null ? "" : Bundle.Image.Url.ToString() %>" style="max-width:100%; max-height:100%;" />
                                             <p><%= passageText %></p>
                                             <hr />
                                         </div>
