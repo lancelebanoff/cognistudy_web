@@ -37,7 +37,8 @@ namespace CogniTutor
         {
             if (PrivateTutorData.RequestsFromStudents.Contains(StudentPublicData))
             {
-                PrivateTutorData.AddStudent(StudentPublicData);
+                RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.AddStudent(StudentPublicData: StudentPublicData)));
+                //PrivateTutorData.AddStudent(StudentPublicData).Wait();
             }
         }
 

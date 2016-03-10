@@ -17,6 +17,8 @@
         of: event,
         collision: "flip"
     });
+
+    $("#detailedData").show().delay(800).fadeIn(400);
 });
 
 $(document).on('mouseleave', ".row_dd", function (e) {

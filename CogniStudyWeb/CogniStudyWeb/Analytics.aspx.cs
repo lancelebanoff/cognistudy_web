@@ -11,6 +11,8 @@ using System.Web.UI.DataVisualization.Charting;
 using System.Drawing;
 using CogniTutor.UserControls;
 using System.Data;
+using System.Diagnostics;
+using CogniStudyWeb.UserControls;
 
 namespace CogniTutor
 {
@@ -33,24 +35,6 @@ namespace CogniTutor
             await BuildCharts();
             if(!IsPostBack)
             {
-                Random random = new Random();
-                for (int pointIndex = 0; pointIndex < 10; pointIndex++)
-                {
-                    Chart4.Series["Series1"].Points.AddY(random.Next(45, 95));
-                }
-
-                // Set series chart type
-                Chart4.Series["Series1"].ChartType = SeriesChartType.Line;
-
-                // Set point labels
-                Chart4.Series["Series1"].IsValueShownAsLabel = true;
-
-                // Enable X axis margin
-                Chart4.ChartAreas["ChartArea1"].AxisX.IsMarginVisible = true;
-
-                // Enable 3D, and show data point marker lines
-                //Chart4.ChartAreas["ChartArea1"].Area3DStyle.Enable3D = true;
-                Chart4.Series["Series1"]["ShowMarkerLines"] = "True";
             }
         }
 
@@ -85,50 +69,63 @@ namespace CogniTutor
         {
             if (ddlFilterStudent.Text == "All Students")
             {
+                // ALL STUDENTS/SUBJECTS
                 if (ddlFilterSubject.Text == "All Subjects")
                 {
                     int totalResponses = 0;
                     int correctResponses = 0;
-                    List<string> subjects = Constants.GetPublicStringProperties(typeof(Constants.Subject));
-                    foreach (string subjectName in subjects)
+                    IList<ParseObject> subjectStats = await ParseCloud.CallFunctionAsync<IList<ParseObject>>("getAllSubStats", null);
+                    foreach (ParseObject stat in subjectStats)
                     {
-                        ParseObject subject = await GetSubject(subjectName);
-                        totalResponses += subject.Get<int>("totalResponses");
-                        correctResponses += subject.Get<int>("correctResponses");
+                        totalResponses += stat.Get<int>("totalResponses");
+                        correctResponses += stat.Get<int>("correctResponses");
                     }
                     DoughnutChart subjectChart = (DoughnutChart)LoadControl("~/UserControls/DoughnutChart.ascx");
                     subjectChart.NumCorrect = correctResponses;
                     subjectChart.NumIncorrect = totalResponses - correctResponses;
+                    subjectChart.Title = ddlFilterSubject.Text;
                     subjectChart.Chart.DataBind();
                     pnlTest.Controls.Add(subjectChart);
                 }
+                // ALL STUDENTS, one subject
                 else
                 {
                     DoughnutChart subjectChart = (DoughnutChart)LoadControl("~/UserControls/DoughnutChart.ascx");
-                    ParseObject subject = await GetSubject(ddlFilterSubject.Text);
-                    subjectChart.NumCorrect = subject.Get<int>("correctResponses");
-                    subjectChart.NumIncorrect = subject.Get<int>("totalResponses") - subject.Get<int>("correctResponses");
+                    IDictionary<string, object> parameters = new Dictionary<string, object>
+                    {
+                        { "subjectName", ddlFilterSubject.Text }
+                    };
+                    ParseObject subjectStats = await ParseCloud.CallFunctionAsync<ParseObject>("getSubStats", parameters);
+                    subjectChart.NumCorrect = subjectStats.Get<int>("correctResponses");
+                    subjectChart.NumIncorrect = subjectStats.Get<int>("totalResponses") - subjectStats.Get<int>("correctResponses");
+                    subjectChart.Title = subjectStats.Get<string>("subject");
                     subjectChart.Chart.DataBind();
                     pnlTest.Controls.Add(subjectChart);
 
                     string[] categories = Constants.SubjectToCategory[ddlFilterSubject.Text];
-                    int i = 1;
-                    foreach (string catName in categories)
+                    IDictionary<string, object> catParams = new Dictionary<string, object>
+                    {
+                        { "catNames", categories }
+                    };
+                    IList<ParseObject> categoryStats = await ParseCloud.CallFunctionAsync<IList<ParseObject>>("getSomeCatStats", catParams);
+                    foreach (ParseObject category in categoryStats)
                     {
                         SingleBarChart catChart = (SingleBarChart)LoadControl("~/UserControls/SingleBarChart.ascx");
-                        ParseObject category = await GetCategory(catName);
                         catChart.SetCorrectIncorrect(category.Get<int>("correctResponses"), category.Get<int>("totalResponses") - category.Get<int>("correctResponses"));
+                        catChart.Title = category.Get<string>("category");
                         catChart.Chart.DataBind();
                         pnlTest.Controls.Add(catChart);
                     }
                 }
             }
+            // one student
             else
             {
                 PublicUserData publicUserData = await PublicUserData.GetById(ddlFilterStudent.SelectedValue);
                 Student student = await publicUserData.Student.FetchIfNeededAsync();
                 //PrivateStudentData privateStudentData = await student.PrivateStudentData.FetchIfNeededAsync();
-                
+
+                // one student, ALL SUBJECTS
                 if (ddlFilterSubject.Text == "All Subjects")
                 {
                     StudentTotalRollingStats studentTotalRollingStats = await student.StudentTotalRollingStats.FetchIfNeededAsync();
@@ -146,12 +143,31 @@ namespace CogniTutor
                         totalResponses =  studentTotalRollingStats.TotalAllTime;
                         correctResponses = studentTotalRollingStats.CorrectAllTime;
                     }
+                    Debug.WriteLine(totalResponses + " " + correctResponses);
                     DoughnutChart subjectChart = (DoughnutChart)LoadControl("~/UserControls/DoughnutChart.ascx");
                     subjectChart.NumCorrect = correctResponses;
                     subjectChart.NumIncorrect = totalResponses - correctResponses;
+                    subjectChart.Title = ddlFilterSubject.Text;
                     subjectChart.Chart.DataBind();
                     pnlTest.Controls.Add(subjectChart);
+
+                    ProgressBarChart progressChart = (ProgressBarChart)LoadControl("~/UserControls/ProgressBarChart.ascx");
+                    ParseRelation<ParseObject> rel = student.GetRelation<ParseObject>("studentTotalDayStats");
+                    int startBlockNum = 54;
+                    DateTime startDate = DateTime.Today.AddDays(-10);
+                    int endBlockNum = 64;
+                    List<ParseObject> stats = new List<ParseObject>();
+                    for(int i = startBlockNum; i <= endBlockNum; i++) {
+                        var query = from s in rel.Query
+                                    where s.Get<int>("blockNum") == i
+                                    select s;
+                        ParseObject stat = await query.FirstOrDefaultAsync();
+                        stats.Add(stat);
+                    }
+                    progressChart.SetUp(stats, startDate);
+                    pnlTest.Controls.Add(progressChart);
                 }
+                // one student, one subject
                 else
                 {
                     DoughnutChart subjectChart = (DoughnutChart)LoadControl("~/UserControls/DoughnutChart.ascx");
@@ -175,6 +191,7 @@ namespace CogniTutor
                     }
                     subjectChart.NumCorrect = correctResponses;
                     subjectChart.NumIncorrect = totalResponses - correctResponses;
+                    subjectChart.Title = subjectName;
                     subjectChart.Chart.DataBind();
                     pnlTest.Controls.Add(subjectChart);
 
@@ -199,6 +216,7 @@ namespace CogniTutor
                             correctResponses = categoryStats.CorrectAllTime;
                         }
                         catChart.SetCorrectIncorrect(correctResponses, totalResponses - correctResponses);
+                        catChart.Title = catName;
                         catChart.Chart.DataBind();
                         pnlTest.Controls.Add(catChart);
                     }
@@ -224,7 +242,7 @@ namespace CogniTutor
 
         protected void btnUpdatePanels_Click(object sender, EventArgs e)
         {
-            BuildCharts().Wait();
+            RegisterAsyncTask(new PageAsyncTask(BuildCharts));
         }
     }
 }

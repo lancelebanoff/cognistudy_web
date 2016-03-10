@@ -37,7 +37,7 @@ namespace CogniTutor
 
         public async Task AddStudent(PublicUserData StudentPublicData)
         {
-            Students.Add(StudentPublicData);
+            this.AddUniqueToList("students", StudentPublicData);
             await this.SaveAsync();
         }
     }

@@ -31,7 +31,8 @@ namespace CogniTutor
         }
         protected override void OnLoad(EventArgs e)
         {
-            AsyncHelpers.RunSync(StartPage);
+            RegisterAsyncTask(new PageAsyncTask(StartPage));
+            //AsyncHelpers.RunSync(StartPage);
             base.OnLoad(e);
         }
         protected async Task StartPage()
@@ -67,6 +68,21 @@ namespace CogniTutor
             ParseObject.RegisterSubclass<QuestionData>();
             ParseObject.RegisterSubclass<Student>();
             ParseObject.RegisterSubclass<Tutor>();
+
+            ParseObject.RegisterSubclass<StudentCategoryDayStats>();
+            ParseObject.RegisterSubclass<StudentCategoryMonthStats>();
+            ParseObject.RegisterSubclass<StudentCategoryRollingStats>();
+            ParseObject.RegisterSubclass<StudentCategoryStats>();
+            ParseObject.RegisterSubclass<StudentCategoryTridayStats>();
+            ParseObject.RegisterSubclass<StudentSubjectDayStats>();
+            ParseObject.RegisterSubclass<StudentSubjectMonthStats>();
+            ParseObject.RegisterSubclass<StudentSubjectRollingStats>();
+            ParseObject.RegisterSubclass<StudentSubjectStats>();
+            ParseObject.RegisterSubclass<StudentSubjectTridayStats>();
+            ParseObject.RegisterSubclass<StudentTotalRollingStats>();
+            ParseObject.RegisterSubclass<StudentTotalDayStats>();
+            ParseObject.RegisterSubclass<StudentTotalTridayStats>();
+            ParseObject.RegisterSubclass<StudentTotalMonthStats>();
         }
         protected abstract Task OnStart();
         protected override void OnUnload(EventArgs e)

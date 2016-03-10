@@ -11,6 +11,7 @@ namespace CogniTutor.UserControls
     public partial class SingleBarChart : System.Web.UI.UserControl
     {
         public Chart Chart { get { return Chart2; } }
+        public string Title { set { Chart.Titles.Clear(); Chart.Titles.Add(value); } }
 
         protected void Page_Load(object sender, EventArgs e)
         {

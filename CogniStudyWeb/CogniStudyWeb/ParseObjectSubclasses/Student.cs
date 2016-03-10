@@ -105,6 +105,24 @@ namespace CogniTutor
             get { return GetProperty<ParseRelation<ParseObject>>(); }
             set { SetProperty<ParseRelation<ParseObject>>(value); }
         }
+        [ParseFieldName("studentTotalDayStats")]
+        public ParseRelation<ParseObject> StudentTotalDayStats
+        {
+            get { return GetProperty<ParseRelation<ParseObject>>(); }
+            set { SetProperty<ParseRelation<ParseObject>>(value); }
+        }
+        [ParseFieldName("studentTotalTridayStats")]
+        public ParseRelation<ParseObject> StudentTotalTridayStats
+        {
+            get { return GetProperty<ParseRelation<ParseObject>>(); }
+            set { SetProperty<ParseRelation<ParseObject>>(value); }
+        }
+        [ParseFieldName("studentTotalMonthStats")]
+        public ParseRelation<ParseObject> StudentTotalMonthStats
+        {
+            get { return GetProperty<ParseRelation<ParseObject>>(); }
+            set { SetProperty<ParseRelation<ParseObject>>(value); }
+        }
         [ParseFieldName("studentSubjectStats")]
         public ParseRelation<ParseObject> StudentSubjectStats
         {
