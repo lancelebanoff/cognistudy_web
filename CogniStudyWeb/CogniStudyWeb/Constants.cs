@@ -25,31 +25,43 @@ namespace CogniTutor
             public static readonly String ENGLISH = "English";
             public static readonly String SCIENCE = "Science";
         }
-
+        
         public static class Category {
-            public static readonly String PASSAGE_READING = "Passage Reading";
-            public static readonly String SENTENCE_COMPLETION = "Sentence Completion";
+            public static readonly String SOCIAL_STUDIES_SCIENCE = "Social Studies/Science";
+            public static readonly String ARTS_LITERATURE = "Arts/Literature";
             public static readonly String PRE_ALGEBRA = "Pre-Algebra";
-            public static readonly String ALGEBRA = "Algebra";
+            //public static readonly String ELEMENTARY_ALGEBRA = "Elementary Algebra";
+            //public static readonly String INTERMEDIATE_ALGEBRA = "Intermediate Algebra";
             public static readonly String GEOMETRY = "Geometry";
             public static readonly String TRIGONOMETRY = "Trigonometry";
-            public static readonly String DATA_ANALYSIS_STATISTICS_PROBABILITY = "Data Analysis, Statistics, Probability";
-            public static readonly String IDENTIFYING_SENTENCE_ERRORS = "Identifying Sentence Errors";
-            public static readonly String IMPROVING_SENTENCES = "Improving Sentences";
-            public static readonly String IMPROVING_PARAGRAPHS = "Improving Paragraphs";
+            //public static readonly String DATA_ANALYSIS = "Data Analysis";
+            public static readonly String USAGE_AND_MECHANICS = "Usage and Mechanics";
+            public static readonly String RHETORICAL_SKILLS = "Rhetorical Skills";
             public static readonly String DATA_REPRESENTATION = "Data Representation";
             public static readonly String RESEARCH_SUMMARIES = "Research Summaries";
             public static readonly String CONFLICTING_VIEWPOINTS = "Conflicting Viewpoints";
         }
 
+        public static class Test {
+            public static readonly String SAT = "SAT";
+            public static readonly String ACT = "ACT";
+            public static readonly String BOTH = "Both";
+
+            public static String[] getTests() {
+                return new String[] { SAT, ACT, BOTH} ;
+            }
+        }
+
         public static readonly Dictionary<String, String[]> SubjectToCategory;
-        static Constants() {
+        static Constants()
+        {
             Dictionary<String, String[]> map = new Dictionary<String, String[]>();
             map[""] = new String[] { "" };
-            map[Subject.READING] = new String[]{Category.PASSAGE_READING, Category.SENTENCE_COMPLETION};
-            map[Subject.MATH] = new String[] { Category.PRE_ALGEBRA, Category.ALGEBRA, Category.GEOMETRY, Category.TRIGONOMETRY, Category.DATA_ANALYSIS_STATISTICS_PROBABILITY };
-            map[Subject.ENGLISH] = new String[] { Category.IDENTIFYING_SENTENCE_ERRORS, Category.IMPROVING_SENTENCES, Category.IMPROVING_PARAGRAPHS };
-            map[Subject.SCIENCE] = new String[] { Category.DATA_REPRESENTATION, Category.RESEARCH_SUMMARIES, Category.CONFLICTING_VIEWPOINTS };
+            map[Subject.READING] = new String[]{Category.SOCIAL_STUDIES_SCIENCE, Category.ARTS_LITERATURE};
+            //map[Subject.MATH] = new String[] { Category.PRE_ALGEBRA, Category.ELEMENTARY_ALGEBRA, Category.GEOMETRY, Category.TRIGONOMETRY, Category.INTERMEDIATE_ALGEBRA, Category.DATA_ANALYSIS };
+            map[Subject.MATH] = new String[] { Category.PRE_ALGEBRA, Category.GEOMETRY, Category.TRIGONOMETRY };
+            map[Subject.ENGLISH] = new String[]{Category.USAGE_AND_MECHANICS, Category.RHETORICAL_SKILLS};
+            map[Subject.SCIENCE] = new String[]{Category.DATA_REPRESENTATION, Category.RESEARCH_SUMMARIES, Category.CONFLICTING_VIEWPOINTS};
             SubjectToCategory = map;
         }
         
@@ -66,5 +78,6 @@ namespace CogniTutor
             public static readonly String APPROVED = "APPROVED";
             public static readonly String DENIED = "DENIED";
         }
+	
     }
 }

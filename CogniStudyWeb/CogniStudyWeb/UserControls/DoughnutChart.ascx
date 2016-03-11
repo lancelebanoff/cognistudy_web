@@ -1,15 +1,16 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DoughnutChart.ascx.cs" Inherits="CogniTutor.UserControls.DoughnutChart" %>
 
 <asp:CHART id="Chart1" runat="server" Palette="BrightPastel" 
-    BackColor="#D3DFF0" Height="296px" 
-	Width="412px" BorderlineDashStyle="Solid" BackGradientStyle="TopBottom" 
+    BackColor="#D3DFF0" Height="400px" 
+	Width="500px" BorderlineDashStyle="Solid" BackGradientStyle="TopBottom" 
     BorderWidth="2" 
 	BorderColor="26, 59, 105" IsSoftShadows="False" 
     ImageLocation="~/TempImages/ChartPic_#SEQ(300,3)">
+    <Titles><asp:Title Font="Trebuchet MS, 10pt, style=Bold"></asp:Title></Titles>
 	<legends>
-		<asp:Legend TitleFont="Microsoft Sans Serif, 8pt, style=Bold" 
+		<asp:Legend TitleFont="Microsoft Sans Serif, 10pt, style=Bold" 
             BackColor="Transparent" 
-			IsEquallySpacedItems="True" Font="Trebuchet MS, 8pt, style=Bold" 
+			IsEquallySpacedItems="True" Font="Trebuchet MS, 10pt, style=Bold" 
             IsTextAutoFit="False" 
 			Name="Default"></asp:Legend>
 	</legends>
@@ -17,7 +18,7 @@
 	<series>
 		<asp:Series ChartArea="Area1" XValueType="String" Name="Series1" 
             ChartType="Doughnut" IsValueShownAsLabel="True"
-			Font="Trebuchet MS, 8.25pt, style=Bold" 
+			Font="Trebuchet MS, 10pt, style=Bold" 
 			CustomProperties="DoughnutRadius=60, PieDrawingStyle=Concave, CollectedLabel=Other, MinimumRelativePieSize=20" 
 			MarkerStyle="Circle" BorderColor="64, 64, 64, 64" 
             Color="180, 65, 140, 240" YValueType="Int32" Label="#LABEL">

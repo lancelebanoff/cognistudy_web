@@ -10,22 +10,22 @@ namespace CogniTutor
     public class Student : ParseObject
     {
         [ParseFieldName("achievements")]
-        public List<ParseObject> Achievements
+        public IList<ParseObject> Achievements
         {
-            get { return GetProperty<List<ParseObject>>(); }
-            set { SetProperty<List<ParseObject>>(value); }
+            get { return GetProperty<IList<ParseObject>>(); }
+            set { SetProperty<IList<ParseObject>>(value); }
         }
         [ParseFieldName("shopItemsBought")]
-        public List<string> ShopItemsBought
+        public IList<string> ShopItemsBought
         {
-            get { return GetProperty<List<string>>(); }
-            set { SetProperty<List<string>>(value); }
+            get { return GetProperty<IList<string>>(); }
+            set { SetProperty<IList<string>>(value); }
         }
         [ParseFieldName("skinSelections")]
-        public List<ParseObject> SkinSelections
+        public IList<ParseObject> SkinSelections
         {
-            get { return GetProperty<List<ParseObject>>(); }
-            set { SetProperty<List<ParseObject>>(value); }
+            get { return GetProperty<IList<ParseObject>>(); }
+            set { SetProperty<IList<ParseObject>>(value); }
         }
         [ParseFieldName("randomEnabled")]
         public bool RandomEnabled
@@ -46,16 +46,16 @@ namespace CogniTutor
             set { SetProperty<string>(value); }
         }
         [ParseFieldName("studentSubjectRollingStats")]
-        public List<StudentSubjectRollingStats> StudentSubjectRollingStats
+        public IList<StudentSubjectRollingStats> StudentSubjectRollingStats
         {
-            get { return GetProperty<List<StudentSubjectRollingStats>>(); }
-            set { SetProperty<List<StudentSubjectRollingStats>>(value); }
+            get { return GetProperty<IList<StudentSubjectRollingStats>>(); }
+            set { SetProperty<IList<StudentSubjectRollingStats>>(value); }
         }
         [ParseFieldName("studentCategoryRollingStats")]
-        public List<StudentCategoryRollingStats> StudentCategoryRollingStats
+        public IList<StudentCategoryRollingStats> StudentCategoryRollingStats
         {
-            get { return GetProperty<List<StudentCategoryRollingStats>>(); }
-            set { SetProperty<List<StudentCategoryRollingStats>>(value); }
+            get { return GetProperty<IList<StudentCategoryRollingStats>>(); }
+            set { SetProperty<IList<StudentCategoryRollingStats>>(value); }
         }
         [ParseFieldName("studentTotalRollingStats")]
         public StudentTotalRollingStats StudentTotalRollingStats
@@ -64,70 +64,70 @@ namespace CogniTutor
             set { SetProperty<StudentTotalRollingStats>(value); }
         }
         [ParseFieldName("studentCategoryDayStats")]
-        public ParseRelation<ParseObject> StudentCategoryDayStats
+        public ParseRelation<StudentCategoryDayStats> StudentCategoryDayStats
         {
-            get { return GetProperty<ParseRelation<ParseObject>>(); }
-            set { SetProperty<ParseRelation<ParseObject>>(value); }
+            get { return GetProperty<ParseRelation<StudentCategoryDayStats>>(); }
+            set { SetProperty<ParseRelation<StudentCategoryDayStats>>(value); }
         }
         [ParseFieldName("studentCategoryTridayStats")]
-        public ParseRelation<ParseObject> StudentCategoryTridayStats
+        public ParseRelation<StudentCategoryTridayStats> StudentCategoryTridayStats
         {
-            get { return GetProperty<ParseRelation<ParseObject>>(); }
-            set { SetProperty<ParseRelation<ParseObject>>(value); }
+            get { return GetProperty<ParseRelation<StudentCategoryTridayStats>>(); }
+            set { SetProperty<ParseRelation<StudentCategoryTridayStats>>(value); }
         }
         [ParseFieldName("studentCategoryMonthStats")]
-        public ParseRelation<ParseObject> StudentCategoryMonthStats
+        public ParseRelation<StudentCategoryMonthStats> StudentCategoryMonthStats
         {
-            get { return GetProperty<ParseRelation<ParseObject>>(); }
-            set { SetProperty<ParseRelation<ParseObject>>(value); }
+            get { return GetProperty<ParseRelation<StudentCategoryMonthStats>>(); }
+            set { SetProperty<ParseRelation<StudentCategoryMonthStats>>(value); }
         }
         [ParseFieldName("studentCategoryStats")]
-        public ParseRelation<ParseObject> StudentCategoryStats
+        public ParseRelation<StudentCategoryStats> StudentCategoryStats
         {
-            get { return GetProperty<ParseRelation<ParseObject>>(); }
-            set { SetProperty<ParseRelation<ParseObject>>(value); }
+            get { return GetProperty<ParseRelation<StudentCategoryStats>>(); }
+            set { SetProperty<ParseRelation<StudentCategoryStats>>(value); }
         }
         [ParseFieldName("studentSubjectDayStats")]
-        public ParseRelation<ParseObject> StudentSubjectDayStats
+        public ParseRelation<StudentSubjectDayStats> StudentSubjectDayStats
         {
-            get { return GetProperty<ParseRelation<ParseObject>>(); }
-            set { SetProperty<ParseRelation<ParseObject>>(value); }
+            get { return GetProperty<ParseRelation<StudentSubjectDayStats>>(); }
+            set { SetProperty<ParseRelation<StudentSubjectDayStats>>(value); }
         }
         [ParseFieldName("studentSubjectTridayStats")]
-        public ParseRelation<ParseObject> StudentSubjectTridayStats
+        public ParseRelation<StudentSubjectTridayStats> StudentSubjectTridayStats
         {
-            get { return GetProperty<ParseRelation<ParseObject>>(); }
-            set { SetProperty<ParseRelation<ParseObject>>(value); }
+            get { return GetProperty<ParseRelation<StudentSubjectTridayStats>>(); }
+            set { SetProperty<ParseRelation<StudentSubjectTridayStats>>(value); }
         }
         [ParseFieldName("studentSubjectMonthStats")]
-        public ParseRelation<ParseObject> StudentSubjectMonthStats
+        public ParseRelation<StudentSubjectMonthStats> StudentSubjectMonthStats
         {
-            get { return GetProperty<ParseRelation<ParseObject>>(); }
-            set { SetProperty<ParseRelation<ParseObject>>(value); }
+            get { return GetProperty<ParseRelation<StudentSubjectMonthStats>>(); }
+            set { SetProperty<ParseRelation<StudentSubjectMonthStats>>(value); }
         }
         [ParseFieldName("studentTotalDayStats")]
-        public ParseRelation<ParseObject> StudentTotalDayStats
+        public ParseRelation<StudentTotalDayStats> StudentTotalDayStats
         {
-            get { return GetProperty<ParseRelation<ParseObject>>(); }
-            set { SetProperty<ParseRelation<ParseObject>>(value); }
+            get { return GetProperty<ParseRelation<StudentTotalDayStats>>(); }
+            set { SetProperty<ParseRelation<StudentTotalDayStats>>(value); }
         }
         [ParseFieldName("studentTotalTridayStats")]
-        public ParseRelation<ParseObject> StudentTotalTridayStats
+        public ParseRelation<StudentTotalTridayStats> StudentTotalTridayStats
         {
-            get { return GetProperty<ParseRelation<ParseObject>>(); }
-            set { SetProperty<ParseRelation<ParseObject>>(value); }
+            get { return GetProperty<ParseRelation<StudentTotalTridayStats>>(); }
+            set { SetProperty<ParseRelation<StudentTotalTridayStats>>(value); }
         }
         [ParseFieldName("studentTotalMonthStats")]
-        public ParseRelation<ParseObject> StudentTotalMonthStats
+        public ParseRelation<StudentTotalMonthStats> StudentTotalMonthStats
         {
-            get { return GetProperty<ParseRelation<ParseObject>>(); }
-            set { SetProperty<ParseRelation<ParseObject>>(value); }
+            get { return GetProperty<ParseRelation<StudentTotalMonthStats>>(); }
+            set { SetProperty<ParseRelation<StudentTotalMonthStats>>(value); }
         }
         [ParseFieldName("studentSubjectStats")]
-        public ParseRelation<ParseObject> StudentSubjectStats
+        public ParseRelation<StudentSubjectStats> StudentSubjectStats
         {
-            get { return GetProperty<ParseRelation<ParseObject>>(); }
-            set { SetProperty<ParseRelation<ParseObject>>(value); }
+            get { return GetProperty<ParseRelation<StudentSubjectStats>>(); }
+            set { SetProperty<ParseRelation<StudentSubjectStats>>(value); }
         }
         [ParseFieldName("privateStudentData")]
         public PrivateStudentData PrivateStudentData
