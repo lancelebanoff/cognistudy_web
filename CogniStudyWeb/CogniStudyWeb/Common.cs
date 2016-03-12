@@ -10,6 +10,7 @@ using System.Net.Mail;
 using System.Data.SqlClient;
 using System.Data;
 using System.Web.SessionState;
+using Parse;
 
 namespace CogniTutor
 {
@@ -28,6 +29,32 @@ namespace CogniTutor
         {
             string s = o.ToString();
             return s.Replace("\"", "&quot;");
+        }
+
+        public static IList<T> RemoveFromList<T>(IEnumerable<T> list, T obj) where T: ParseObject
+        {
+            list = list.Where(item => item.ObjectId != obj.ObjectId);
+            return list.ToList();
+        }
+
+        public static bool ParseContains(IEnumerable<ParseObject> list, ParseObject obj)
+        {
+            //IList<ParseObject> l = (IList<ParseObject>)list;
+            //ParseObject o = (ParseObject)obj;
+            return list.Contains(obj, new Common.ParseObjectComparer());
+        }
+
+        public class ParseObjectComparer : IEqualityComparer<ParseObject>
+        {
+            public bool Equals(ParseObject a, ParseObject b)
+            {
+                return a.ObjectId == b.ObjectId;
+            }
+
+            public int GetHashCode(ParseObject a)
+            {
+                return a.ObjectId.GetHashCode();
+            }
         }
     }
 }

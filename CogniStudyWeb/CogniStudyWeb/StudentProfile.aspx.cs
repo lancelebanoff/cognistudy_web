@@ -28,18 +28,23 @@ namespace CogniTutor
                 string studentID = Request.QueryString["StudentId"];
                 StudentPublicData = await PublicUserData.GetById(studentID);
                 Image1.ImageUrl = StudentPublicData.ProfilePic != null ? StudentPublicData.ProfilePic.Url.ToString() : "Images/default_prof_pic.png";
-                if ((await PrivateTutorData.RequestsFromStudents.FetchAllIfNeededAsync()).Contains(StudentPublicData))
-                    btnRequestStudent.Text = "Accept student request";
+                await PrivateTutorData.Students.FetchAllIfNeededAsync();
             }
+            bool a = Common.ParseContains(PrivateTutorData.Students, StudentPublicData);
+            //bool a = Common.ParseContains(PrivateTutorData.Students, StudentPublicData);
+            btnBlockStudent.Visible = !Common.ParseContains(PrivateTutorData.Students, StudentPublicData);
+            btnRemoveStudent.Visible = Common.ParseContains(PrivateTutorData.Students, StudentPublicData);
+            btnStudentAdded.Visible = Common.ParseContains(PrivateTutorData.Students, StudentPublicData);
+
+            btnRequestStudent.Visible = !Common.ParseContains(PrivateTutorData.Students, StudentPublicData)
+                && !Common.ParseContains(PrivateTutorData.RequestsFromStudents, StudentPublicData);
+            btnAcceptStudent.Visible = !Common.ParseContains(PrivateTutorData.Students, StudentPublicData)
+                && Common.ParseContains(PrivateTutorData.RequestsFromStudents, StudentPublicData);
         }
 
         protected void btnRequestStudent_Click(object sender, EventArgs e)
         {
-            if (PrivateTutorData.RequestsFromStudents.Contains(StudentPublicData))
-            {
-                RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.AddStudent(StudentPublicData: StudentPublicData)));
-                //PrivateTutorData.AddStudent(StudentPublicData).Wait();
-            }
+            RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.SendRequestToStudent(StudentPublicData: StudentPublicData, tutor: Tutor)));
         }
 
         protected void btnSendMessage_Click(object sender, EventArgs e)
@@ -48,9 +53,19 @@ namespace CogniTutor
             Response.Redirect("Messages");
         }
 
-        //protected void btnBlockStudent_Click(object sender, EventArgs e)
-        //{
+        protected void btnAcceptStudent_Click(object sender, EventArgs e)
+        {
+            RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.AcceptStudentRequest(StudentPublicData: StudentPublicData, TutorPublicData: PublicUserData)));
+        }
 
-        //}
+        protected void btnBlockStudent_Click(object sender, EventArgs e)
+        {
+            RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.BlockStudent(StudentPublicData: StudentPublicData)));
+        }
+
+        protected void btnRemoveStudent_Click(object sender, EventArgs e)
+        {
+            RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.RemoveStudent(StudentPublicData: StudentPublicData, TutorPublicData: PublicUserData)));
+        }
     }
 }

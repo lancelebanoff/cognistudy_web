@@ -173,7 +173,7 @@
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="">
                                                         <ItemTemplate>
-                                                            <asp:Button CommandName="Assign" runat="server" Text="Assign" id="btnAssign"
+                                                            <asp:Button CssClass="btn btn-default center-block" CommandName="Assign" runat="server" Text="Assign" id="btnAssign"
                                                                 CommandArgument='<%# Eval("ObjectId") %>'
                                                                 />
                                                         </ItemTemplate>
@@ -242,9 +242,9 @@
                                             </div>
                                             
                                             <asp:Panel ID="pnlSend" runat="server" CssClass="modalPopup" style = "display:none">
-                                                <asp:CheckBoxList runat="server" ID="cblMyStudents" DataTextField="DisplayName" DataValueField="ObjectId"></asp:CheckBoxList>
-                                                <asp:Button runat="server" ID="btnSend" Text="Send to students" OnClick="btnSend_Click" />
-                                                <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClientClick = "return Hidepopup()"/>
+                                                <asp:CheckBoxList CssClass="form-control" runat="server" ID="cblMyStudents" DataTextField="DisplayName" DataValueField="ObjectId"></asp:CheckBoxList>
+                                                <asp:Button CssClass="btn btn-success" runat="server" ID="btnSend" Text="Send to students" OnClick="btnSend_Click" />
+                                                <asp:Button CssClass="btn btn-default" ID="btnCancel" runat="server" Text="Cancel" OnClientClick = "return Hidepopup()"/>
                                             </asp:Panel>
                                             <asp:Button id="btnFake" runat="server" CssClass="hidden" />
                                             <ajax:ModalPopupExtender ID="popup" runat="server" DropShadow="false"

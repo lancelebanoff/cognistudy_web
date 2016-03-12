@@ -63,17 +63,19 @@
                 <div class="row float-bottom">
                     <div class="col-sm-2 col-xs-5">
                         <asp:Image ID="Image1" class="img-rounded img-responsive" runat="server" />
-                        <asp:Image class="hidden cursor-pointer" ID="edit" src="Images/edit.png" Style="position: absolute; bottom: 5px; right: 20px;" runat="server"
-                            onclick="picClick()" onmouseenter="mouseOverProfilePicture()" onmouseleave="mouseLeaveProfilePicture()" />
-                        <asp:FileUpload class="hidden" ID="FileUpload1" runat="server" onchange="fileChosen()" />
-                        <!--<asp:Button class="hidden" ID="btnUpload" runat="server" Text="Upload" />-->
                     </div>
                     <div class="col-sm-10 col-xs-7">
                         <h1><%= StudentName %></h1>
-                        <asp:Button runat="server" ID="btnRequestStudent" OnClick="btnRequestStudent_Click" class="btn btn-success" Text="Add student" />
+                        <asp:Button runat="server" ID="btnRequestStudent" OnClick="btnRequestStudent_Click" class="btn btn-success" Text="Send request to student" />
+                        <asp:Button runat="server" ID="btnAcceptStudent" OnClick="btnAcceptStudent_Click" class="btn btn-success" Text="Accept request from student"/>
+                        <asp:Button runat="server" ID="btnStudentAdded" class="btn btn-success disabled" Text="Student added" />
                         <asp:Button runat="server" ID="btnSendMessage" OnClick="btnSendMessage_Click" class="btn btn-info" Text="Send a message" />
+                        <asp:Button runat="server" ID="btnBlockStudent" OnClick="btnBlockStudent_Click" class="btn btn-danger" Text="Block" />
+                        <asp:Button runat="server" ID="btnRemoveStudent" OnClick="btnRemoveStudent_Click" class="btn btn-danger" Text="Remove student" />
+
                     </div>
                 </div>
+                <hr />
             </div>
         </div>
             

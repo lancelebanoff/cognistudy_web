@@ -34,11 +34,70 @@ namespace CogniTutor
             get { return GetProperty<IList<PublicUserData>>(); }
             set { SetProperty<IList<PublicUserData>>(value); }
         }
-
-        public async Task AddStudent(PublicUserData StudentPublicData)
+        [ParseFieldName("blocked")]
+        public IList<ParseUser> Blocked
         {
-            this.AddUniqueToList("students", StudentPublicData);
+            get { return GetProperty<IList<ParseUser>>(); }
+            set { SetProperty<IList<ParseUser>>(value); }
+        }
+
+        public async Task AcceptStudentRequest(PublicUserData StudentPublicData, PublicUserData TutorPublicData)
+        {
+            IList<PublicUserData> requests = (await RequestsFromStudents.FetchAllIfNeededAsync()).ToList();
+            requests.Remove(StudentPublicData);
+            RequestsFromStudents = requests;
+
+            IList<PublicUserData> students = Students;
+            students.Add(StudentPublicData);
+            Students = students;
+
+            Student student = await StudentPublicData.Student.FetchIfNeededAsync();
+            PrivateStudentData privateStudentData = student.PrivateStudentData;
+            IDictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "privateStudentDataId", privateStudentData.ObjectId },
+                { "tutorPublicDataId", TutorPublicData.ObjectId }
+            };
+            await ParseCloud.CallFunctionAsync<string>("addTutor", parameters);
+
+            //this.AddUniqueToList("students", StudentPublicData);
             await this.SaveAsync();
         }
+
+        public async Task SendRequestToStudent(PublicUserData StudentPublicData, Tutor tutor)
+        {
+            Student student = await StudentPublicData.Student.FetchIfNeededAsync();
+            PrivateStudentData privateStudentData = student.PrivateStudentData;
+            IDictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "privateStudentDataId", privateStudentData.ObjectId },
+                { "tutorId", tutor.ObjectId }
+            };
+            await ParseCloud.CallFunctionAsync<string>("tutorRequestToStudent", parameters);
+        }
+
+        public async Task BlockStudent(PublicUserData StudentPublicData)
+        {
+            IList<ParseUser> blocked = this.Blocked;
+            blocked.Add(ParseUser.CreateWithoutData<ParseUser>(StudentPublicData.BaseUserId));
+            this.Blocked = blocked;
+            await this.SaveAsync();
+        }
+
+        public async Task RemoveStudent(PublicUserData StudentPublicData, PublicUserData TutorPublicData)
+        {
+            Students = Common.RemoveFromList(Students, StudentPublicData);
+            await this.SaveAsync();
+
+            Student student = await StudentPublicData.Student.FetchIfNeededAsync();
+            PrivateStudentData privateStudentData = student.PrivateStudentData;
+            IDictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "privateStudentDataId", privateStudentData.ObjectId },
+                { "tutorPublicDataId", TutorPublicData.ObjectId }
+            };
+            await ParseCloud.CallFunctionAsync<string>("removeTutor", parameters);
+        }
+        
     }
 }
