@@ -13,9 +13,9 @@ namespace CogniTutor
 {
     public partial class Messages : CogniPage
     {
-        public string TheirName { get { if (TheirPublicData == null) return ""; else return TheirPublicData.Get<string>("displayName"); } }
-        public ParseObject TheirPublicData;
-        public ParseObject Conversation;
+        public string TheirName { get { if (RecipientPublicData == null) return ""; else return RecipientPublicData.Get<string>("displayName"); } }
+        public ParseObject RecipientPublicData { get { return (ParseObject)Session["RecipientPublicData"]; } set { Session["RecipientPublicData"] = value; } }
+        public ParseObject Conversation { get { return (ParseObject)Session["Conversation"]; } set { Session["Conversation"] = value; } }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -28,6 +28,7 @@ namespace CogniTutor
             {
 
             }
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), "scrollPanel", "scrollPanel();", true);
             IEnumerable<ParseObject> conversations = await GetConversations();
             DataTable dt = InitConversationTable();
             foreach (ParseObject conv in conversations)
@@ -47,27 +48,38 @@ namespace CogniTutor
                 ParseObject tempTheirPublicData = conv.Get<ParseObject>("publicUserData" + theirNumber);
                 await tempTheirPublicData.FetchIfNeededAsync();
                 dr["TheirName"] = tempTheirPublicData.Get<string>("displayName");
-                dr["LastMessage"] = await GetFirstMessageText(conv);
+                string lastMessage = await GetFirstMessageText(conv);
+                dr["LastMessage"] = lastMessage.Length <= 30 ? lastMessage : lastMessage.Substring(0, 30) + "...";
                 dr["TheirUserID"] = tempTheirPublicData.ObjectId;
+                ParseFile profilePic = tempTheirPublicData.Get<ParseFile>("profilePic");
+                dr["ProfilePicUrl"] = profilePic == null ? "Images/default_prof_pic.png" : profilePic.Url.ToString();
                 dt.Rows.Add(dr);
             }
             repConversations.DataSource = dt;
             repConversations.DataBind();
             if (Session["ConversationUserId"] != null)
             {
-                TheirPublicData = await GetStudentPublicData(Session["ConversationUserId"].ToString());
-                Conversation = await GetThisConversation(TheirPublicData.Get<string>("baseUserId"));
-                ParseRelation<ParseObject> relation = Conversation.GetRelation<ParseObject>("messages");
-                IEnumerable<ParseObject> messages = await relation.Query.FindAsync();
-                DataTable messageData = InitMessageTable();
-                foreach (ParseObject mes in messages)
+                RecipientPublicData = await GetStudentPublicData(Session["ConversationUserId"].ToString());
+                Conversation = await GetThisConversation(RecipientPublicData.Get<string>("baseUserId"));
+                if (Conversation == null)
                 {
-                    DataRow dr = messageData.NewRow();
-                    dr["Text"] = mes.Get<string>("text");
-                    messageData.Rows.Add(dr);
+
                 }
-                repMessages.DataSource = messageData;
-                repMessages.DataBind();
+                else
+                {
+                    ParseRelation<ParseObject> relation = Conversation.GetRelation<ParseObject>("messages");
+                    IEnumerable<ParseObject> messages = await relation.Query.OrderBy("createdAt").FindAsync();
+                    DataTable messageData = InitMessageTable();
+                    foreach (ParseObject mes in messages)
+                    {
+                        DataRow dr = messageData.NewRow();
+                        dr["Text"] = mes.Get<string>("text");
+                        dr["WasSentByMe"] = mes.Get<string>("senderBaseUserId") == UserID;
+                        messageData.Rows.Add(dr);
+                    }
+                    repMessages.DataSource = messageData;
+                    repMessages.DataBind();
+                }
             }
         }
 
@@ -77,6 +89,7 @@ namespace CogniTutor
             dt.Columns.Add("TheirName");
             dt.Columns.Add("LastMessage");
             dt.Columns.Add("TheirUserID");
+            dt.Columns.Add("ProfilePicUrl");
             return dt;
         }
 
@@ -84,6 +97,7 @@ namespace CogniTutor
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("Text");
+            dt.Columns.Add("WasSentByMe");
             return dt;
         }
 
@@ -123,12 +137,15 @@ namespace CogniTutor
 
         protected void btnSend_Click(object sender, EventArgs e)
         {
-            RegisterAsyncTask(new PageAsyncTask(SendMessage));
+            //RegisterAsyncTask(new PageAsyncTask(SendMessage));
+            //Task t = SendMessage();
+            //t.Wait();
+            AsyncHelpers.RunSync(SendMessage);
         }
 
         protected async Task SendMessage()
         {
-            if (TheirPublicData == null)
+            if (RecipientPublicData == null)
                 throw new Exception("no user selected");
             ParseObject message = await CreateNewMessage();
             if (Conversation == null)
@@ -147,7 +164,7 @@ namespace CogniTutor
         {
             ParseObject message = new ParseObject("Message");
             message["text"] = tbType.Text;
-            message["receiverBaseUserId"] = TheirPublicData.Get<string>("baseUserId");
+            message["receiverBaseUserId"] = RecipientPublicData.Get<string>("baseUserId");
             message["senderBaseUserId"] = UserID;
             await message.SaveAsync();
             return message;
@@ -155,7 +172,7 @@ namespace CogniTutor
 
         protected async Task<ParseObject> FindOrCreateNewConversation()
         {
-            ParseObject conversation = await GetThisConversation(TheirPublicData.Get<string>("baseUserId"));
+            ParseObject conversation = await GetThisConversation(RecipientPublicData.Get<string>("baseUserId"));
             if (conversation != null)
             {
                 return conversation;
@@ -164,9 +181,9 @@ namespace CogniTutor
             {
                 conversation = new ParseObject("Conversation");
                 conversation["publicUserData1"] = PublicUserData;
-                conversation["publicUserData2"] = TheirPublicData;
+                conversation["publicUserData2"] = RecipientPublicData;
                 conversation["baseUserId1"] = PublicUserData.Get<string>("baseUserId");
-                conversation["baseUserId2"] = TheirPublicData.Get<string>("baseUserId");
+                conversation["baseUserId2"] = RecipientPublicData.Get<string>("baseUserId");
                 await conversation.SaveAsync();
                 return conversation;
             }

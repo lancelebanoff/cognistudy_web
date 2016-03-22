@@ -168,6 +168,7 @@
     <Content Include="css\bootstrap-rtl.min.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\chat_bubble.css" />
     <Content Include="css\cognitutor_green2.css" />
     <Content Include="css\modal.css" />
     <Content Include="css\customtooltip.css" />
@@ -188,6 +189,7 @@
     <Content Include="font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Images\default_prof_pic.png" />
+    <Content Include="Images\edit.png" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\magnify.gif" />
     <Content Include="Images\underline2.jpg" />

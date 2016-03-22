@@ -30,13 +30,31 @@ namespace CogniTutor.UserControls
 
         protected void btnSignIn_Click(object sender, EventArgs e)
         {
+            //mPage.RegisterAsyncTask(new PageAsyncTask(LogIn));
+            bool success = AsyncHelpers.RunSync<bool>(LogIn);
+            mPage.Session["Email"] = tbLoginEmail.Text.ToLower();
+            mPage.Session["Password"] = tbLoginPassword.Text;
+            mPage.Redirect("Dashboard.aspx");
+        }
+        private async Task<bool> LogIn()
+        {
             try
             {
-                mPage.RegisterAsyncTask(new PageAsyncTask(LogIn));
+                await ParseUser.LogInAsync(tbLoginEmail.Text.ToLower(), tbLoginPassword.Text);
+
+                // Email not verified
+                if (!ParseUser.CurrentUser.Get<bool>("emailVerified"))
+                {
+                    lblLoginError.Visible = true;
+                    lblLoginError.Text = "Please check your email to verify your account.";
+                    return false;
+                }
                 // Login was successful.
-                mPage.Session["Email"] = tbLoginEmail.Text.ToLower();
-                mPage.Session["Password"] = tbLoginPassword.Text;
-                mPage.Redirect("Dashboard.aspx");
+                else
+                {
+                    lblLoginError.Visible = false;
+                    return true;
+                }
             }
             catch (Exception ex)
             {
@@ -45,12 +63,18 @@ namespace CogniTutor.UserControls
                 Console.WriteLine(s);
 
                 if (ex.Message.Contains("invalid login parameters"))
-                    s = "";
+                {
+                    lblLoginError.Visible = true;
+                    lblLoginError.Text = "Username and/or password is incorrect.";
+                    return false;
+                }
+                else
+                {
+                    lblLoginError.Visible = true;
+                    lblLoginError.Text = "There was an unexpected problem with your login. Please contact support@cognitutor.com.";
+                    return false;
+                }
             }
-        }
-        private async Task LogIn()
-        {
-            await ParseUser.LogInAsync(tbLoginEmail.Text.ToLower(), tbLoginPassword.Text);
         }
 
         public void CreateSession(int UserID)

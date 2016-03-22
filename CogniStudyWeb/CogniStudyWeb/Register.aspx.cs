@@ -28,39 +28,47 @@ namespace CogniTutor
             {
                 Username = tbEmail.Text.ToLower(),
                 Password = tbPassword.Text,
-                Email = tbEmail.Text.ToLower()
+                Email = tbEmail.Text.ToLower(),
             };
-            Task t1 = user.SignUpAsync();
-            t1.Wait();
-            ParseObject privateTutorData = new ParseObject("PrivateTutorData");
-            privateTutorData["baseUserId"] = user.ObjectId;
-            privateTutorData["requestsFromStudents"] = new List<PublicUserData>();
-            Task t2 = privateTutorData.SaveAsync();
-            t2.Wait();
-            ParseObject tutor = new ParseObject("Tutor");
-            tutor["numQuestionsCreated"] = 0;
-            tutor["numQuestionsReviewed"] = 0;
-            tutor["baseUserId"] = user.ObjectId;
-            tutor["privateTutorData"] = privateTutorData;
-            Task t3 = tutor.SaveAsync();
-            t3.Wait();
-            ParseObject publicUserData = new ParseObject("PublicUserData");
-            publicUserData["userType"] = Constants.UserType.TUTOR;
-            publicUserData["displayName"] = tbFirstName.Text.Trim() + " " + tbLastName.Text.Trim();
-            publicUserData["searchableDisplayName"] = tbFirstName.Text.Trim().ToLower() + tbLastName.Text.Trim().ToLower();
-            publicUserData["baseUserId"] = user.ObjectId;
-            publicUserData["tutor"] = tutor;
-            Task t4 = publicUserData.SaveAsync();
-            t4.Wait();
+            await user.SignUpAsync();
+            PrivateTutorData privateTutorData = new PrivateTutorData();
+            privateTutorData.BaseUserId = user.ObjectId;
+            privateTutorData.Students = new List<PublicUserData>();
+            privateTutorData.RequestsFromStudents = new List<PublicUserData>();
+            privateTutorData.Blocked = new List<ParseUser>();
+            privateTutorData.ACL = new ParseACL(user);
+            await privateTutorData.SaveAsync();
+            Tutor tutor = new Tutor();
+            tutor.NumQuestionsCreated = 0;
+            tutor.NumQuestionsReviewed = 0;
+            tutor.BaseUserId = user.ObjectId;
+            tutor.Biography = "";
+            tutor.PrivateTutorData = privateTutorData;
+            tutor.ACL = new ParseACL();
+            tutor.ACL.PublicReadAccess = true;
+            tutor.ACL.PublicWriteAccess = false;
+            tutor.ACL.SetWriteAccess(user, true);
+            await tutor.SaveAsync();
+            PublicUserData publicUserData = new PublicUserData();
+            publicUserData.UserType = Constants.UserType.TUTOR;
+            publicUserData.DisplayName = tbFirstName.Text.Trim() + " " + tbLastName.Text.Trim();
+            publicUserData.SearchableDisplayName = tbFirstName.Text.Trim().ToLower() + tbLastName.Text.Trim().ToLower();
+            publicUserData.BaseUserId = user.ObjectId;
+            publicUserData.Tutor = tutor;
+            publicUserData.ACL = new ParseACL();
+            publicUserData.ACL.PublicReadAccess = true;
+            publicUserData.ACL.PublicWriteAccess = false;
+            publicUserData.ACL.SetWriteAccess(user, true);
+            await publicUserData.SaveAsync();
+            user.ACL = new ParseACL(user);
             user["publicUserData"] = publicUserData;
-            //user["phoneNumber"] = tbPhoneNumber.Text;
-            //user["zipCode"] = tbZipCode.Text;
-            //user["address"] = tbStreetAddress.Text;
-            //user["address2"] = tbAddress2.Text;
-            //user["city"] = tbCity.Text;
-            //user["state"] = ddState.SelectedValue;
-            Task t5 = user.SaveAsync();
-            t5.Wait();
+            //user.phoneNumber = tbPhoneNumber.Text;
+            //user.zipCode = tbZipCode.Text;
+            //user.address = tbStreetAddress.Text;
+            //user.address2 = tbAddress2.Text;
+            //user.city = tbCity.Text;
+            //user.state = ddState.SelectedValue;
+            await user.SaveAsync();
             Response.Redirect("RegisterSuccess.aspx");
         }
 

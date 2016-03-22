@@ -68,7 +68,11 @@ namespace CogniTutor
         public static class UserType {
             public static readonly String STUDENT = "STUDENT";
             public static readonly String TUTOR = "TUTOR";
+            public static readonly String MODERATOR = "MODERATOR";
             public static readonly String ADMIN = "ADMIN";
+            public static bool IsQualifiedToReviewQuestions(string myUserType) {
+                return myUserType == MODERATOR || myUserType == ADMIN;
+            }
         }
 
         public static class ReviewStatusType

@@ -41,8 +41,8 @@ namespace CogniTutor
             ParseClient.Initialize("iT8NyJO0dChjLyfVsHUTM8UZQLSBBJLxd43AX9IY", "SvmmmluPjmLblmNrgqnUmylInkyiXzoWBk9ZxeZH");
             if (IsTestMode)
             {
-                Session["Email"] = "loganlebanoff@yahoo.com";
-                Session["Password"] = "poi";
+                //Session["Email"] = "loganlebanoff@yahoo.com";
+                //Session["Password"] = "poi";
             }
             if (LoggedIn)
             {
@@ -165,12 +165,11 @@ namespace CogniTutor
                 return ParseUser.CurrentUser.ObjectId;
             }
         }
-        public UserTypes UserType
+        public string UserType
         {
             get
             {
-                string userType = PublicUserData.Get<string>("userType");
-                return Common.ParseEnum<UserTypes>(userType);
+                return PublicUserData.UserType;
             }
         }
         public PublicUserData PublicUserData
@@ -235,14 +234,6 @@ namespace CogniTutor
         {
             EndPage();
             this.Response.Redirect(link);
-        }
-        public enum UserTypes
-        {
-            NotLoggedIn = 0,
-            Student = 1,
-            Tutor = 2,
-            Moderator = 3,
-            Admin = 4
         }
 
         public static IList<T> GetAllControlsRecusrvive<T>(Control control) where T : Control

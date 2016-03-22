@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Footer.ascx.cs" Inherits="CogniTutor.Footer" %>
 
 <!-- Footer -->
-<div class="footer">
+<div class="footer hidden">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">

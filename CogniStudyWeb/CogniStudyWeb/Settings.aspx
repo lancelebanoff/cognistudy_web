@@ -42,15 +42,6 @@
     <!-- Our custom javascript -->
     <script src="js/Custom.js"></script>
 
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
-
-    <script type="text/javascript" async
-        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-    </script>
-
-    <link href="css/question.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -81,10 +72,21 @@
                                 </div>
                             </div>
 
-                            <asp:TextBox ID="tb" runat="server" TextMode="MultiLine"></asp:TextBox>
-                            <asp:Button ID="btn" runat="server" OnClick="btn_Click" />
-                            <asp:Label ID="lb" runat="server"></asp:Label>
-                            aaaaaaaaaaaaaaaa\(\frac{a}{b}+2 = a i^2\)bababababa
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h3 class="page-header">Tutors</h3>
+                                    <asp:GridView ID="grdTutors" runat="server" CssClass="table table-striped" AutoGenerateColumns="false">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Subject/Category">
+                                                <ItemTemplate>
+                                                    <%# Eval("displayName") %>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
 
                         </div>
                         <!-- /.container-fluid -->

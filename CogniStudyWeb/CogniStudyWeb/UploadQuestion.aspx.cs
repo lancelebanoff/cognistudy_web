@@ -97,6 +97,7 @@ namespace CogniTutor
             qd3["correctResponses"] = 0;
             qd3["totalResponses"] = 0;
             qd3["reviewStatus"] = Constants.ReviewStatusType.PENDING;
+            qd3["reviews"] = new List<ParseObject>();
             return qd3;
         }
 
@@ -123,6 +124,7 @@ namespace CogniTutor
             q3["questionContents"] = qc3;
             q3["questionData"] = qd3;
             q3["bundle"] = bundle;
+            q3["isActive"] = false;
             return q3;
         }
 
@@ -132,6 +134,7 @@ namespace CogniTutor
             qd2["correctResponses"] = 0;
             qd2["totalResponses"] = 0;
             qd2["reviewStatus"] = Constants.ReviewStatusType.PENDING;
+            qd2["reviews"] = new List<ParseObject>();
             return qd2;
         }
 
@@ -158,6 +161,7 @@ namespace CogniTutor
             q2["questionContents"] = qc2;
             q2["questionData"] = qd2;
             q2["bundle"] = bundle;
+            q2["isActive"] = false;
             return q2;
         }
 
@@ -167,6 +171,7 @@ namespace CogniTutor
             qd["correctResponses"] = 0;
             qd["totalResponses"] = 0;
             qd["reviewStatus"] = Constants.ReviewStatusType.PENDING;
+            qd["reviews"] = new List<ParseObject>();
             return qd;
         }
 
@@ -192,6 +197,7 @@ namespace CogniTutor
             q["inBundle"] = false;
             q["questionContents"] = qc;
             q["questionData"] = qd;
+            q["isActive"] = false;
             return q;
         }
 

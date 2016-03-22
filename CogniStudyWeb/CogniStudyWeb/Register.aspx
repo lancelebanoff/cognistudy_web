@@ -94,6 +94,9 @@
                             <label for="tbPasswordRetype">Retype Password</label>
                             <asp:TextBox CssClass="form-control" ID="tbPasswordRetype" placeholder="Retype Password" runat="server" type="password" />
                         </div>
+                        
+                        <div class="hidden">
+                            
                         <div class="form-group">
                             <label for="tbPhoneNumber">Phone Number</label>
                             <asp:TextBox CssClass="form-control" ID="tbPhoneNumber" placeholder="Phone Number" runat="server" />
@@ -175,6 +178,7 @@
                         <div class="form-group">
                             <asp:CheckBox ID="cbTerms" runat="server" Text="I have read and agree to the " />
                             <a href="TermsOfUse.aspx" target="_blank">Terms and Conditions.</a>
+                        </div>
                         </div>
                     </div>
                 </div>

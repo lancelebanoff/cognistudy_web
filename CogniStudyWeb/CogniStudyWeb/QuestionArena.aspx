@@ -81,7 +81,8 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <a href="UploadQuestion.aspx" class="btn btn-default">Upload New Question</a>
-                                    <a href="ReviewQuestion.aspx" class="btn btn-default">Review Questions</a>
+                                    <a href="ReviewQuestion.aspx" class="btn btn-default <%= CogniTutor.Constants.UserType.IsQualifiedToReviewQuestions(UserType) ? "" : "hidden" %>">
+                                        Review Questions</a>
                                 </div>
                             </div>
                             <!-- /.row -->

@@ -83,6 +83,12 @@ namespace CogniTutor
             return await query.GetAsync(objectId);
         }
 
+        public static async Task<PublicUserData> GetAllTutorDataById(string objectId)
+        {
+            var query = new ParseQuery<PublicUserData>().Include("tutor.privateTutorData");
+            return await query.GetAsync(objectId);
+        }
+
         public static async Task<IEnumerable<PublicUserData>> Search(string searchText)
         {
             System.Diagnostics.Debug.WriteLine("search");
@@ -90,6 +96,15 @@ namespace CogniTutor
                         where data.SearchableDisplayName.StartsWith(searchText.ToLower())
                         select data;
             System.Diagnostics.Debug.WriteLine("searchabout done");
+            return await query.FindAsync();
+        }
+
+        public static async Task<IEnumerable<PublicUserData>> AllTutors()
+        {
+            string[] array = new string[] {Constants.UserType.TUTOR, Constants.UserType.MODERATOR};
+            var query = from tutor in new ParseQuery<PublicUserData>().Include("tutor.privateTutorData")
+                        where array.Contains(tutor.UserType)
+                        select tutor;
             return await query.FindAsync();
         }
     }

@@ -31,6 +31,15 @@ namespace CogniTutor {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
+        /// pnlConversations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlConversations;
+        
+        /// <summary>
         /// repConversations control.
         /// </summary>
         /// <remarks>
@@ -46,16 +55,7 @@ namespace CogniTutor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel pnlMessages;
-        
-        /// <summary>
-        /// pnlScroll control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlScroll;
+        protected global::System.Web.UI.WebControls.Panel pnlMessages;
         
         /// <summary>
         /// repMessages control.

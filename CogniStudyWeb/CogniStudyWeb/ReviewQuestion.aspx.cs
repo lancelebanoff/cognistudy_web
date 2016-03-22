@@ -37,7 +37,7 @@ namespace CogniTutor
 
         protected override async Task OnStart()
         {
-            if (!(UserType == UserTypes.Moderator || UserType == UserTypes.Admin))
+            if (!(UserType == Constants.UserType.MODERATOR || UserType == Constants.UserType.ADMIN))
                 Response.Redirect("QuestionArena");
             if (!IsPostBack)
             {

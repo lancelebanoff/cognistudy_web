@@ -62,7 +62,7 @@
                             <a href="Dashboard.aspx"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
-                                <a href="Profile.aspx"><i class="fa fa-fw fa-user"></i> Edit Profile</a>
+                                <a href="Profile.aspx?tutorId=<%= mPage.PublicUserData.ObjectId %>"><i class="fa fa-fw fa-user"></i> Edit Profile</a>
                         </li>
                         <li>
                             <a href="Settings"><i class="fa fa-fw fa-gear"></i> Settings</a>
