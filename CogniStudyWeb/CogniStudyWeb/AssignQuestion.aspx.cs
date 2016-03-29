@@ -94,6 +94,12 @@ namespace CogniTutor
             await suggestedQuestion.SaveAsync();
             psd.AssignedQuestions.Add(suggestedQuestion);
             await psd.SaveAsync();
+
+            IDictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "baseUserId", pud.BaseUserId }
+            };
+            await ParseCloud.CallFunctionAsync<string>("assignQuestion", parameters);
         }
 
         protected void grdQuestions_RowDataBound(object sender, GridViewRowEventArgs e)
