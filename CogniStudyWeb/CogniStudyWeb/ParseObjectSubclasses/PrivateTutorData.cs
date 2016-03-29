@@ -66,11 +66,11 @@ namespace CogniTutor
 
         public async Task SendRequestToStudent(PublicUserData StudentPublicData, Tutor tutor)
         {
-            Student student = await StudentPublicData.Student.FetchIfNeededAsync();
-            PrivateStudentData privateStudentData = student.PrivateStudentData;
+            //Student student = await StudentPublicData.Student.FetchIfNeededAsync();
+            //PrivateStudentData privateStudentData = student.PrivateStudentData;
             IDictionary<string, object> parameters = new Dictionary<string, object>
             {
-                { "privateStudentDataId", privateStudentData.ObjectId },
+                { "publicStudentDataId", StudentPublicData.ObjectId },
                 { "tutorId", tutor.ObjectId }
             };
             await ParseCloud.CallFunctionAsync<string>("tutorRequestToStudent", parameters);

@@ -41,8 +41,8 @@ namespace CogniTutor
             ParseClient.Initialize("iT8NyJO0dChjLyfVsHUTM8UZQLSBBJLxd43AX9IY", "SvmmmluPjmLblmNrgqnUmylInkyiXzoWBk9ZxeZH");
             if (IsTestMode)
             {
-                //Session["Email"] = "loganlebanoff@yahoo.com";
-                //Session["Password"] = "poi";
+                Session["Email"] = "loganlebanoff@yahoo.com";
+                Session["Password"] = "poi";
             }
             if (LoggedIn)
             {
@@ -66,6 +66,7 @@ namespace CogniTutor
             ParseObject.RegisterSubclass<QuestionBundle>();
             ParseObject.RegisterSubclass<QuestionContents>();
             ParseObject.RegisterSubclass<QuestionData>();
+            ParseObject.RegisterSubclass<SuggestedQuestion>();
             ParseObject.RegisterSubclass<Student>();
             ParseObject.RegisterSubclass<Tutor>();
 

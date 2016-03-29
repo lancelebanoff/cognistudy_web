@@ -58,10 +58,10 @@ namespace CogniTutor
             set { SetProperty<ParseRelation<ParseObject>>(value); }
         }
         [ParseFieldName("assignedQuestions")]
-        public IList<Question> AssignedQuestions
+        public ParseRelation<SuggestedQuestion> AssignedQuestions
         {
-            get { return GetProperty<IList<Question>>(); }
-            set { SetProperty<IList<Question>>(value); }
+            get { return GetRelationProperty<SuggestedQuestion>(); }
+            set { SetProperty<ParseRelation<SuggestedQuestion>>(value); }
         }
     }
 }

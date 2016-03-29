@@ -241,10 +241,15 @@
                                                 </div>
                                             </div>
                                             
-                                            <asp:Panel ID="pnlSend" runat="server" CssClass="modalPopup" style = "display:none">
-                                                <asp:CheckBoxList CssClass="form-control" runat="server" ID="cblMyStudents" DataTextField="DisplayName" DataValueField="ObjectId"></asp:CheckBoxList>
-                                                <asp:Button CssClass="btn btn-success" runat="server" ID="btnSend" Text="Send to students" OnClick="btnSend_Click" />
-                                                <asp:Button CssClass="btn btn-default" ID="btnCancel" runat="server" Text="Cancel" OnClientClick = "return Hidepopup()"/>
+                                            <asp:Panel ID="pnlSend" runat="server" CssClass="modalPopup row" style = "display:none">
+                                                <div class="col-lg-3">
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <asp:CheckBoxList CssClass="" runat="server" ID="cblMyStudents" DataTextField="DisplayName" DataValueField="ObjectId"></asp:CheckBoxList>
+                                                    <br />
+                                                    <asp:Button CssClass="btn btn-success" runat="server" ID="btnSend" Text="Send to students" OnClick="btnSend_Click" />
+                                                    <asp:Button CssClass="btn btn-default" ID="btnCancel" runat="server" Text="Cancel" OnClientClick = "return Hidepopup()"/>
+                                                </div>
                                             </asp:Panel>
                                             <asp:Button id="btnFake" runat="server" CssClass="hidden" />
                                             <ajax:ModalPopupExtender ID="popup" runat="server" DropShadow="false"

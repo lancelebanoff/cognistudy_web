@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -55,11 +56,15 @@ namespace CogniTutor
             publicUserData.SearchableDisplayName = tbFirstName.Text.Trim().ToLower() + tbLastName.Text.Trim().ToLower();
             publicUserData.BaseUserId = user.ObjectId;
             publicUserData.Tutor = tutor;
+            string path = HttpContext.Current.Server.MapPath("~/Images/default_prof_pic.png");
+            byte[] pic = File.ReadAllBytes(path);
+            publicUserData.ProfilePic = new ParseFile("default-profile-pic", pic);
             publicUserData.ACL = new ParseACL();
             publicUserData.ACL.PublicReadAccess = true;
             publicUserData.ACL.PublicWriteAccess = false;
             publicUserData.ACL.SetWriteAccess(user, true);
             await publicUserData.SaveAsync();
+            user["registrationTestScore"] = 0;
             user.ACL = new ParseACL(user);
             user["publicUserData"] = publicUserData;
             //user.phoneNumber = tbPhoneNumber.Text;
@@ -69,10 +74,11 @@ namespace CogniTutor
             //user.city = tbCity.Text;
             //user.state = ddState.SelectedValue;
             await user.SaveAsync();
-            Response.Redirect("RegisterSuccess.aspx");
+            //Response.Redirect("RegisterSuccess.aspx");
+            Response.Redirect("RegistrationTest");
         }
 
-        #region This Code used to Insert data and Send Email
+        #region This Code used to validate
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             if (!Valid())

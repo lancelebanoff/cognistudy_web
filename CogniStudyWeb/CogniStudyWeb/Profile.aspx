@@ -90,15 +90,17 @@
         <div class="container target col-lg-11">
             <div class="row float-bottom">
                 <div class="col-sm-2 col-xs-5">
-                    <asp:Image ID="Image1" class='img-rounded img-responsive cursor-pointer' runat="server"
-                        onclick='picClick()' onmouseenter='mouseOverProfilePicture()' onmouseleave="mouseLeaveProfilePicture()" />
+                    <asp:Image ID="Image1" class='img-rounded img-responsive <%= IsMyProfile?"cursor-pointer":"" %>' runat="server"
+                        onclick='<%= IsMyProfile?"picClick()":"" %>' onmouseenter='mouseOverProfilePicture()' onmouseleave="mouseLeaveProfilePicture()"
+                        />
                     <asp:Image class="hidden cursor-pointer" ID="edit" src="Images/edit.png" Style="position: absolute; bottom: 5px; right: 20px;" runat="server"
-                        onclick="picClick()" onmouseenter="mouseOverProfilePicture()" onmouseleave="mouseLeaveProfilePicture()" Visible="<%# IsMyProfile %>" />
+                        onclick="picClick()" onmouseenter="mouseOverProfilePicture()" onmouseleave="mouseLeaveProfilePicture()" />
                     <asp:FileUpload class="hidden" ID="FileUpload1" runat="server" onchange="fileChosen()" />
                     <asp:Button class="hidden" ID="btnUpload" runat="server" Text="Upload" OnClick="Upload" />
                 </div>
                 <div class="col-sm-10 col-xs-7">
                     <h1><%= theirPublicUserData.DisplayName %></h1>
+                    <asp:Button runat="server" ID="btnSendMessage" OnClick="btnSendMessage_Click" class="btn btn-info" Text="Send a message" />
                 </div>
             </div>
             <br>
@@ -113,7 +115,7 @@
                                         About Me
                                         <span class="float-right">
                                             <asp:LinkButton ID="EditAboutMeBtn" OnClientClick="var r = checkAboutMeEdit(); if(r == false) return false;"
-                                                OnClick="SetAboutMeVisibilities" class="btn-default btn-md" runat="server" Visible="<%# IsMyProfile %>">
+                                                OnClick="SetAboutMeVisibilities" class="btn-default btn-md" runat="server">
                                                 <span class="glyphicon glyphicon-pencil"></span>
                                             </asp:LinkButton>
                                         </span>

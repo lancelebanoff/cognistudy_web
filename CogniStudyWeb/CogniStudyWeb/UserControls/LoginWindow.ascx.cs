@@ -32,9 +32,12 @@ namespace CogniTutor.UserControls
         {
             //mPage.RegisterAsyncTask(new PageAsyncTask(LogIn));
             bool success = AsyncHelpers.RunSync<bool>(LogIn);
-            mPage.Session["Email"] = tbLoginEmail.Text.ToLower();
-            mPage.Session["Password"] = tbLoginPassword.Text;
-            mPage.Redirect("Dashboard.aspx");
+            if (success)
+            {
+                mPage.Session["Email"] = tbLoginEmail.Text.ToLower();
+                mPage.Session["Password"] = tbLoginPassword.Text;
+                mPage.Redirect("Dashboard.aspx");
+            }
         }
         private async Task<bool> LogIn()
         {
@@ -42,8 +45,14 @@ namespace CogniTutor.UserControls
             {
                 await ParseUser.LogInAsync(tbLoginEmail.Text.ToLower(), tbLoginPassword.Text);
 
+                if (ParseUser.CurrentUser.Get<int>("registrationTestScore") < 7)
+                {
+                    lblLoginError.Visible = true;
+                    lblLoginError.Text = "You failed to acheive a sufficient score on the registration test.";
+                    return false;
+                }
                 // Email not verified
-                if (!ParseUser.CurrentUser.Get<bool>("emailVerified"))
+                else if (!ParseUser.CurrentUser.Get<bool>("emailVerified"))
                 {
                     lblLoginError.Visible = true;
                     lblLoginError.Text = "Please check your email to verify your account.";
@@ -71,7 +80,7 @@ namespace CogniTutor.UserControls
                 else
                 {
                     lblLoginError.Visible = true;
-                    lblLoginError.Text = "There was an unexpected problem with your login. Please contact support@cognitutor.com.";
+                    lblLoginError.Text = "There was an unexpected problem with your login. Please try again.";
                     return false;
                 }
             }

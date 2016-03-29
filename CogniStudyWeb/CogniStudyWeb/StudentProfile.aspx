@@ -70,7 +70,7 @@
                         <asp:Button runat="server" ID="btnAcceptStudent" OnClick="btnAcceptStudent_Click" class="btn btn-success" Text="Accept request from student"/>
                         <asp:Button runat="server" ID="btnStudentAdded" class="btn btn-success disabled" Text="Student added" />
                         <asp:Button runat="server" ID="btnSendMessage" OnClick="btnSendMessage_Click" class="btn btn-info" Text="Send a message" />
-                        <asp:Button runat="server" ID="btnBlockStudent" OnClick="btnBlockStudent_Click" class="btn btn-danger" Text="Block" />
+                        <asp:Button runat="server" ID="btnBlockStudent" OnClick="btnBlockStudent_Click" class="btn btn-danger hidden" Text="Block" />
                         <asp:Button runat="server" ID="btnRemoveStudent" OnClick="btnRemoveStudent_Click" class="btn btn-danger" Text="Remove student" />
 
                     </div>

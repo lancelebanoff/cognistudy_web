@@ -109,7 +109,7 @@
                                 <div class="col-lg-1">
                                 </div>
                                 <div class="col-lg-4">
-                                    <h4 class="h4">Search for Students</h4>
+                                    <h4 class="h4">Search Users</h4>
                                     <cc1:DelayedSubmitExtender ID="DisableButtonExtender1" runat="server" Timeout="1" TargetControlID="TextBox1"/>
                                     <asp:TextBox ID="TextBox1" CssClass="form-control input-lg fill-parent-width" placeholder="Type Student's Name..." runat="server" AutoPostBack="True" OnTextChanged="TextBox1_TextChanged" Columns="50" autocomplete="false"></asp:TextBox>        
                                     <br />
@@ -123,7 +123,9 @@
                                                 <ItemTemplate>
                                                     <tr>
                                                         <td>
-                                                            <a href="StudentProfile.aspx?StudentId=<%# Eval("ObjectId") %>" class="btn btn-default fill-parent-width">
+                                                            <a href="<%# (CogniTutor.Constants.UserType.IsTutor(Eval("UserType").ToString()) ? 
+                                                            "Profile.aspx?tutorId=" : "StudentProfile.aspx?StudentId=") + Eval("ObjectId").ToString() %>" 
+                                                                class="btn btn-default fill-parent-width">
                                                                 <div class="pull-left">
                                                                     <asp:Image Height="75" Width="75" runat="server" ImageUrl='<%# Eval("profilePic.Url") ?? "Images/default_prof_pic.png" %>' />
                                                                     <%# Eval("DisplayName") %>

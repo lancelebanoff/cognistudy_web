@@ -12,9 +12,9 @@ namespace CogniTutor
 {
     public partial class ReviewQuestion : CogniPage
     {
-        public ParseObject[] Questions { get { return (ParseObject[])Session["Questions"]; } set { Session["Questions"] = value; } }
-        public ParseObject[] QuestionContents { get { return (ParseObject[])Session["QuestionContents"]; } set { Session["QuestionContents"] = value; } }
-        public ParseObject[] QuestionData { get { return (ParseObject[])Session["QuestionData"]; } set { Session["QuestionData"] = value; } }
+        public Question[] Questions { get { return (Question[])Session["Questions"]; } set { Session["Questions"] = value; } }
+        public QuestionContents[] QuestionContents { get { return (QuestionContents[])Session["QuestionContents"]; } set { Session["QuestionContents"] = value; } }
+        public QuestionData[] QuestionData { get { return (QuestionData[])Session["QuestionData"]; } set { Session["QuestionData"] = value; } }
         public QuestionBundle Bundle = null;
         public string passageText = "";
         public List<string> AlreadyVisited
@@ -72,26 +72,26 @@ namespace CogniTutor
             }
         }
 
-        private async Task<ParseObject[]> GetQuestions()
+        private async Task<Question[]> GetQuestions()
         {
-            ParseObject question1 = await GetQuestion();
+            Question question1 = await GetQuestion();
             if (question1 == null) return null;
             if (question1.Get<bool>("inBundle"))
             {
                 Bundle = question1.Get<QuestionBundle>("bundle");
                 await Bundle.FetchAsync();
-                IList<ParseObject> questions = Bundle.Get<IList<ParseObject>>("questions");
-                foreach (ParseObject question in questions)
+                IList<Question> questions = Bundle.Get<IList<Question>>("questions");
+                foreach (Question question in questions)
                     await question.FetchIfNeededAsync();
                 return questions.ToArray();
             }
             else
             {
-                return new ParseObject[1] { question1 };
+                return new Question[1] { question1 };
             }
         }
 
-        private async Task<ParseObject> GetQuestion()
+        private async Task<Question> GetQuestion()
         {
             //var contentsQuery = from contents in new ParseQuery<QuestionContents>()
             //                    where contents.Get<ParseObject>("author") != PublicUserData
@@ -106,7 +106,7 @@ namespace CogniTutor
                         join data in dataQuery on question["questionData"] equals data
                         //join contents in contentsQuery on question["questionContents"] equals contents
                         select question;
-            ParseObject res = null;
+            Question res = null;
             try
             {
                 res = await questionQuery.FirstAsync();
@@ -127,22 +127,22 @@ namespace CogniTutor
             return res;
         }
 
-        private async Task<ParseObject[]> GetQuestionData()
+        private async Task<QuestionData[]> GetQuestionData()
         {
-            ParseObject[] data = new ParseObject[Questions.Length];
+            QuestionData[] data = new QuestionData[Questions.Length];
             for(int i = 0; i < data.Length; i++) {
-                data[i] = Questions[i].Get<ParseObject>("questionData");
+                data[i] = Questions[i].Get<QuestionData>("questionData");
                 await data[i].FetchIfNeededAsync();
             }
             return data;
         }
 
-        private async Task<ParseObject[]> GetQuestionContents()
+        private async Task<QuestionContents[]> GetQuestionContents()
         {
-            ParseObject[] contents = new ParseObject[Questions.Length];
+            QuestionContents[] contents = new QuestionContents[Questions.Length];
             for (int i = 0; i < contents.Length; i++)
             {
-                contents[i] = Questions[i].Get<ParseObject>("questionContents");
+                contents[i] = Questions[i].Get<QuestionContents>("questionContents");
                 await contents[i].FetchIfNeededAsync();
             }
             return contents;

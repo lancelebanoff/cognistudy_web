@@ -22,10 +22,15 @@
         <%= QuestionContents.Get<string>("questionText") %>
     </div>
     <div class="col-lg-6" id="divAnswers<%= Index %>">
+        <% if(Checkable) { %>
+        <asp:RadioButtonList runat="server" ID="rblAnswers">
+        </asp:RadioButtonList>
+        <% } else { %>
         <% for (int i = 0; i < QuestionContents.Get<IList<object>>("answers").Count; i++) { %>
         <a class="btn btn-default btn-block" correct="<%= QuestionContents.Get<int>("correctAnswer") == i %>" onclick="showCorrect('divAnswers<%= Index %>','divExplanation<%= Index %>');">
             <%= QuestionContents.Get<List<object>>("answers")[i].ToString() %>
         </a>
+        <% } %>
         <% } %>
     </div>
 </div>

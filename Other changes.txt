@@ -3,3 +3,5 @@ PrivateTutorData	need to add blocked
 Need to add moderator role
 
 changed suggest question to assign question
+
+added registrationTestScore to User

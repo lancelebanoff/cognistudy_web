@@ -94,15 +94,6 @@ namespace CogniTutor {
         protected global::CogniTutor.UserControls.LatexEditor tbQuestion;
         
         /// <summary>
-        /// tbExplanation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::CogniTutor.UserControls.LatexEditor tbExplanation;
-        
-        /// <summary>
         /// tbAnswer1 control.
         /// </summary>
         /// <remarks>
@@ -200,6 +191,15 @@ namespace CogniTutor {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton rbAnswer5;
+        
+        /// <summary>
+        /// tbExplanation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::CogniTutor.UserControls.LatexEditor tbExplanation;
         
         /// <summary>
         /// FileUpload2 control.

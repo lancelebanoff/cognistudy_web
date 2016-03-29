@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Profile</title>
+    <title>Settings</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -67,7 +67,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h1 class="page-header">
-                                        Profile
+                                        Settings
                                     </h1>
                                 </div>
                             </div>
@@ -76,11 +76,20 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h3 class="page-header">Tutors</h3>
-                                    <asp:GridView ID="grdTutors" runat="server" CssClass="table table-striped" AutoGenerateColumns="false">
+                                    <asp:GridView ID="grdTutors" runat="server" CssClass="table table-striped" AutoGenerateColumns="false"
+                                        OnRowCommand="grdTutors_RowCommand" DataKeyNames="ObjectId">
                                         <Columns>
-                                            <asp:TemplateField HeaderText="Subject/Category">
+                                            <asp:TemplateField HeaderText="Tutor Name">
                                                 <ItemTemplate>
                                                     <%# Eval("displayName") %>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:ButtonField Text="Message" CommandName="Message" ButtonType="Button" ControlStyle-CssClass="btn btn-default align-center btn"/>
+                                            <asp:ButtonField Text="See Profile" CommandName="SeeProfile" ButtonType="Button" ControlStyle-CssClass="btn btn-default align-center"  />
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:Button runat="server" CommandName="ToggleModerator" CommandArgument='<%# Eval("ObjectId") %>' CssClass="btn btn-default align-center" 
+                                                        Text='<%# Eval("UserType").ToString() == CogniTutor.Constants.UserType.TUTOR ? "Promote to Moderator" : "Demote to Tutor" %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>

@@ -10,7 +10,7 @@
 namespace CogniTutor {
     
     
-    public partial class Profile {
+    public partial class RegistrationTest {
         
         /// <summary>
         /// form1 control.
@@ -31,147 +31,129 @@ namespace CogniTutor {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
-        /// Image1 control.
+        /// pnlError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
+        protected global::System.Web.UI.WebControls.Panel pnlError;
         
         /// <summary>
-        /// edit control.
+        /// pnlAll control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image edit;
+        protected global::System.Web.UI.WebControls.Panel pnlAll;
         
         /// <summary>
-        /// FileUpload1 control.
+        /// pnlQuestions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
+        protected global::System.Web.UI.WebControls.Panel pnlQuestions;
         
         /// <summary>
-        /// btnUpload control.
+        /// QuestionBlock0 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpload;
+        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock0;
         
         /// <summary>
-        /// btnSendMessage control.
+        /// QuestionBlock1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSendMessage;
+        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock1;
         
         /// <summary>
-        /// MainEditDiv control.
+        /// QuestionBlock2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl MainEditDiv;
+        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock2;
         
         /// <summary>
-        /// EditAboutMeBtn control.
+        /// QuestionBlock3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton EditAboutMeBtn;
+        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock3;
         
         /// <summary>
-        /// divAboutMeBody control.
+        /// QuestionBlock4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAboutMeBody;
+        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock4;
         
         /// <summary>
-        /// divAboutMeStatic control.
+        /// QuestionBlock5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAboutMeStatic;
+        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock5;
         
         /// <summary>
-        /// divAboutMeDynamic control.
+        /// QuestionBlock6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAboutMeDynamic;
+        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock6;
         
         /// <summary>
-        /// tbEditAboutMe control.
+        /// QuestionBlock7 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbEditAboutMe;
+        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock7;
         
         /// <summary>
-        /// divAboutMeButtons control.
+        /// QuestionBlock8 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAboutMeButtons;
+        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock8;
         
         /// <summary>
-        /// aboutMeCancelBtn control.
+        /// QuestionBlock9 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton aboutMeCancelBtn;
+        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock9;
         
         /// <summary>
-        /// aboutMeSaveChangesBtn control.
+        /// btnSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton aboutMeSaveChangesBtn;
-        
-        /// <summary>
-        /// div1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div1;
-        
-        /// <summary>
-        /// div2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div2;
+        protected global::System.Web.UI.WebControls.Button btnSubmit;
     }
 }

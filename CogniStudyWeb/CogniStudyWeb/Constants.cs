@@ -73,6 +73,10 @@ namespace CogniTutor
             public static bool IsQualifiedToReviewQuestions(string myUserType) {
                 return myUserType == MODERATOR || myUserType == ADMIN;
             }
+            public static bool IsTutor(string myUserType)
+            {
+                return myUserType == TUTOR || myUserType == MODERATOR || myUserType == ADMIN;
+            }
         }
 
         public static class ReviewStatusType

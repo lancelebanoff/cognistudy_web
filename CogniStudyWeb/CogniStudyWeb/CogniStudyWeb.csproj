@@ -2579,7 +2579,9 @@
     <Content Include="Profile.aspx" />
     <Content Include="QuestionArena.aspx" />
     <Content Include="Register.aspx" />
+    <Content Include="RegisterFailure.aspx" />
     <Content Include="RegisterSuccess.aspx" />
+    <Content Include="RegistrationTest.aspx" />
     <Content Include="ReviewQuestion.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -2696,6 +2698,7 @@
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="ParseObjectSubclasses\PrivateStudentData.cs" />
+    <Compile Include="ParseObjectSubclasses\SuggestedQuestion.cs" />
     <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentTotalMonthStats.cs" />
     <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentTotalTridayStats.cs" />
     <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentTotalDayStats.cs" />
@@ -2740,12 +2743,26 @@
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RegisterFailure.aspx.cs">
+      <DependentUpon>RegisterFailure.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterFailure.aspx.designer.cs">
+      <DependentUpon>RegisterFailure.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RegisterSuccess.aspx.cs">
       <DependentUpon>RegisterSuccess.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RegisterSuccess.aspx.designer.cs">
       <DependentUpon>RegisterSuccess.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistrationTest.aspx.cs">
+      <DependentUpon>RegistrationTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistrationTest.aspx.designer.cs">
+      <DependentUpon>RegistrationTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="ReviewQuestion.aspx.cs">
       <DependentUpon>ReviewQuestion.aspx</DependentUpon>

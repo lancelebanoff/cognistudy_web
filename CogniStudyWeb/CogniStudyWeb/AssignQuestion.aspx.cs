@@ -71,7 +71,7 @@ namespace CogniTutor
             {
                 if (item.Selected)
                 {
-                    RegisterAsyncTask(new PageAsyncTask(() => AssignQuestionToStudent(questionObjectId: SelectedQuestionId, studentObjectId: item.Value)));
+                    AsyncHelpers.RunSync(() => AssignQuestionToStudent(questionObjectId: SelectedQuestionId, studentObjectId: item.Value));
                 }
             }
             popup.Hide();
@@ -83,9 +83,16 @@ namespace CogniTutor
             PublicUserData pud = await query.GetAsync(studentObjectId);
             Student student = await pud.Student.FetchIfNeededAsync();
             PrivateStudentData psd = await student.PrivateStudentData.FetchIfNeededAsync();
-            IList<Question> list = psd.AssignedQuestions;
-            list.Add(Question.CreateWithoutData<Question>(questionObjectId));
-            psd.AssignedQuestions = list;
+
+            Question question = Question.CreateWithoutData<Question>(questionObjectId);
+            SuggestedQuestion suggestedQuestion = new SuggestedQuestion();
+            suggestedQuestion.Answered = false;
+            suggestedQuestion.Question = question;
+            suggestedQuestion.Response = null;
+            suggestedQuestion.StudentBaseUserId = pud.BaseUserId;
+            suggestedQuestion.Tutor = PublicUserData;
+            await suggestedQuestion.SaveAsync();
+            psd.AssignedQuestions.Add(suggestedQuestion);
             await psd.SaveAsync();
         }
 

@@ -28,7 +28,12 @@ namespace CogniTutor
             theirPublicUserData = await PublicUserData.GetAllTutorDataById(tutorId);
             theirTutor = theirPublicUserData.Tutor;
             theirPrivateTutorData = theirTutor.PrivateTutorData;
-            Image1.ImageUrl = PublicUserData.ProfilePic != null ? PublicUserData.ProfilePic.Url.ToString() : "Images/default_prof_pic.png";
+            Image1.ImageUrl = theirPublicUserData.ProfilePic != null ? theirPublicUserData.ProfilePic.Url.ToString() : "Images/default_prof_pic.png";
+            edit.Visible = IsMyProfile;
+            EditAboutMeBtn.Visible = IsMyProfile;
+            btnSendMessage.Visible = !IsMyProfile;
+            //theirPublicUserData.ProfilePic = null;
+            //await theirPublicUserData.SaveAsync();
         }
 
         protected void aboutMeSaveChangesBtn_Click(object sender, EventArgs e)
@@ -82,6 +87,12 @@ namespace CogniTutor
                 //    + "' where UserID=" + Request.QueryString["TutorID"]);
                 //ReloadPage();
             }
+        }
+
+        protected void btnSendMessage_Click(object sender, EventArgs e)
+        {
+            Session["ConversationUserId"] = theirPublicUserData.ObjectId;
+            Response.Redirect("Messages");
         }
     }
 }

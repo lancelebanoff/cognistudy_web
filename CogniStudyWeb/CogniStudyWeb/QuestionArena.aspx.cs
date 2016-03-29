@@ -38,6 +38,8 @@ namespace CogniTutor
             }
             grdStatus.DataSource = dt;
             grdStatus.DataBind();
+            if (dt.Rows.Count == 0)
+                lblNoQuestions.Visible = true;
         }
 
         protected void grdStatus_DataBinding(object sender, EventArgs e)

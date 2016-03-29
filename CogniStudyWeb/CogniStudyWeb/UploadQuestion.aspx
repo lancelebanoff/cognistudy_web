@@ -119,7 +119,7 @@
                                             </div>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
-                                    <asp:CheckBox runat="server" CssClass="form-control" ID="cbInBundle" onclick="$('#divPassage').toggleClass('hidden'); $('#divPassageExtraQuestions').toggleClass('hidden');" Text="Make 3-question bundle"/><br /><br />
+                                    <asp:CheckBox runat="server" CssClass="" ID="cbInBundle" onclick="$('#divPassage').toggleClass('hidden'); $('#divPassageExtraQuestions').toggleClass('hidden');" Text="Make 3-question bundle"/><br /><br />
 
 
                                     <div id="divPassage" class="hidden">
@@ -189,7 +189,7 @@
                                         Explanation:<br /><COG:LatexEditor runat="server" ID="tbExplanation3" Width="700" Height="100" TextMode="MultiLine"></COG:LatexEditor><br /><br />
                                     </div>
 
-                                    <asp:Button runat="server" ID="btnSubmitQuestion" OnClick="btnSubmitQuestion_Click" Text="Submit"/><br /><br />
+                                    <asp:Button CssClass="btn btn-success" runat="server" ID="btnSubmitQuestion" OnClick="btnSubmitQuestion_Click" Text="Submit"/><br /><br />
                                 </div>
                             </div>
                             <!-- /.row -->

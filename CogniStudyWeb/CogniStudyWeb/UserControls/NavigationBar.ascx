@@ -52,7 +52,7 @@
                 <li>
                     <a href="Messages"><i class="fa fa-fw fa-envelope"></i></a>
                 </li>
-                <li>
+                <li class="hidden">
                     <a href="#"><i class="fa fa-fw fa-bell"></i></a>
                 </li>
                 <li class="dropdown">
@@ -65,7 +65,7 @@
                                 <a href="Profile.aspx?tutorId=<%= mPage.PublicUserData.ObjectId %>"><i class="fa fa-fw fa-user"></i> Edit Profile</a>
                         </li>
                         <li>
-                            <a href="Settings"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            <a href="Settings" class="<%= mPage.UserType == CogniTutor.Constants.UserType.ADMIN ? "" : "hidden" %>"><i class="fa fa-fw fa-gear"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li>

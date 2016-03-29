@@ -53,34 +53,6 @@ namespace CogniTutor
             set { SetProperty<QuestionContents>(value); }
         }
 
-        public static async Task<IEnumerable<Question>> QueryQuestions2(string subject, string category)
-        {
-            if (subject == null)
-            {
-                var query = from ques in new ParseQuery<Question>()
-                            where ques.ObjectId != ""
-                            select ques;
-                return await query.FindAsync();
-            }
-            else if (category == null)
-            {
-                var query = from ques in new ParseQuery<Question>()
-                            where ques.IsActive
-                            where ques.Subject == subject
-                            select ques;
-                return await query.FindAsync();
-            }
-            else
-            {
-                var query = from ques in new ParseQuery<Question>()
-                            where ques.IsActive
-                            where ques.Subject == subject
-                            where ques.Category == category
-                            select ques;
-                return await query.FindAsync();
-            }
-        }
-
         public static List<Question> QueryQuestions(string subject, string category)
         {
             Task<IEnumerable<Question>> t;
@@ -110,6 +82,26 @@ namespace CogniTutor
             }
             t.Wait();
             return t.Result.ToList();
-        } 
+        }
+
+        public static async Task<Question[]> ChooseTenRandomQuestions()
+        {
+            //IDictionary<string, object> parameters = new Dictionary<string, object>
+            //{
+            //    { "categories", Constants.GetPublicStringProperties(typeof(Constants.Category)) }
+            //    //{ "answeredQuestionIds", new string[] {} },
+            //    //{ "skipBundles", true}
+            //};
+            //IList<ParseObject> questions = await ParseCloud.CallFunctionAsync<IList<ParseObject>>("chooseTenQuestions", parameters);
+            //return questions.ToArray();
+
+            var questionQuery = from question in new ParseQuery<Question>()
+                                where question.Get<bool>("isActive")
+                                where !question.Get<bool>("inBundle")
+                                select question;
+            questionQuery = questionQuery.Limit(10);
+            IEnumerable<Question> questions = await questionQuery.FindAsync();
+            return questions.ToArray();
+        }
     }
 }
