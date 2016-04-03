@@ -175,6 +175,7 @@ namespace CogniTutor
             message["text"] = tbType.Text;
             message["receiverBaseUserId"] = RecipientPublicData.Get<string>("baseUserId");
             message["senderBaseUserId"] = UserID;
+            message["sentAt"] = DateTime.Now;
             await message.SaveAsync();
             return message;
         }
