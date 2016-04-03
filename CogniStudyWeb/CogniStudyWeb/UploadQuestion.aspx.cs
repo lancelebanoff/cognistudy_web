@@ -16,12 +16,20 @@ namespace CogniTutor
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
                 ddlSubject.DataSource = Constants.GetPublicStringProperties(typeof(Constants.Subject));
                 ddlSubject.DataBind();
                 ddlSubject.Items.Insert(0, "");
+            }
+
+            if (Request.QueryString["success"] == "true")
+            {
+                pnlSuccess.Visible = true;
+            }
+            else
+            {
+                pnlSuccess.Visible = false;
             }
         }
 
@@ -39,6 +47,13 @@ namespace CogniTutor
 
         protected void btnSubmitQuestion_Click(object sender, EventArgs e)
         {
+            if (!ValidateQuestions())
+            {
+                pnlError.Visible = true;
+                return;
+            }
+            pnlError.Visible = false;
+
             List<Task> tasks = new List<Task>();
             QuestionContents contents1 = CreateContents1();
             QuestionData data1 = CreateData1();
@@ -78,6 +93,62 @@ namespace CogniTutor
                 Task t3 = question1.SaveAsync();
                 t3.Wait();
             }
+            Response.Redirect("UploadQuestion?success=true");
+        }
+
+        private bool ValidateQuestions()
+        {
+            if (ddlSubject.SelectedItem == null || ddlCategory.SelectedItem == null)
+            {
+                lbError.Text = "Please choose a Subject and Category.";
+                return false;
+            }
+            if(tbQuestion.Text == "")
+            {
+                lbError.Text = "Please fill in Question text.";
+                return false;
+            }
+            if (tbAnswer1.Text == "" || tbAnswer2.Text == "" || tbAnswer3.Text == "" || tbAnswer4.Text == "" || (cbAnswer5.Checked && tbAnswer5.Text == ""))
+            {
+                lbError.Text = "Please fill in Answer text.";
+                return false;
+            }
+            if (tbExplanation.Text == "")
+            {
+                lbError.Text = "Please fill in Explanation text.";
+                return false;
+            }
+            if ( !(rbAnswer1.Checked || rbAnswer2.Checked || rbAnswer3.Checked || rbAnswer4.Checked || (cbAnswer5.Checked && rbAnswer5.Checked)) )
+            {
+                lbError.Text = "Please mark one of the answers as correct.";
+                return false;
+            }
+            if (cbInBundle.Checked)
+            {
+                if (tbQuestion2.Text == "" || tbQuestion3.Text == "")
+                {
+                    lbError.Text = "Please fill in Question text.";
+                    return false;
+                }
+                if (tb2Answer1.Text == "" || tb2Answer2.Text == "" || tb2Answer3.Text == "" || tb2Answer4.Text == "" || (cb2Answer5.Checked && tb2Answer5.Text == "")
+                    || tb3Answer1.Text == "" || tb3Answer2.Text == "" || tb3Answer3.Text == "" || tb3Answer4.Text == "" || (cb3Answer5.Checked && tb3Answer5.Text == ""))
+                {
+                    lbError.Text = "Please fill in Answer text.";
+                    return false;
+                }
+                if (tbExplanation2.Text == "" || tbExplanation3.Text == "")
+                {
+                    lbError.Text = "Please fill in Explanation text.";
+                    return false;
+                }
+                if (!(rb2Answer1.Checked || rb2Answer2.Checked || rb2Answer3.Checked || rb2Answer4.Checked || (cb2Answer5.Checked && rb2Answer5.Checked))
+                    || !(rb3Answer1.Checked || rb3Answer2.Checked || rb3Answer3.Checked || rb3Answer4.Checked || (cb3Answer5.Checked && rb3Answer5.Checked)))
+                {
+                    lbError.Text = "Please mark one of the answers as correct.";
+                    return false;
+                }
+            }
+            return true;
         }
 
         private QuestionBundle SaveBundle()
@@ -105,9 +176,9 @@ namespace CogniTutor
         {
             QuestionContents qc3 = new QuestionContents();;
             qc3["correctAnswer"] = CorrectIndex(3);
-            qc3["author"] = ParseUser.CurrentUser.Get<ParseObject>("publicUserData");
+            qc3["author"] = PublicUserData;
             qc3["questionText"] = tbQuestion3.Text;
-            if (cb2Answer5.Checked) qc3["answers"] = new string[] { tb3Answer1.Text, tb3Answer2.Text, tb3Answer3.Text, tb3Answer4.Text, tb3Answer5.Text };
+            if (cb3Answer5.Checked) qc3["answers"] = new string[] { tb3Answer1.Text, tb3Answer2.Text, tb3Answer3.Text, tb3Answer4.Text, tb3Answer5.Text };
             else qc3["answers"] = new string[] { tb3Answer1.Text, tb3Answer2.Text, tb3Answer3.Text, tb3Answer4.Text };
             qc3["explanation"] = tbExplanation3.Text;
             if (FileUpload3.HasFile)
@@ -142,7 +213,7 @@ namespace CogniTutor
         {
             QuestionContents qc2 = new QuestionContents();;
             qc2["correctAnswer"] = CorrectIndex(2);
-            qc2["author"] = ParseUser.CurrentUser.Get<ParseObject>("publicUserData");
+            qc2["author"] = PublicUserData;
             qc2["questionText"] = tbQuestion2.Text;
             if(cb2Answer5.Checked) qc2["answers"] = new string[] { tb2Answer1.Text, tb2Answer2.Text, tb2Answer3.Text, tb2Answer4.Text, tb2Answer5.Text };
             else qc2["answers"] = new string[] { tb2Answer1.Text, tb2Answer2.Text, tb2Answer3.Text, tb2Answer4.Text };
@@ -179,9 +250,9 @@ namespace CogniTutor
         {
             QuestionContents qc = new QuestionContents();
             qc["correctAnswer"] = CorrectIndex(1);
-            qc["author"] = ParseUser.CurrentUser.Get<ParseObject>("publicUserData");
+            qc["author"] = PublicUserData;
             qc["questionText"] = tbQuestion.Text;
-            if(cbAnswer5.Checked) qc["answers"] = new string[] { tbAnswer1.Text, tbAnswer2.Text, tbAnswer3.Text, tbAnswer4.Text, tbAnswer5.Text };
+            if (cbAnswer5.Checked) qc["answers"] = new string[] { tbAnswer1.Text, tbAnswer2.Text, tbAnswer3.Text, tbAnswer4.Text, tbAnswer5.Text };
             else qc["answers"] = new string[] { tbAnswer1.Text, tbAnswer2.Text, tbAnswer3.Text, tbAnswer4.Text };
             qc["explanation"] = tbExplanation.Text;
             if (FileUpload1.HasFile)
@@ -242,11 +313,6 @@ namespace CogniTutor
             Task t = file.SaveAsync();
             t.Wait();
             return file;
-            //string downloadFileName = "user" + Request.QueryString["TutorID"].ToString();
-            //FileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/profile pictures/") + downloadFileName + ".png");
-            //Common.ExecuteCommand("update users set PictureFileName='" + downloadFileName
-            //    + "' where UserID=" + Request.QueryString["TutorID"]);
-            //ReloadPage();
         }
     }
 }

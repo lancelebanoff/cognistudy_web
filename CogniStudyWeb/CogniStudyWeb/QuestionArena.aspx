@@ -17,6 +17,8 @@
 
     <title>Question Arena</title>
 
+    <link rel="shortcut icon" type="image/x-icon" href="Images/CogniTutor5.jpg" />
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -111,6 +113,11 @@
                                             <asp:TemplateField HeaderText="Status">
                                                 <ItemTemplate>
                                                     <%# Eval("reviewStatus") %>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Comments">
+                                                <ItemTemplate>
+                                                    <%# Eval("comments") %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>

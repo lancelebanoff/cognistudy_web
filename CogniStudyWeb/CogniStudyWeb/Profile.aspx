@@ -17,6 +17,8 @@
 
     <title>Profile</title>
 
+    <link rel="shortcut icon" type="image/x-icon" href="Images/CogniTutor5.jpg" />
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css?version=1" rel="stylesheet">
 
@@ -87,7 +89,7 @@
         <COG:LoginWindow runat="server" />
 
         <div class="col-lg-1"></div>
-        <div class="container target col-lg-11">
+        <div class="container target col-lg-10">
             <div class="row float-bottom">
                 <div class="col-sm-2 col-xs-5">
                     <asp:Image ID="Image1" class='img-rounded img-responsive <%= IsMyProfile?"cursor-pointer":"" %>' runat="server"

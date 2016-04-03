@@ -18,6 +18,8 @@
 
     <title>Dashboard</title>
 
+    <link rel="shortcut icon" type="image/x-icon" href="Images/CogniTutor5.jpg" />
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -49,7 +51,7 @@
 </head>
 
 <body>
-    <form id="form1" runat="server" autocomplete="false">
+    <form id="form1" runat="server" autocomplete="off">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
                     <!--Login modal-->
         <COG:LoginWindow runat="server" />
@@ -111,13 +113,20 @@
                                 <div class="col-lg-4">
                                     <h4 class="h4">Search Users</h4>
                                     <cc1:DelayedSubmitExtender ID="DisableButtonExtender1" runat="server" Timeout="1" TargetControlID="TextBox1"/>
-                                    <asp:TextBox ID="TextBox1" CssClass="form-control input-lg fill-parent-width" placeholder="Type Student's Name..." runat="server" AutoPostBack="True" OnTextChanged="TextBox1_TextChanged" Columns="50" autocomplete="false"></asp:TextBox>        
+                                    <asp:TextBox ID="TextBox1" CssClass="form-control input-lg fill-parent-width" placeholder="Type Student's Name..." runat="server" AutoPostBack="True" OnTextChanged="TextBox1_TextChanged" Columns="50" AutoCompleteType="Disabled"></asp:TextBox>        
                                     <br />
-                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                    <asp:UpdatePanel ID="pnlSearch" runat="server" UpdateMode="Conditional">
                                         <Triggers>
                                             <asp:AsyncPostBackTrigger ControlID="TextBox1" />
                                         </Triggers>
                                         <ContentTemplate>
+                                            <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="pnlSearch" DisplayAfter="0">
+                                                <ProgressTemplate>
+                                                    <div class="row text-center">
+                                                        <asp:Image ID="imgLoginLoading" runat="server" ImageUrl="Images/loading.gif" />
+                                                    </div>
+                                                </ProgressTemplate>
+                                            </asp:UpdateProgress>
                                             <asp:Repeater ID="Repeater1" runat="server">
                                                 <HeaderTemplate><table class="table"></HeaderTemplate>
                                                 <ItemTemplate>

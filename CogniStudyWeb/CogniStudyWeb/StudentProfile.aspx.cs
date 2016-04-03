@@ -38,13 +38,29 @@ namespace CogniTutor
 
             btnRequestStudent.Visible = !Common.ParseContains(PrivateTutorData.Students, StudentPublicData)
                 && !Common.ParseContains(PrivateTutorData.RequestsFromStudents, StudentPublicData);
+            //btnRequestSent.Visible = !Common.ParseContains(PrivateTutorData.Students, StudentPublicData)
+            //    && !Common.ParseContains(PrivateTutorData.RequestsFromStudents, StudentPublicData);
             btnAcceptStudent.Visible = !Common.ParseContains(PrivateTutorData.Students, StudentPublicData)
                 && Common.ParseContains(PrivateTutorData.RequestsFromStudents, StudentPublicData);
         }
 
+        public int StudentAllTimeAnswered()
+        {
+            //IDictionary<string, object> parameters = new Dictionary<string, object>
+            //{
+            //    { "studentBaseId", StudentPublicData.BaseUserId },
+            //};
+            //Task<int> t = ParseCloud.CallFunctionAsync<int>("getStudentAllTimeAnswered", parameters);
+            //t.Wait();
+            //return t.Result;
+            return 10;
+        }
+
         protected void btnRequestStudent_Click(object sender, EventArgs e)
         {
-            RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.SendRequestToStudent(StudentPublicData: StudentPublicData, tutor: Tutor)));
+            RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.SendRequestToStudent(StudentPublicData: StudentPublicData, TutorPublicData: PublicUserData)));
+            lbSuccess.Text = "Your request was successfully sent to the student.";
+            pnlSuccess.Visible = true;
         }
 
         protected void btnSendMessage_Click(object sender, EventArgs e)
@@ -56,6 +72,8 @@ namespace CogniTutor
         protected void btnAcceptStudent_Click(object sender, EventArgs e)
         {
             RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.AcceptStudentRequest(StudentPublicData: StudentPublicData, TutorPublicData: PublicUserData)));
+            lbSuccess.Text = "You are now friends with the student. You can now view their analytics and assign questions to them.";
+            pnlSuccess.Visible = true;
         }
 
         protected void btnBlockStudent_Click(object sender, EventArgs e)
@@ -66,6 +84,8 @@ namespace CogniTutor
         protected void btnRemoveStudent_Click(object sender, EventArgs e)
         {
             RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.RemoveStudent(StudentPublicData: StudentPublicData, TutorPublicData: PublicUserData)));
+            lbSuccess.Text = "You are no longer friends with this student.";
+            pnlSuccess.Visible = true;
         }
     }
 }

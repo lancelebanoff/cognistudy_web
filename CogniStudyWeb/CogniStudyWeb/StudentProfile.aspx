@@ -17,6 +17,8 @@
 
     <title>Profile</title>
 
+    <link rel="shortcut icon" type="image/x-icon" href="Images/CogniTutor5.jpg" />
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -58,7 +60,10 @@
 
         <div class="row">
             <div class="col-lg-1"></div>
-            <div class="container target col-lg-11">
+            <div class="container target col-lg-10">
+                <asp:Panel runat="server" class="alert alert-success" ID="pnlSuccess" Visible="false">
+                    <strong>Success! </strong><asp:Label runat="server" ID="lbSuccess" Text="Your request was successfully sent to the student."></asp:Label>
+                </asp:Panel>
                 <hr class="">
                 <div class="row float-bottom">
                     <div class="col-sm-2 col-xs-5">
@@ -68,6 +73,7 @@
                         <h1><%= StudentName %></h1>
                         <asp:Button runat="server" ID="btnRequestStudent" OnClick="btnRequestStudent_Click" class="btn btn-success" Text="Send request to student" />
                         <asp:Button runat="server" ID="btnAcceptStudent" OnClick="btnAcceptStudent_Click" class="btn btn-success" Text="Accept request from student"/>
+                        <asp:Button runat="server" ID="btnRequestSent" class="btn btn-success disabled" Text="Request sent to student" />
                         <asp:Button runat="server" ID="btnStudentAdded" class="btn btn-success disabled" Text="Student added" />
                         <asp:Button runat="server" ID="btnSendMessage" OnClick="btnSendMessage_Click" class="btn btn-info" Text="Send a message" />
                         <asp:Button runat="server" ID="btnBlockStudent" OnClick="btnBlockStudent_Click" class="btn btn-danger hidden" Text="Block" />
@@ -76,9 +82,28 @@
                     </div>
                 </div>
                 <hr />
+                
+                <div id="MainEditDiv" class="row" runat="server">
+                    <div class="col-sm-7" contenteditable="false" style="">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title-bold">
+                                    Activity
+                                </div>
+                            </div>
+                            <div class="panel-body" id="div1" runat="server">
+                                <div id="div2" runat="server">
+                                    <p class="medium-text" style="white-space: pre-wrap">Date started using CogniStudy: <%= PublicUserData.CreatedAt.Value.ToShortDateString() %></p>
+                                    <p class="medium-text" style="white-space: pre-wrap">Number of Questions Answered: <%= StudentAllTimeAnswered() %></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
-            
+
     <!-- Footer -->
     <COG:Footer runat="server" />
     </form>

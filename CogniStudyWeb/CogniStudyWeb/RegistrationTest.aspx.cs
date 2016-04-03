@@ -29,9 +29,6 @@ namespace CogniTutor
             {
                 QuestionBlocks = new QuestionBlock[] {QuestionBlock0,QuestionBlock1,QuestionBlock2,QuestionBlock3,QuestionBlock4,
                     QuestionBlock5,QuestionBlock6,QuestionBlock7,QuestionBlock8,QuestionBlock9};
-            }
-            if (Questions == null)
-            {
                 QuestionIndex = 1;
                 await FillTenQuestions();
             }
@@ -85,6 +82,7 @@ namespace CogniTutor
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             int numCorrect = 0;
+            ListItem listItem = rbl.SelectedItem;
             foreach (QuestionBlock questionBlock in QuestionBlocks)
             {
                 if (!questionBlock.IsAnswered)

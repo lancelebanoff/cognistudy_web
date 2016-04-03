@@ -54,6 +54,13 @@ namespace CogniTutor
                 PrivateTutorData = Tutor.PrivateTutorData;
                 await PrivateTutorData.FetchAsync();
             }
+            else
+            {
+                if (!(this is _Default || this is Register))
+                {
+                    Response.Redirect("Default");
+                }
+            }
             await OnStart();
         }
 

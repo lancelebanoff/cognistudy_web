@@ -25,6 +25,6 @@
         allowedContent: 'span(ques1,ques2,ques3); img[*]',
         height: '<%= Height.ToString() %>',
         width: '<%= Width.ToString() %>'
-
+        
     });
 </script>

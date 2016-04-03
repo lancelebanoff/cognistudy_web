@@ -33,6 +33,7 @@ namespace CogniTutor
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
         }
 
         protected override async Task OnStart()
@@ -48,6 +49,7 @@ namespace CogniTutor
 
         private async Task NewQuestion()
         {
+            tbComments.Text = "";
             Questions = await GetQuestions();
             if (Questions == null)
             {
@@ -167,6 +169,7 @@ namespace CogniTutor
             }
             Task.WaitAll(tasks.ToArray());
             RegisterAsyncTask(new PageAsyncTask(NewQuestion));
+            pnlSuccess.Visible = true;
         }
 
         protected void btnDeny_Click(object sender, EventArgs e)
@@ -187,11 +190,13 @@ namespace CogniTutor
             }
             Task.WaitAll(tasks.ToArray());
             RegisterAsyncTask(new PageAsyncTask(NewQuestion));
+            pnlSuccess.Visible = true;
         }
 
         protected void btnSkip_Click(object sender, EventArgs e)
         {
             RegisterAsyncTask(new PageAsyncTask(NewQuestion));
+            pnlSuccess.Visible = false;
         }
     }
 }

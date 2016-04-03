@@ -19,7 +19,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard</title>
+    <title>Analytics</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="Images/CogniTutor5.jpg" />
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">

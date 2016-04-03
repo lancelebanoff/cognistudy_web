@@ -188,6 +188,7 @@
     <Content Include="font-awesome\css\font-awesome.min.css" />
     <Content Include="font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Images\CogniTutor5.jpg" />
     <Content Include="Images\default_prof_pic.png" />
     <Content Include="Images\edit.png" />
     <Content Include="Images\loading.gif" />
@@ -2637,6 +2638,7 @@
     <Content Include="UserControls\QuestionBlock.ascx" />
     <Content Include="UserControls\SingleBarChart.ascx" />
     <Content Include="UserControls\SubjectCategoryDropdown.ascx" />
+    <Content Include="UserControls\SwitchEditor.ascx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -2890,6 +2892,13 @@
     </Compile>
     <Compile Include="UserControls\SubjectCategoryDropdown.ascx.designer.cs">
       <DependentUpon>SubjectCategoryDropdown.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SwitchEditor.ascx.cs">
+      <DependentUpon>SwitchEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\SwitchEditor.ascx.designer.cs">
+      <DependentUpon>SwitchEditor.ascx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

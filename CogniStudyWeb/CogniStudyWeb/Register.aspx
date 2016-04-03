@@ -17,6 +17,8 @@
 
     <title>Registration</title>
 
+    <link rel="shortcut icon" type="image/x-icon" href="Images/CogniTutor5.jpg" />
+
     <!-- Bootstrap Core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 
@@ -59,7 +61,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Registration</h1>
+                    <h1 class="page-header">Tutor Registration</h1>
                 </div>
             </div>
 

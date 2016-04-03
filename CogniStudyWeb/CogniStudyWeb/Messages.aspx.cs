@@ -156,8 +156,17 @@ namespace CogniTutor
             messages.Add(message);
             Conversation["lastSent"] = DateTime.Now;
             await Conversation.SaveAsync();
-            tbType.Text = "";
 
+            IDictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "senderBaseUserId", PublicUserData.BaseUserId },
+                { "receiverBaseUserId", RecipientPublicData.Get<string>("baseUserId") },
+                { "senderName", PublicUserData.DisplayName },
+                { "messageText", tbType.Text }
+            };
+            await ParseCloud.CallFunctionAsync<string>("sendMessageNotification", parameters);
+
+            tbType.Text = "";
         }
 
         protected async Task<ParseObject> CreateNewMessage()

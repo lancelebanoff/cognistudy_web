@@ -18,6 +18,8 @@
 
     <title>Registration</title>
 
+    <link rel="shortcut icon" type="image/x-icon" href="Images/CogniTutor5.jpg" />
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -90,6 +92,11 @@
                             <asp:Panel ID="pnlAll" runat="server" class="row">
                                 <div class="col-lg-12">
                                     <asp:Panel runat="server" id="pnlQuestions">
+                                        <asp:RadioButtonList runat="server" ID="rbl">
+                                            <asp:ListItem Text="aa"></asp:ListItem>
+                                            <asp:ListItem Text="ba"></asp:ListItem>
+                                            <asp:ListItem Text="ca"></asp:ListItem>
+                                        </asp:RadioButtonList>
                                         <COG:QuestionBlock runat="server" id="QuestionBlock0" Checkable="true"></COG:QuestionBlock>
                                         <COG:QuestionBlock runat="server" id="QuestionBlock1" Checkable="true"></COG:QuestionBlock>
                                         <COG:QuestionBlock runat="server" id="QuestionBlock2" Checkable="true"></COG:QuestionBlock>

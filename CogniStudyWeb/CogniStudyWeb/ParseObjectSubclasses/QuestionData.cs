@@ -7,6 +7,7 @@ using System.Web;
 namespace CogniTutor
 {
     [ParseClassName("QuestionData")]
+    [Serializable]
     public class QuestionData : ParseObject
     {
         [ParseFieldName("responses")]

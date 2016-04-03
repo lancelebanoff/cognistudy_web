@@ -16,7 +16,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Question Arena</title>
+    <title>Review Question</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="Images/CogniTutor5.jpg" />
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -64,7 +66,7 @@
 </head>
 
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" defaultbutton="">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
                     <!--Login modal-->
         <COG:LoginWindow runat="server" />
@@ -78,6 +80,10 @@
             <div class="col-lg-12">
                 <div id="wrapper">
 
+                    <asp:Panel runat="server" class="alert alert-success" ID="pnlSuccess" Visible="false">
+                      <strong>Success!</strong> You successfully approved/denied the question.
+                    </asp:Panel>
+
                     <div id="page-wrapper">
 
                         <div class="container-fluid">
@@ -86,7 +92,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h1 class="page-header">
-                                        Question Arena
+                                        Review Question
                                     </h1>
                                     <ol class="breadcrumb hidden">
                                         <li class="active">

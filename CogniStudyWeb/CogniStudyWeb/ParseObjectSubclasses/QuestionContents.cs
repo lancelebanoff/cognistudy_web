@@ -7,6 +7,7 @@ using System.Web;
 namespace CogniTutor
 {
     [ParseClassName("QuestionContents")]
+    [Serializable]
     public class QuestionContents : ParseObject
     {
         [ParseFieldName("bundle")]

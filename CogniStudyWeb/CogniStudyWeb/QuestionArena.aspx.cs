@@ -26,6 +26,7 @@ namespace CogniTutor
                 await question.FetchIfNeededAsync();
                 ParseObject contents = await question.Get<ParseObject>("questionContents").FetchIfNeededAsync();
                 ParseObject data = await question.Get<ParseObject>("questionData").FetchIfNeededAsync();
+                IList<ParseObject> reviews = (await data.Get<IList<ParseObject>>("reviews").FetchAllIfNeededAsync()).ToList();
                 DataRow dr = dt.NewRow();
                 dr["subject"] = question.Get<string>("subject");
                 dr["category"] = question.Get<string>("category");
@@ -34,6 +35,10 @@ namespace CogniTutor
                 string strAnswers = String.Join("\r\n", answers);
                 dr["answers"] = strAnswers;
                 dr["reviewStatus"] = data.Get<string>("reviewStatus");
+                if (reviews.Count != 0)
+                {
+                    dr["comments"] = reviews[0].Get<string>("comment");
+                }
                 dt.Rows.Add(dr);
             }
             grdStatus.DataSource = dt;
@@ -67,6 +72,7 @@ namespace CogniTutor
             dt.Columns.Add("questionText", typeof(string));
             dt.Columns.Add("answers", typeof(string));
             dt.Columns.Add("reviewStatus", typeof(string));
+            dt.Columns.Add("comments", typeof(string));
             return dt;
         }
 

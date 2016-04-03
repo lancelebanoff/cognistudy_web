@@ -18,6 +18,8 @@
 
     <title>Messages</title>
 
+    <link rel="shortcut icon" type="image/x-icon" href="Images/CogniTutor5.jpg" />
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -99,7 +101,7 @@ div.fill{
 </head>
 
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" autocomplete="off" defaultbutton="btnSend">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
                     <!--Login modal-->
         <COG:LoginWindow runat="server" />
