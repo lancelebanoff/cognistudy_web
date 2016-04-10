@@ -83,9 +83,9 @@ namespace CogniTutor
             return await query.GetAsync(objectId);
         }
 
-        public static async Task<PublicUserData> GetAllTutorDataById(string objectId)
+        public static async Task<PublicUserData> GetPublicTutorDataById(string objectId)
         {
-            var query = new ParseQuery<PublicUserData>().Include("tutor.privateTutorData");
+            var query = new ParseQuery<PublicUserData>().Include("tutor");
             return await query.GetAsync(objectId);
         }
 

@@ -30,37 +30,66 @@ namespace CogniTutor
                 Image1.ImageUrl = StudentPublicData.ProfilePic != null ? StudentPublicData.ProfilePic.Url.ToString() : "Images/default_prof_pic.png";
                 await PrivateTutorData.Students.FetchAllIfNeededAsync();
             }
-            bool a = Common.ParseContains(PrivateTutorData.Students, StudentPublicData);
-            //bool a = Common.ParseContains(PrivateTutorData.Students, StudentPublicData);
+            FixButtonVisibility();
+
+            if (Common.ParseContains(PrivateTutorData.Students, StudentPublicData))
+            {
+                pnlAssignedQuestions.Visible = true;
+                grdAssignedQuestions.DataSource = await SuggestedQuestion.GetAssignedQuestionsBetweenStudentTutor(StudentPublicData, PublicUserData);
+                grdAssignedQuestions.DataBind();
+            }
+            else
+            {
+                pnlAssignedQuestions.Visible = false;
+            }
+        }
+
+        private void FixButtonVisibility()
+        {
             btnBlockStudent.Visible = !Common.ParseContains(PrivateTutorData.Students, StudentPublicData);
             btnRemoveStudent.Visible = Common.ParseContains(PrivateTutorData.Students, StudentPublicData);
             btnStudentAdded.Visible = Common.ParseContains(PrivateTutorData.Students, StudentPublicData);
 
+            bool alreadyRequested = TutorAlreadyRequestedStudent();
             btnRequestStudent.Visible = !Common.ParseContains(PrivateTutorData.Students, StudentPublicData)
-                && !Common.ParseContains(PrivateTutorData.RequestsFromStudents, StudentPublicData);
-            //btnRequestSent.Visible = !Common.ParseContains(PrivateTutorData.Students, StudentPublicData)
-            //    && !Common.ParseContains(PrivateTutorData.RequestsFromStudents, StudentPublicData);
+                && !Common.ParseContains(PrivateTutorData.RequestsFromStudents, StudentPublicData)
+                && !alreadyRequested;
+            btnRequestSent.Visible = !Common.ParseContains(PrivateTutorData.Students, StudentPublicData)
+                && alreadyRequested;
             btnAcceptStudent.Visible = !Common.ParseContains(PrivateTutorData.Students, StudentPublicData)
                 && Common.ParseContains(PrivateTutorData.RequestsFromStudents, StudentPublicData);
         }
 
         public int StudentAllTimeAnswered()
         {
-            //IDictionary<string, object> parameters = new Dictionary<string, object>
-            //{
-            //    { "studentBaseId", StudentPublicData.BaseUserId },
-            //};
-            //Task<int> t = ParseCloud.CallFunctionAsync<int>("getStudentAllTimeAnswered", parameters);
-            //t.Wait();
-            //return t.Result;
-            return 10;
+            IDictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "studentBaseId", StudentPublicData.BaseUserId },
+            };
+            Task<int> t = ParseCloud.CallFunctionAsync<int>("getStudentAllTimeAnswered", parameters);
+            t.Wait();
+            return t.Result;
+            //return 10;
+        }
+
+        public bool TutorAlreadyRequestedStudent()
+        {
+            IDictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "publicStudentDataId", StudentPublicData.ObjectId },
+                { "publicTutorDataId", PublicUserData.ObjectId }
+            };
+            Task<bool> t = ParseCloud.CallFunctionAsync<bool>("tutorAlreadyRequestedStudent", parameters);
+            t.Wait();
+            return t.Result;
         }
 
         protected void btnRequestStudent_Click(object sender, EventArgs e)
         {
-            RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.SendRequestToStudent(StudentPublicData: StudentPublicData, TutorPublicData: PublicUserData)));
+            AsyncHelpers.RunSync(() => PrivateTutorData.SendRequestToStudent(StudentPublicData: StudentPublicData, TutorPublicData: PublicUserData));
             lbSuccess.Text = "Your request was successfully sent to the student.";
             pnlSuccess.Visible = true;
+            FixButtonVisibility();
         }
 
         protected void btnSendMessage_Click(object sender, EventArgs e)
@@ -71,21 +100,24 @@ namespace CogniTutor
 
         protected void btnAcceptStudent_Click(object sender, EventArgs e)
         {
-            RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.AcceptStudentRequest(StudentPublicData: StudentPublicData, TutorPublicData: PublicUserData)));
+            AsyncHelpers.RunSync(() => PrivateTutorData.AcceptStudentRequest(StudentPublicData: StudentPublicData, TutorPublicData: PublicUserData));
             lbSuccess.Text = "You are now friends with the student. You can now view their analytics and assign questions to them.";
             pnlSuccess.Visible = true;
+            FixButtonVisibility();
         }
 
         protected void btnBlockStudent_Click(object sender, EventArgs e)
         {
-            RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.BlockStudent(StudentPublicData: StudentPublicData)));
+            AsyncHelpers.RunSync(() => PrivateTutorData.BlockStudent(StudentPublicData: StudentPublicData));
+            FixButtonVisibility();
         }
 
         protected void btnRemoveStudent_Click(object sender, EventArgs e)
         {
-            RegisterAsyncTask(new PageAsyncTask(() => PrivateTutorData.RemoveStudent(StudentPublicData: StudentPublicData, TutorPublicData: PublicUserData)));
+            AsyncHelpers.RunSync(() => PrivateTutorData.RemoveStudent(StudentPublicData: StudentPublicData, TutorPublicData: PublicUserData));
             lbSuccess.Text = "You are no longer friends with this student.";
             pnlSuccess.Visible = true;
+            FixButtonVisibility();
         }
     }
 }

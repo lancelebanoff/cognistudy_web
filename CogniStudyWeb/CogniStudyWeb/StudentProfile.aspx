@@ -98,9 +98,57 @@
                                 </div>
                             </div>
                         </div>
+                        
 
                     </div>
                 </div>
+
+                <asp:Panel class="row" runat="server" Visible="false" ID="pnlAssignedQuestions">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title-bold">
+                                    Assigned Questions
+                                </div>
+                            </div>
+                            <div class="panel-body" id="div3" runat="server">
+                                <div id="div4" runat="server">
+                                    <asp:GridView ID="grdAssignedQuestions" runat="server" CssClass="table table-striped" AutoGenerateColumns="false">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Subject/Category">
+                                                <ItemTemplate>
+                                                    <%# Eval("question.subject") + " - " + Eval("question.category") %>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Question">
+                                                <ItemTemplate>
+                                                    <%# Eval("question.questionContents.questionText") %>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Answers">
+                                                <ItemTemplate>
+                                                    <%# Eval("question.questionContents.FriendlyAnswers") %>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Student Response">
+                                                <ItemTemplate>
+                                                    <%# Convert.ToBoolean(Eval("answered")) ? (((int)Eval("response.selectedAnswer")) + 'A' + "") : "Not answered" %>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Correct Answer">
+                                                <ItemTemplate>
+                                                    <%# Eval("question.questionContents.correctAnswer") %>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </asp:Panel>
+
+
             </div>
         </div>
 

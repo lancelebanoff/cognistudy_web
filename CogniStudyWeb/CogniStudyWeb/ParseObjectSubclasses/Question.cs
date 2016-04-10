@@ -53,56 +53,43 @@ namespace CogniTutor
             get { return GetProperty<QuestionContents>(); }
             set { SetProperty<QuestionContents>(value); }
         }
+        [ParseFieldName("test")]
+        public bool Test
+        {
+            get { return GetProperty<bool>(); }
+            set { SetProperty<bool>(value); }
+        }
 
         public static List<Question> QueryQuestions(string subject, string category)
         {
-            Task<IEnumerable<Question>> t;
-            if (subject == null)
+            IDictionary<string, object> parameters = new Dictionary<string, object>
             {
-                var query = from ques in new ParseQuery<Question>().Include("questionContents").Include("questionData").Include("bundle")
-                            where ques.Get<bool>("isActive")
-                            select ques;
-                t = query.FindAsync();
-            }
-            else if (category == null)
-            {
-                var query = from ques in new ParseQuery<Question>().Include("questionContents").Include("questionData").Include("bundle")
-                            where ques.Get<bool>("isActive")
-                            where ques.Subject == subject
-                            select ques;
-                t = query.FindAsync();
-            }
-            else
-            {
-                var query = from ques in new ParseQuery<Question>().Include("questionContents").Include("questionData").Include("bundle")
-                            where ques.Get<bool>("isActive")
-                            where ques.Subject == subject
-                            where ques.Category == category
-                            select ques;
-                t = query.FindAsync();
-            }
+                { "subject", subject ?? "" },
+                { "category", category ?? "" }
+            };
+            Task<IList<ParseObject>> t = ParseCloud.CallFunctionAsync<IList<ParseObject>>("queryAllQuestions", parameters);
             t.Wait();
-            return t.Result.ToList();
+            List<Question> questions = new List<Question>();
+            foreach (ParseObject o in t.Result)
+            {
+                questions.Add((Question)o);
+            }
+            return questions;
         }
 
         public static async Task<Question[]> ChooseTenRandomQuestions()
         {
-            //IDictionary<string, object> parameters = new Dictionary<string, object>
-            //{
-            //    { "categories", Constants.GetPublicStringProperties(typeof(Constants.Category)) }
-            //    //{ "answeredQuestionIds", new string[] {} },
-            //    //{ "skipBundles", true}
-            //};
-            //IList<ParseObject> questions = await ParseCloud.CallFunctionAsync<IList<ParseObject>>("chooseTenQuestions", parameters);
-            //return questions.ToArray();
-
-            var questionQuery = from question in new ParseQuery<Question>()
-                                where question.Get<bool>("isActive")
-                                where !question.Get<bool>("inBundle")
-                                select question;
-            questionQuery = questionQuery.Limit(10);
-            IEnumerable<Question> questions = await questionQuery.FindAsync();
+            IDictionary<string, object> parameters = new Dictionary<string, object>
+            {
+            };
+            IList<Question> questions = await ParseCloud.CallFunctionAsync<IList<Question>>("chooseTenQuestions", parameters);
             return questions.ToArray();
+        }
+
+        public static async Task<Question> GetFullQuestionById(string questionId)
+        {
+            ParseQuery<Question> query = new ParseQuery<Question>().Include("questionData").Include("questionContents").Include("bundle");
+            return await query.GetAsync(questionId);
         }
     }
 }

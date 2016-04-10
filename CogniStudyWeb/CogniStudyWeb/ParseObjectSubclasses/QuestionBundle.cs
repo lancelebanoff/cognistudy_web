@@ -28,6 +28,6 @@ namespace CogniTutor
             set { SetProperty<List<Question>>(value); }
         }
 
-        public string ImageUrl { get { return Image == null ? "" : Image.Url.ToString(); } set { } }
+        public string ImageUrl { get { return Image == null ? "" : Image.Url.ToString(); } }
     }
 }

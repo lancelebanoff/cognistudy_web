@@ -1,9 +1,9 @@
-﻿<%@ Page ValidateRequest="false" Async="true" Language="C#" AutoEventWireup="true" CodeBehind="RegistrationTest.aspx.cs" Inherits="CogniTutor.RegistrationTest" %>
+﻿<%@ Page EnableViewState="true" ValidateRequest="false" Async="true" Language="C#" AutoEventWireup="true" CodeBehind="RegistrationTest.aspx.cs" Inherits="CogniTutor.RegistrationTest" %>
 
 <%@ Register TagPrefix="COG" TagName="NavigationBar" Src="~/UserControls/NavigationBar.ascx" %>
 <%@ Register TagPrefix="COG" TagName="Footer" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="COG" TagName="LoginWindow" Src="~/UserControls/LoginWindow.ascx" %>
-<%@ Register TagPrefix="COG" TagName="QuestionBlock" Src="~/UserControls/QuestionBlock.ascx" %>
+<%@ Register TagPrefix="COG" TagName="CheckableQuestionBlock" Src="~/UserControls/CheckableQuestionBlock.ascx" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -92,21 +92,16 @@
                             <asp:Panel ID="pnlAll" runat="server" class="row">
                                 <div class="col-lg-12">
                                     <asp:Panel runat="server" id="pnlQuestions">
-                                        <asp:RadioButtonList runat="server" ID="rbl">
-                                            <asp:ListItem Text="aa"></asp:ListItem>
-                                            <asp:ListItem Text="ba"></asp:ListItem>
-                                            <asp:ListItem Text="ca"></asp:ListItem>
-                                        </asp:RadioButtonList>
-                                        <COG:QuestionBlock runat="server" id="QuestionBlock0" Checkable="true"></COG:QuestionBlock>
-                                        <COG:QuestionBlock runat="server" id="QuestionBlock1" Checkable="true"></COG:QuestionBlock>
-                                        <COG:QuestionBlock runat="server" id="QuestionBlock2" Checkable="true"></COG:QuestionBlock>
-                                        <COG:QuestionBlock runat="server" id="QuestionBlock3" Checkable="true"></COG:QuestionBlock>
-                                        <COG:QuestionBlock runat="server" id="QuestionBlock4" Checkable="true"></COG:QuestionBlock>
-                                        <COG:QuestionBlock runat="server" id="QuestionBlock5" Checkable="true"></COG:QuestionBlock>
-                                        <COG:QuestionBlock runat="server" id="QuestionBlock6" Checkable="true"></COG:QuestionBlock>
-                                        <COG:QuestionBlock runat="server" id="QuestionBlock7" Checkable="true"></COG:QuestionBlock>
-                                        <COG:QuestionBlock runat="server" id="QuestionBlock8" Checkable="true"></COG:QuestionBlock>
-                                        <COG:QuestionBlock runat="server" id="QuestionBlock9" Checkable="true"></COG:QuestionBlock>
+                                        <COG:CheckableQuestionBlock runat="server" id="QuestionBlock0"></COG:CheckableQuestionBlock>
+                                        <COG:CheckableQuestionBlock runat="server" id="QuestionBlock1"></COG:CheckableQuestionBlock>
+                                        <COG:CheckableQuestionBlock runat="server" id="QuestionBlock2"></COG:CheckableQuestionBlock>
+                                        <COG:CheckableQuestionBlock runat="server" id="QuestionBlock3"></COG:CheckableQuestionBlock>
+                                        <COG:CheckableQuestionBlock runat="server" id="QuestionBlock4"></COG:CheckableQuestionBlock>
+                                        <COG:CheckableQuestionBlock runat="server" id="QuestionBlock5"></COG:CheckableQuestionBlock>
+                                        <COG:CheckableQuestionBlock runat="server" id="QuestionBlock6"></COG:CheckableQuestionBlock>
+                                        <COG:CheckableQuestionBlock runat="server" id="QuestionBlock7"></COG:CheckableQuestionBlock>
+                                        <COG:CheckableQuestionBlock runat="server" id="QuestionBlock8"></COG:CheckableQuestionBlock>
+                                        <COG:CheckableQuestionBlock runat="server" id="QuestionBlock9"></COG:CheckableQuestionBlock>
                                     </asp:Panel>
                                     <asp:Button CssClass="btn btn-success center-block" runat="server" ID="btnSubmit" OnClick="btnSubmit_Click" Text="Submit"/>
                                 </div>

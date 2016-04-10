@@ -23,58 +23,16 @@ namespace CogniTutor
         {
         }
 
-        private async Task SignUp()
+        private void GoToRegistrationTest()
         {
-            var user = new ParseUser()
-            {
-                Username = tbEmail.Text.ToLower(),
-                Password = tbPassword.Text,
-                Email = tbEmail.Text.ToLower(),
-            };
-            await user.SignUpAsync();
-            PrivateTutorData privateTutorData = new PrivateTutorData();
-            privateTutorData.BaseUserId = user.ObjectId;
-            privateTutorData.Students = new List<PublicUserData>();
-            privateTutorData.RequestsFromStudents = new List<PublicUserData>();
-            privateTutorData.Blocked = new List<ParseUser>();
-            privateTutorData.ACL = new ParseACL(user);
-            await privateTutorData.SaveAsync();
-            Tutor tutor = new Tutor();
-            tutor.NumQuestionsCreated = 0;
-            tutor.NumQuestionsReviewed = 0;
-            tutor.BaseUserId = user.ObjectId;
-            tutor.Biography = "";
-            tutor.PrivateTutorData = privateTutorData;
-            tutor.ACL = new ParseACL();
-            tutor.ACL.PublicReadAccess = true;
-            tutor.ACL.PublicWriteAccess = false;
-            tutor.ACL.SetWriteAccess(user, true);
-            await tutor.SaveAsync();
-            PublicUserData publicUserData = new PublicUserData();
-            publicUserData.UserType = Constants.UserType.TUTOR;
-            publicUserData.DisplayName = tbFirstName.Text.Trim() + " " + tbLastName.Text.Trim();
-            publicUserData.SearchableDisplayName = tbFirstName.Text.Trim().ToLower() + tbLastName.Text.Trim().ToLower();
-            publicUserData.BaseUserId = user.ObjectId;
-            publicUserData.Tutor = tutor;
-            string path = HttpContext.Current.Server.MapPath("~/Images/default_prof_pic.png");
-            byte[] pic = File.ReadAllBytes(path);
-            publicUserData.ProfilePic = new ParseFile("default-profile-pic", pic);
-            publicUserData.ACL = new ParseACL();
-            publicUserData.ACL.PublicReadAccess = true;
-            publicUserData.ACL.PublicWriteAccess = false;
-            publicUserData.ACL.SetWriteAccess(user, true);
-            await publicUserData.SaveAsync();
-            user["registrationTestScore"] = 0;
-            user.ACL = new ParseACL(user);
-            user["publicUserData"] = publicUserData;
-            //user.phoneNumber = tbPhoneNumber.Text;
-            //user.zipCode = tbZipCode.Text;
-            //user.address = tbStreetAddress.Text;
-            //user.address2 = tbAddress2.Text;
-            //user.city = tbCity.Text;
-            //user.state = ddState.SelectedValue;
-            await user.SaveAsync();
+            RegistrationInfo info = new RegistrationInfo();
+            info.FirstName = tbFirstName.Text;
+            info.LastName = tbLastName.Text;
+            info.Email = tbEmail.Text;
+            info.Password = tbPassword.Text;
+
             //Response.Redirect("RegisterSuccess.aspx");
+            Session["RegistrationInfo"] = info;
             Response.Redirect("RegistrationTest");
         }
 
@@ -83,7 +41,7 @@ namespace CogniTutor
         {
             if (!Valid())
                 return;
-            RegisterAsyncTask(new PageAsyncTask(SignUp));
+            GoToRegistrationTest();
         }
 
         private bool Valid()
@@ -144,13 +102,23 @@ namespace CogniTutor
             //    lblError.Text = "You must agree to the Terms and Conditions";
             //    lblError.Visible = true;
             //}
-            //else if (EmailExists(tbEmail.Text))
-            //{
-            //    lblError.Text = "That email is not available";
-            //    lblError.Visible = true;
-            //}
+            else if (AsyncHelpers.RunSync<bool>(() => EmailExists(email: tbEmail.Text)))
+            {
+                lblError.Text = "That email is not available";
+                lblError.Visible = true;
+            }
 
             return !lblError.Visible;
+        }
+
+        private async Task<bool> EmailExists(string email)
+        {
+            IDictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "email", email}
+            };
+            bool res = await ParseCloud.CallFunctionAsync<bool>("doesEmailExist", parameters);
+            return res;
         }
         #endregion
     }

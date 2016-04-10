@@ -17,7 +17,7 @@
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                        <div class="form-group">
-                           <asp:Label ID="lblLoginError" class="lead" runat="server" Text="Username and/or password is incorrect." Visible="False" ForeColor="Red"></asp:Label>
+                           <asp:Label ID="lblLoginError" class="lead" runat="server" Text="There was a problem with your login." Visible="False" ForeColor="Red"></asp:Label>
                        </div>
                         <div class="form-group">
                            <asp:TextBox ID="tbLoginEmail" runat="server" AutoCompleteType="Email" CssClass="form-control input-lg" placeholder="Email"></asp:TextBox>

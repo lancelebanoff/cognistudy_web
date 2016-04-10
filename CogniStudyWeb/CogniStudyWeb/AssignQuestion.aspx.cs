@@ -1,4 +1,5 @@
 ﻿using AjaxControlToolkit;
+using CogniTutor.UserControls;
 using Parse;
 using System;
 using System.Collections;
@@ -58,9 +59,24 @@ namespace CogniTutor
 
         protected void grdQuestions_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Assign")
+            if (e.CommandName == "View")
             {
                 SelectedQuestionId = e.CommandArgument.ToString();
+                Question question = AsyncHelpers.RunSync<Question>(() => Question.GetFullQuestionById(SelectedQuestionId));
+                if (question.InBundle)
+                {
+                    pnlBundle.Visible = true;
+                    Image1.ImageUrl = question.Bundle.Image == null ? "" : question.Bundle.Image.Url.ToString();
+                    lbBundleText.Text = question.Bundle.PassageText;
+                }
+                else 
+                {
+                    pnlBundle.Visible = false;
+                }
+                QuestionBlock questionBlock = (QuestionBlock)LoadControl("~/UserControls/QuestionBlock.ascx");
+                questionBlock.FillContents(question);
+                pnlQuestions.Controls.Add(questionBlock);
+
                 popup.Show();
             }
         }
@@ -75,14 +91,15 @@ namespace CogniTutor
                 }
             }
             popup.Hide();
+            pnlSuccess.Visible = true;
         }
 
         protected async Task AssignQuestionToStudent(string questionObjectId, string studentObjectId)
         {
             var query = new ParseQuery<PublicUserData>();
             PublicUserData pud = await query.GetAsync(studentObjectId);
-            Student student = await pud.Student.FetchIfNeededAsync();
-            PrivateStudentData psd = await student.PrivateStudentData.FetchIfNeededAsync();
+            //Student student = await pud.Student.FetchIfNeededAsync();
+            //PrivateStudentData psd = await student.PrivateStudentData.FetchIfNeededAsync();
 
             Question question = Question.CreateWithoutData<Question>(questionObjectId);
             SuggestedQuestion suggestedQuestion = new SuggestedQuestion();
@@ -92,12 +109,13 @@ namespace CogniTutor
             suggestedQuestion.StudentBaseUserId = pud.BaseUserId;
             suggestedQuestion.Tutor = PublicUserData;
             await suggestedQuestion.SaveAsync();
-            psd.AssignedQuestions.Add(suggestedQuestion);
-            await psd.SaveAsync();
+            //psd.AssignedQuestions.Add(suggestedQuestion);
+            //await psd.SaveAsync();
 
             IDictionary<string, object> parameters = new Dictionary<string, object>
             {
-                { "baseUserId", pud.BaseUserId }
+                { "baseUserId", pud.BaseUserId },
+                { "suggestedQuestionId", suggestedQuestion.ObjectId}
             };
             await ParseCloud.CallFunctionAsync<string>("assignQuestion", parameters);
         }

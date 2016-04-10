@@ -1,10 +1,14 @@
 p {
     line-height:2.5em;
 }
+.btn{
+    white-space:normal !important;
+    word-wrap:break-word; 
+}
 .ques {
     padding-bottom:1.5em;
     white-space: nowrap;
 }
 .ques1 { background: url("../Images/underline1.jpg") 53% 100% no-repeat;  background-size: 500px 20px; }
 .ques2 { background: url("../Images/underline2.jpg") 54% 100% no-repeat;  background-size: 500px 20px; }
-.ques3 { background: url("../Images/underline3.jpg") 50% 100% no-repeat;  background-size: 500px 20px; }
+.ques3 { background: url("../Images/underline3.jpg") 53% 100% no-repeat;  background-size: 500px 20px; }

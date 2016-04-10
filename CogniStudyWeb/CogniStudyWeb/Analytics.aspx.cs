@@ -264,6 +264,7 @@ namespace CogniTutor
                 List<DataPoint> correctDataPoints = new List<DataPoint>();
                 List<DataPoint> incorrectDataPoints = new List<DataPoint>();
                 string blockStatsType = FigureBlockStatsType();
+                string blockStatsSelection = FigureBlockStatsSelection();
                 if (ddlFilterTime.SelectedValue == "PastWeek")
                 {
                     rel = student.GetRelation<ParseObject>("student" + blockStatsType + "DayStats");
@@ -276,6 +277,13 @@ namespace CogniTutor
                         var query = from s in rel.Query
                                     where s.Get<int>("blockNum") == i
                                     select s;
+                        if (blockStatsType != "Total")
+                        {
+                            query = from s in rel.Query
+                                    where s.Get<int>("blockNum") == i
+                                    where s.Get<string>(blockStatsType.ToLower()) == blockStatsSelection
+                                    select s;
+                        }
                         ParseObject stat = await query.FirstOrDefaultAsync();
                         DataPoint correct = new DataPoint();
                         DataPoint incorrect = new DataPoint();
@@ -300,6 +308,13 @@ namespace CogniTutor
                                     where s.Get<int>("blockNum") >= i
                                     where s.Get<int>("blockNum") <= i + 2
                                     select s;
+                        if (blockStatsType != "Total")
+                        {
+                            query = from s in rel.Query
+                                    where s.Get<int>("blockNum") == i
+                                    where s.Get<string>(blockStatsType.ToLower()) == blockStatsSelection
+                                    select s;
+                        }
                         IEnumerable<ParseObject> stats = await query.FindAsync();
                         int totalCorrect = 0, totalIncorrect = 0;
                         foreach (ParseObject stat in stats)
@@ -329,6 +344,13 @@ namespace CogniTutor
                         var query = from s in rel.Query
                                     where s.Get<int>("blockNum") == i
                                     select s;
+                        if (blockStatsType != "Total")
+                        {
+                            query = from s in rel.Query
+                                    where s.Get<int>("blockNum") == i
+                                    where s.Get<string>(blockStatsType.ToLower()) == blockStatsSelection
+                                    select s;
+                        }
                         ParseObject stat = await query.FirstOrDefaultAsync();
                         DataPoint correct = new DataPoint();
                         DataPoint incorrect = new DataPoint();
@@ -349,6 +371,16 @@ namespace CogniTutor
             }
         }
 
+        private string FigureBlockStatsSelection()
+        {
+            if (ddlFilterCategory.Text != "All Categories")
+                return ddlFilterCategory.Text;
+            else if (ddlFilterSubject.Text != "All Subjects")
+                return ddlFilterSubject.Text;
+            else
+                throw new Exception("Total block stats should not have a selection");
+        }
+
         private string FigureBlockStatsType()
         {
             if (ddlFilterCategory.Text != "All Categories")
@@ -356,7 +388,7 @@ namespace CogniTutor
             else if (ddlFilterSubject.Text != "All Subjects")
                 return "Subject";
             else
-                return "Total";
+                return "";
         }
 
         private string FigureMostSpecificType()

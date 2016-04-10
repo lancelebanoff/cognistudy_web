@@ -14,7 +14,6 @@ namespace CogniTutor
     {
         public PublicUserData theirPublicUserData { get { return (PublicUserData)Session["theirPublicUserData"]; } set { Session["theirPublicUserData"] = value; } }
         public Tutor theirTutor { get { return (Tutor)Session["theirTutor"]; } set { Session["theirTutor"] = value; } }
-        public PrivateTutorData theirPrivateTutorData { get { return (PrivateTutorData)Session["theirPrivateTutorData"]; } set { Session["theirPrivateTutorData"] = value; } }
         public bool IsMyProfile { get { return theirPublicUserData.BaseUserId == UserID; } }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -25,9 +24,8 @@ namespace CogniTutor
         protected override async Task OnStart()
         {
             string tutorId = Request.QueryString["tutorId"];
-            theirPublicUserData = await PublicUserData.GetAllTutorDataById(tutorId);
+            theirPublicUserData = await PublicUserData.GetPublicTutorDataById(tutorId);
             theirTutor = theirPublicUserData.Tutor;
-            theirPrivateTutorData = theirTutor.PrivateTutorData;
             Image1.ImageUrl = theirPublicUserData.ProfilePic != null ? theirPublicUserData.ProfilePic.Url.ToString() : "Images/default_prof_pic.png";
             edit.Visible = IsMyProfile;
             EditAboutMeBtn.Visible = IsMyProfile;
@@ -38,21 +36,16 @@ namespace CogniTutor
 
         protected void aboutMeSaveChangesBtn_Click(object sender, EventArgs e)
         {
-            Tutor.Biography = tbEditAboutMe.Text;
-            //RegisterAsyncTask(new PageAsyncTask(() => Tutor.SaveAsync()));
-            //ExecuteRegisteredAsyncTasks();
-            Task t = Tutor.SaveAsync();
-            t.Wait();
-            //UpdateUserColumn("About", tbEditAboutMe.Text);
+            theirTutor.Biography = tbEditAboutMe.Text;
+            AsyncHelpers.RunSync(theirTutor.SaveAsync);
+            //Task t = Tutor.SaveAsync();
+            //t.Wait();
             SetAboutMeVisibilities(sender, e);
         }
 
         protected void SetAboutMeVisibilities(object sender, EventArgs e)
         {
             bool setToEdit = divAboutMeStatic.Visible; //if static div is visible, we wish to set to edit mode
-
-            //if (sender.Equals(EditAboutMeBtn) && !setToEdit)
-            //    return;
 
             divAboutMeStatic.Visible = !setToEdit;
             divAboutMeDynamic.Visible = setToEdit;
@@ -75,17 +68,11 @@ namespace CogniTutor
                 Task t = file.SaveAsync();
                 t.Wait();
 
-                PublicUserData.ProfilePic = file;
-                //RegisterAsyncTask(new PageAsyncTask(() => PublicUserData.SaveAsync()));
-                Task t2 = PublicUserData.SaveAsync();
+                theirPublicUserData.ProfilePic = file;
+                Task t2 = theirPublicUserData.SaveAsync();
                 t2.Wait();
-                //string uploadFileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
-                //string downloadFileName = "user" + Request.QueryString["TutorID"].ToString();
-                //Directory.CreateDirectory("~/Images/profile pictures/");
-                //FileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/profile pictures/") + downloadFileName + ".png");
-                //Common.ExecuteCommand("update users set PictureFileName='" + downloadFileName
-                //    + "' where UserID=" + Request.QueryString["TutorID"]);
-                //ReloadPage();
+
+                Image1.ImageUrl = theirPublicUserData.ProfilePic != null ? theirPublicUserData.ProfilePic.Url.ToString() : "Images/default_prof_pic.png";
             }
         }
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Async="true" Language="C#" AutoEventWireup="true" CodeBehind="Settings.aspx.cs" Inherits="CogniTutor.Settings" %>
+﻿<%@ Page EnableEventValidation="true" Async="true" Language="C#" AutoEventWireup="true" CodeBehind="Settings.aspx.cs" Inherits="CogniTutor.Settings" %>
 
 <%@ Register TagPrefix="COG" TagName="NavigationBar" Src="~/UserControls/NavigationBar.ascx" %>
 <%@ Register TagPrefix="COG" TagName="Footer" Src="~/UserControls/Footer.ascx" %>

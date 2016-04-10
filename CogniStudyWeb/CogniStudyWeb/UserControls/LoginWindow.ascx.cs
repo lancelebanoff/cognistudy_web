@@ -16,7 +16,6 @@ namespace CogniTutor.UserControls
     public partial class LoginWindow : System.Web.UI.UserControl
     {
         public CogniPage mPage;
-        //public static SqlConnection SqlConnection1 = new SqlConnection(CogniPage.GetConnectionString());
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,13 +29,12 @@ namespace CogniTutor.UserControls
 
         protected void btnSignIn_Click(object sender, EventArgs e)
         {
-            //mPage.RegisterAsyncTask(new PageAsyncTask(LogIn));
             bool success = AsyncHelpers.RunSync<bool>(LogIn);
             if (success)
             {
                 mPage.Session["Email"] = tbLoginEmail.Text.ToLower();
                 mPage.Session["Password"] = tbLoginPassword.Text;
-                mPage.Redirect("Dashboard.aspx");
+                Response.Redirect("Dashboard.aspx");
             }
         }
         private async Task<bool> LogIn()
@@ -45,17 +43,25 @@ namespace CogniTutor.UserControls
             {
                 await ParseUser.LogInAsync(tbLoginEmail.Text.ToLower(), tbLoginPassword.Text);
 
-                if (ParseUser.CurrentUser.Get<int>("registrationTestScore") < 7)
-                {
-                    lblLoginError.Visible = true;
-                    lblLoginError.Text = "You failed to acheive a sufficient score on the registration test.";
-                    return false;
-                }
                 // Email not verified
-                else if (!ParseUser.CurrentUser.Get<bool>("emailVerified"))
+                if (!ParseUser.CurrentUser.Get<bool>("emailVerified"))
                 {
                     lblLoginError.Visible = true;
                     lblLoginError.Text = "Please check your email to verify your account.";
+                    return false;
+                }
+                // Not tutor
+                else if (!Constants.UserType.IsTutor((await ParseUser.CurrentUser.Get<PublicUserData>("publicUserData").FetchAsync()).UserType))
+                {
+                    lblLoginError.Visible = true;
+                    lblLoginError.Text = "Only tutors may use the website. If you are a student, then you can open CogniStudy through your mobile device.";
+                    return false;
+                }
+                // Didn't pass registration test
+                else if (ParseUser.CurrentUser.Get<int>("registrationTestScore") < 7)
+                {
+                    lblLoginError.Visible = true;
+                    lblLoginError.Text = "You failed to acheive a sufficient score on the registration test.";
                     return false;
                 }
                 // Login was successful.
@@ -84,12 +90,6 @@ namespace CogniTutor.UserControls
                     return false;
                 }
             }
-        }
-
-        public void CreateSession(int UserID)
-        {
-            //Page.Session["SessionID"] = newSessionID;
-            //Page.Session["SessionPW"] = newSessionPW;
         }
     }
 }

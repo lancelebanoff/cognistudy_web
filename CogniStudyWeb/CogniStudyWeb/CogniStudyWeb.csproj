@@ -1549,8 +1549,12 @@
     <Content Include="js\ckeditor\plugins\maximize\plugin.js" />
     <Content Include="js\ckeditor\plugins\menubutton\plugin.js" />
     <Content Include="js\ckeditor\plugins\menu\plugin.js" />
-    <Content Include="js\ckeditor\plugins\numunderline\icons\numunderline.png" />
-    <Content Include="js\ckeditor\plugins\numunderline\plugin.js" />
+    <Content Include="js\ckeditor\plugins\numunderline3\icons\numunderline3.png" />
+    <Content Include="js\ckeditor\plugins\numunderline3\plugin.js" />
+    <Content Include="js\ckeditor\plugins\numunderline2\icons\numunderline2.png" />
+    <Content Include="js\ckeditor\plugins\numunderline2\plugin.js" />
+    <Content Include="js\ckeditor\plugins\numunderline1\icons\numunderline1.png" />
+    <Content Include="js\ckeditor\plugins\numunderline1\plugin.js" />
     <Content Include="js\ckeditor\plugins\panel\plugin.js" />
     <Content Include="js\ckeditor\plugins\pastefromword\filter\default.js" />
     <Content Include="js\ckeditor\plugins\pastefromword\icons\hidpi\pastefromword-rtl.png" />
@@ -2576,6 +2580,7 @@
     <Content Include="js\ckeditor\skins\bootstrapck\scss\config\_config.scss" />
     <Content Include="js\ckeditor\skins\bootstrapck\scss\config\_defaults.scss" />
     <Content Include="js\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
+    <None Include="Properties\PublishProfiles\CogniStudy Published.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Profile.aspx" />
     <Content Include="QuestionArena.aspx" />
@@ -2628,6 +2633,7 @@
     <Content Include="AssignQuestion.aspx" />
     <Content Include="TestPage.aspx" />
     <Content Include="UploadQuestion.aspx" />
+    <Content Include="UserControls\CheckableQuestionBlock.ascx" />
     <Content Include="UserControls\ConversationPanel.ascx" />
     <Content Include="UserControls\DoughnutChart.ascx" />
     <Content Include="UserControls\Footer.ascx" />
@@ -2670,7 +2676,6 @@
     <Compile Include="CogniPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CogniSession.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DateUtils.cs" />
@@ -2759,6 +2764,7 @@
     <Compile Include="RegisterSuccess.aspx.designer.cs">
       <DependentUpon>RegisterSuccess.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RegistrationInfo.cs" />
     <Compile Include="RegistrationTest.aspx.cs">
       <DependentUpon>RegistrationTest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2822,6 +2828,13 @@
     </Compile>
     <Compile Include="UploadQuestion.aspx.designer.cs">
       <DependentUpon>UploadQuestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CheckableQuestionBlock.ascx.cs">
+      <DependentUpon>CheckableQuestionBlock.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\CheckableQuestionBlock.ascx.designer.cs">
+      <DependentUpon>CheckableQuestionBlock.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ConversationPanel.ascx.cs">
       <DependentUpon>ConversationPanel.ascx</DependentUpon>

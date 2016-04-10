@@ -10,7 +10,6 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Text;
 
-
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,7 +30,7 @@ namespace CogniTutor
         }
         protected override void OnLoad(EventArgs e)
         {
-            RegisterAsyncTask(new PageAsyncTask(StartPage));
+            AsyncHelpers.RunSync(StartPage);
             //AsyncHelpers.RunSync(StartPage);
             base.OnLoad(e);
         }
@@ -56,7 +55,7 @@ namespace CogniTutor
             }
             else
             {
-                if (!(this is _Default || this is Register))
+                if (!(this is _Default || this is Register || this is RegistrationTest || this is RegisterSuccess || this is RegisterFailure))
                 {
                     Response.Redirect("Default");
                 }
@@ -95,23 +94,13 @@ namespace CogniTutor
         protected abstract Task OnStart();
         protected override void OnUnload(EventArgs e)
         {
-            EndPage();
-
             base.OnUnload(e);
         }
+
         //protected void Page_Error(object sender, EventArgs e)
         //{
         //    //ErrorToUserLog();
         //}
-
-        protected bool isExpired()
-        {
-            return false;
-        }
-
-        protected void EndPage()
-        {
-        }
 
         private void ErrorToUserLog()
         {
@@ -240,26 +229,7 @@ namespace CogniTutor
         }
         public void Redirect(string link)
         {
-            EndPage();
             this.Response.Redirect(link);
-        }
-
-        public static IList<T> GetAllControlsRecusrvive<T>(Control control) where T : Control
-        {
-            var rtn = new List<T>();
-            foreach (Control item in control.Controls)
-            {
-                var ctr = item as T;
-                if (ctr != null)
-                {
-                    rtn.Add(ctr);
-                }
-                else
-                {
-                    rtn.AddRange(GetAllControlsRecusrvive<T>(item));
-                }
-            }
-            return rtn;
         }
     }
 }

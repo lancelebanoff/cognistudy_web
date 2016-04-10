@@ -95,38 +95,47 @@ namespace CogniTutor
 
         private async Task<Question> GetQuestion()
         {
-            //var contentsQuery = from contents in new ParseQuery<QuestionContents>()
-            //                    where contents.Get<ParseObject>("author") != PublicUserData
-            //                    select contents;
-            var dataQuery = from data in new ParseQuery<QuestionData>()
-                            where data.Get<string>("reviewStatus") == Constants.ReviewStatusType.PENDING
-                            select data;
-            var questionQuery = from question in new ParseQuery<Question>()
-                        //where question.Get<bool>("isActive")
-                        where !AlreadyVisited.ToArray().Contains(question.ObjectId)
-                        orderby question.CreatedAt descending
-                        join data in dataQuery on question["questionData"] equals data
-                        //join contents in contentsQuery on question["questionContents"] equals contents
-                        select question;
-            Question res = null;
-            try
+            IDictionary<string, object> parameters = new Dictionary<string, object>
             {
-                res = await questionQuery.FirstAsync();
-            }
-            catch (ParseException exc)
-            {
-                if (AlreadyVisited.Count == 0)
-                {
-                    AlreadyVisited.Clear();
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            if (res == null)
-                res = await GetQuestion();
+                { "author", PublicUserData.ObjectId },
+                { "alreadyVisited", AlreadyVisited },
+                { "isAdmin", PublicUserData.UserType == Constants.UserType.ADMIN }
+            };
+            Question res = await ParseCloud.CallFunctionAsync<Question>("oldestPendingQuestion", parameters);
             return res;
+
+            ////var contentsQuery = from contents in new ParseQuery<QuestionContents>()
+            ////                    where contents.Get<ParseObject>("author") != PublicUserData
+            ////                    select contents;
+            //var dataQuery = from data in new ParseQuery<QuestionData>()
+            //                where data.Get<string>("reviewStatus") == Constants.ReviewStatusType.PENDING
+            //                select data;
+            //var questionQuery = from question in new ParseQuery<Question>()
+            //            //where question.Get<bool>("isActive")
+            //            where !AlreadyVisited.ToArray().Contains(question.ObjectId)
+            //            orderby question.CreatedAt descending
+            //            join data in dataQuery on question["questionData"] equals data
+            //            //join contents in contentsQuery on question["questionContents"] equals contents
+            //            select question;
+            //Question res = null;
+            //try
+            //{
+            //    res = await questionQuery.FirstAsync();
+            //}
+            //catch (ParseException exc)
+            //{
+            //    if (AlreadyVisited.Count == 0)
+            //    {
+            //        AlreadyVisited.Clear();
+            //    }
+            //    else
+            //    {
+            //        return null;
+            //    }
+            //}
+            //if (res == null)
+            //    res = await GetQuestion();
+            //return res;
         }
 
         private async Task<QuestionData[]> GetQuestionData()

@@ -8,7 +8,7 @@
     CKEDITOR.config.contentsCss = '/../css/ckeditor_question.css';
     editor = CKEDITOR.replace('<%= AcutalID %>', {
         // Load the timestamp plugin.
-        extraPlugins: 'numunderline,eqneditor,timestamp',
+        extraPlugins: 'numunderline1,numunderline2,numunderline3,eqneditor,timestamp',
         // Rearrange toolbar groups and remove unnecessary plugins.
         toolbarGroups: [
             { name: 'clipboard', groups: ['clipboard', 'undo'] },
@@ -20,9 +20,7 @@
             //{ name: 'timestamp' },
             { name: 'about' }
         ],
-        removePlugins: 'font,iframe,pagebreak,flash,stylescombo,print,preview,save,smiley,pastetext,pastefromword',
-        removeButtons: 'Anchor,Font,Strike,Subscript,Superscript',
-        allowedContent: 'span(ques1,ques2,ques3); img[*]',
+        allowedContent: 'span(ques,ques1,ques2,ques3); img[*]; b; i; u; strike; sub; sup',
         height: '<%= Height.ToString() %>',
         width: '<%= Width.ToString() %>'
         

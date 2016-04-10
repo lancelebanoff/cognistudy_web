@@ -58,6 +58,15 @@ namespace CogniTutor
         public string Answer3 { get { return Answers[2]; } }
         public string Answer4 { get { return Answers[3]; } }
         public string Answer5 { get { return Answers.Count >= 5 ? Answers[4] : ""; } }
-        public string ImageUrl { get { return Image == null ? "" : Image.Url.ToString(); } set { } }
+        public string ImageUrl { get { return Image == null ? "" : Image.Url.ToString(); } }
+
+        public string FriendlyAnswers
+        {
+            get
+            {
+                string strAnswers = String.Join("\r\n", Answers);
+                return strAnswers;
+            }
+        }
     }
 }

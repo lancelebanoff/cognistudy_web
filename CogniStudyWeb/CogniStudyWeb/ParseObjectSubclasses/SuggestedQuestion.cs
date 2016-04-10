@@ -40,5 +40,16 @@ namespace CogniTutor
             get { return GetProperty<bool>(); }
             set { SetProperty<bool>(value); }
         }
+
+        public static async Task<IList<SuggestedQuestion>> GetAssignedQuestionsBetweenStudentTutor(PublicUserData studentPublicData, PublicUserData tutorPublicData)
+        {
+            IDictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "studentPublicDataId", studentPublicData.ObjectId },
+                { "tutorPublicDataId", tutorPublicData.ObjectId }
+            };
+            IList<SuggestedQuestion> assignedQuestions = await ParseCloud.CallFunctionAsync<IList<SuggestedQuestion>>("assignedQuestionsToStudent", parameters);
+            return assignedQuestions;
+        }
     }
 }

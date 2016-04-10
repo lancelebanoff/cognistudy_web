@@ -81,6 +81,17 @@ div.fill{
 }
     </style>
     <script>
+        function FixHeights() {
+            $(document).ready(function () {
+                $("#divContent").height($(window).height() - $("#divNavBar").height() - $("#divHeader").height());
+                $("#pnlMessages").height($("#divContent").height() - $("#tbType").height() - $("#btnSend").height() - $("#pName").height() - 100);
+                $("#pnlConversations").height($("#divContent").height() - $("#hConversations").height() - 100);
+                var div = document.getElementById("<%=pnlMessages.ClientID%>");
+                div.scrollTop = div.scrollHeight - div.clientHeight;
+            });
+        }
+    </script>
+    <script>
         $(document).ready(function () {
             $("#divContent").height($(window).height() - $("#divNavBar").height() - $("#divHeader").height());
             $("#pnlMessages").height($("#divContent").height() - $("#tbType").height() - $("#btnSend").height() - $("#pName").height() - 100);
@@ -121,68 +132,87 @@ div.fill{
                 </h1>
             </div>
         </div>
-                            
-        <div id="divContent">
-            <div class="row fill-height">
+                <div id="divContent">
+                    <div class="row fill-height">
                 
-                <div class="col-lg-5 fill-height" style="padding-right:20px; border-right: 1px solid #ccc;">
-                    <h3 id="hConversations" class="page-header center-block">
-                        Conversations
-                    </h3>
+                        <div class="col-lg-5 fill-height" style="padding-right:20px; border-right: 1px solid #ccc;">
+                            <h3 id="hConversations" class="page-header center-block">
+                                Conversations
+                            </h3>
                     
-                    <asp:Panel runat="server" ID="pnlConversations" CssClass="fill-height" ScrollBars="Vertical">
-                        <asp:Repeater runat="server" ID="repConversations" OnItemCommand="repConversations_ItemCommand">
-                            <ItemTemplate>
-                                <div class="row fill-width">
-                                    <asp:LinkButton class="btn btn-default fill-parent-width" runat="server" ID="btnConversation" CommandName="Change" CommandArgument='<%# Eval("TheirUserID") %>'>
-                                        <div class="col-sm-3 col-xs-3">
-                                            <asp:Image Height="75" Width="75" runat="server" ImageUrl='<%# Eval("ProfilePicUrl") %>' />
-                                        </div>
-                                        <div class="col-sm-9 col-xs-9">
-                                            <div class="row">
-                                                <asp:Label ID="lbTheirName" CssClass="large-text" runat="server" Text='<%# Eval("TheirName") %>'></asp:Label>
-                                            </div>
-                                            <div class="row">
-                                                <asp:Label runat="server" ID="lbLastMessage" class="medium-text" Text='<%# Eval("LastMessage") %>'></asp:Label>
-                                                <asp:Label ID="lbTheirUserID" class="hidden" runat="server" Text='<%# Eval("TheirUserID") %>'></asp:Label>
-                                            </div>
-                                        </div>
-                                    </asp:LinkButton>
-                                </div>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                    </asp:Panel>
+                                    <asp:UpdatePanel runat="server">
+                                        <ContentTemplate>
+                                            <script type="text/javascript">
+                                                Sys.Application.add_load(FixHeights);
+                                            </script>
+                                        <asp:Panel runat="server" ID="pnlConversations" CssClass="fill-height" ScrollBars="Vertical">
+                                            <asp:Repeater runat="server" ID="repConversations" OnItemCommand="repConversations_ItemCommand">
+                                                <ItemTemplate>
+                                                    <div class="row fill-width">
+                                                        <asp:LinkButton class="btn btn-default fill-parent-width" runat="server" ID="btnConversation" CommandName="Change" CommandArgument='<%# Eval("TheirUserID") %>'>
+                                                            <div class="col-sm-3 col-xs-3">
+                                                                <asp:Image Height="75" Width="75" runat="server" ImageUrl='<%# Eval("ProfilePicUrl") %>' />
+                                                            </div>
+                                                            <div class="col-sm-9 col-xs-9">
+                                                                <div class="row">
+                                                                    <asp:Label ID="lbTheirName" CssClass="large-text" runat="server" Text='<%# Eval("TheirName") %>'></asp:Label>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <asp:Label runat="server" ID="lbLastMessage" class="medium-text" Text='<%# Eval("LastMessage") %>'></asp:Label>
+                                                                    <asp:Label ID="lbTheirUserID" class="hidden" runat="server" Text='<%# Eval("TheirUserID") %>'></asp:Label>
+                                                                </div>
+                                                            </div>
+                                                        </asp:LinkButton>
+                                                    </div>
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                        </asp:Panel>
 
-                                    
+                                    </ContentTemplate>
+                                        </asp:UpdatePanel>
 
 
-                </div>
+                        </div>
 
-                <div class="col-lg-7 fill-height" style="border-left: 1px solid #ccc;">
-                            <p id="pName" class="large-text text-center"><%= TheirName %></p>
-                            <asp:Panel runat="server" ID="pnlMessages" CssClass="fill-height" ScrollBars="Vertical">
-                                <div class="row fill-height fill-width">
-                                    <div class="col-lg-1"></div>
-                                    <div class="col-lg-10 chat fill-height">
-                                        <asp:Repeater runat="server" ID="repMessages">
-                                            <ItemTemplate>
-                                                <div class="bubble <%# Convert.ToBoolean(Eval("WasSentByMe")) ? "me" : "you" %>">
-                                                    <%# Eval("Text") %>
+                        <div class="col-lg-7 fill-height" style="border-left: 1px solid #ccc;">
+                                    <p id="pName" class="large-text text-center"><%= TheirName %></p>
+                                    <asp:UpdatePanel runat="server">
+                                        <ContentTemplate>
+                                            <script type="text/javascript">
+                                                Sys.Application.add_load(FixHeights);
+                                            </script>
+                                            <asp:Timer runat="server" id="Timer1" Interval="5000" OnTick="Timer1_Tick"></asp:Timer>
+                                            <asp:Panel runat="server" ID="pnlMessages" CssClass="fill-height" ScrollBars="Vertical">
+                                                <div class="row fill-height fill-width">
+                                                    <div class="col-lg-1"></div>
+                                                    <div class="col-lg-10 chat fill-height">
+                                                        <asp:Repeater runat="server" ID="repMessages">
+                                                            <ItemTemplate>
+                                                                <div class="bubble <%# Convert.ToBoolean(Eval("WasSentByMe")) ? "me" : "you" %>">
+                                                                    <%# Eval("Text") %>
+                                                                </div>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>
+                                                    </div>
                                                 </div>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
-                                    </div>
-                                </div>
-                            </asp:Panel>
-                            <br />
-                            <asp:TextBox runat="server" ID="tbType" CssClass="form-control"></asp:TextBox>
-                            <asp:Button runat="server" ID="btnSend" Text="Send" OnClick="btnSend_Click" CssClass="btn btn-default pull-right" UseSubmitBehavior="true" />
+                                            </asp:Panel>
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
+                                    <br />
+                            <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>
+                            <asp:Label runat="server" Text="the time" ID="testlabel"></asp:Label>
+                                    <asp:TextBox runat="server" ID="tbType" CssClass="form-control"></asp:TextBox>
+                                    <asp:Button runat="server" ID="btnSend" Text="Send" OnClick="btnSend_Click" CssClass="btn btn-default pull-right" UseSubmitBehavior="true" />
                                     
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
 
-                </div>
+                        </div>
 
-            </div>
-        </div>
+                    </div>
+                </div>           
+        
 
         <hr>
     </div>

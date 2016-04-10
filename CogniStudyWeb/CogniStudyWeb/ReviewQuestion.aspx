@@ -105,12 +105,13 @@
                             <asp:Label ID="lbNoResults" runat="server" Visible="false" class="large-text" Text="No questions to be reviewed."></asp:Label>
                             <asp:Panel ID="pnlAll" runat="server" class="row">
                                 <div class="col-lg-12">
+                                    <h2 class="align-center"><%= (Questions != null && Questions.Length > 0) ? Questions[0].Subject + " - " + Questions[0].Category : "" %></h2>
                                     <% if(Bundle != null) { %>
                                     <div class="row">
-                                        <div class="col-lg-3"></div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-2"></div>
+                                        <div class="col-lg-8">
                                             <h3 class="align-center">Passage</h3><br />
-                                            <img src="<%= Bundle.Image == null ? "" : Bundle.Image.Url.ToString() %>" style="max-width:100%; max-height:100%;" />
+                                            <img class="center-block" src="<%= Bundle.Image == null ? "" : Bundle.Image.Url.ToString() %>" style="max-width:100%; max-height:100%;" />
                                             <p><%= passageText %></p>
                                             <hr />
                                         </div>

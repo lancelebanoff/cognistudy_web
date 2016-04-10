@@ -58,22 +58,13 @@ namespace CogniTutor {
         protected global::System.Web.UI.WebControls.Panel pnlQuestions;
         
         /// <summary>
-        /// rbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rbl;
-        
-        /// <summary>
         /// QuestionBlock0 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock0;
+        protected global::CogniTutor.UserControls.CheckableQuestionBlock QuestionBlock0;
         
         /// <summary>
         /// QuestionBlock1 control.
@@ -82,7 +73,7 @@ namespace CogniTutor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock1;
+        protected global::CogniTutor.UserControls.CheckableQuestionBlock QuestionBlock1;
         
         /// <summary>
         /// QuestionBlock2 control.
@@ -91,7 +82,7 @@ namespace CogniTutor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock2;
+        protected global::CogniTutor.UserControls.CheckableQuestionBlock QuestionBlock2;
         
         /// <summary>
         /// QuestionBlock3 control.
@@ -100,7 +91,7 @@ namespace CogniTutor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock3;
+        protected global::CogniTutor.UserControls.CheckableQuestionBlock QuestionBlock3;
         
         /// <summary>
         /// QuestionBlock4 control.
@@ -109,7 +100,7 @@ namespace CogniTutor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock4;
+        protected global::CogniTutor.UserControls.CheckableQuestionBlock QuestionBlock4;
         
         /// <summary>
         /// QuestionBlock5 control.
@@ -118,7 +109,7 @@ namespace CogniTutor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock5;
+        protected global::CogniTutor.UserControls.CheckableQuestionBlock QuestionBlock5;
         
         /// <summary>
         /// QuestionBlock6 control.
@@ -127,7 +118,7 @@ namespace CogniTutor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock6;
+        protected global::CogniTutor.UserControls.CheckableQuestionBlock QuestionBlock6;
         
         /// <summary>
         /// QuestionBlock7 control.
@@ -136,7 +127,7 @@ namespace CogniTutor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock7;
+        protected global::CogniTutor.UserControls.CheckableQuestionBlock QuestionBlock7;
         
         /// <summary>
         /// QuestionBlock8 control.
@@ -145,7 +136,7 @@ namespace CogniTutor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock8;
+        protected global::CogniTutor.UserControls.CheckableQuestionBlock QuestionBlock8;
         
         /// <summary>
         /// QuestionBlock9 control.
@@ -154,7 +145,7 @@ namespace CogniTutor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::CogniTutor.UserControls.QuestionBlock QuestionBlock9;
+        protected global::CogniTutor.UserControls.CheckableQuestionBlock QuestionBlock9;
         
         /// <summary>
         /// btnSubmit control.

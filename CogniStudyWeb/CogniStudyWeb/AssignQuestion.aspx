@@ -61,59 +61,74 @@
     <link href="css/customtooltip.css" rel="stylesheet"/>
 
     <script>
-        $(document).on('mouseenter', ".row_dd", function (e) {
-            var self = $(this).find(".dataDiv");
-            var question = self.attr("data-question");
-            var answer1 = self.attr("data-answer1");
-            var answer2 = self.attr("data-answer2");
-            var answer3 = self.attr("data-answer3");
-            var answer4 = self.attr("data-answer4");
-            var answer5 = self.attr("data-answer5");
-            var explanation = self.attr("data-explanation");
-            var correctAnswer = self.attr("data-correctAnswer");
-            var image = self.attr("data-image");
-            var bundleText = self.attr("data-bundleText");
-            var bundleImage = self.attr("data-bundleImage");
+        //$(document).on('mouseenter', ".row_dd", function (e) {
+        //    var self = $(this).find(".dataDiv");
+        //    var question = self.attr("data-question");
+        //    var answer1 = self.attr("data-answer1");
+        //    var answer2 = self.attr("data-answer2");
+        //    var answer3 = self.attr("data-answer3");
+        //    var answer4 = self.attr("data-answer4");
+        //    var answer5 = self.attr("data-answer5");
+        //    var explanation = self.attr("data-explanation");
+        //    var correctAnswer = self.attr("data-correctAnswer");
+        //    var image = self.attr("data-image");
+        //    var bundleText = self.attr("data-bundleText");
+        //    var bundleImage = self.attr("data-bundleImage");
 
-            $("#p_question").html(question);
-            $("#b_answer1").html(answer1);
-            $("#b_answer2").html(answer2);
-            $("#b_answer3").html(answer3);
-            $("#b_answer4").html(answer4);
-            $("#b_answer5").html(answer5);
-            $("#p_explanation").html(explanation);
-            $("#p_bundletext").html(bundleText);
-            $("#img_image").attr("src", image);
-            $("#img_bundleimage").attr("src", bundleImage);
-            if (answer5 == "") {
-                $("#b_answer5").hide();
-            }
-            else {
-                $("#b_answer5").show();
-            }
-            $("#b_answer1").removeClass("btn-success").addClass("btn-danger");
-            $("#b_answer2").removeClass("btn-success").addClass("btn-danger");
-            $("#b_answer3").removeClass("btn-success").addClass("btn-danger");
-            $("#b_answer4").removeClass("btn-success").addClass("btn-danger");
-            $("#b_answer5").removeClass("btn-success").addClass("btn-danger");
-            $("#b_answer" + correctAnswer).removeClass("btn-danger").addClass("btn-success");
-            MathJax.Hub.Queue(["Typeset", MathJax.Hub, "MathExample"]);
-            $("#detailedData").show();
-        });
+        //    $("#p_question").html(question);
+        //    $("#b_answer1").html(answer1);
+        //    $("#b_answer2").html(answer2);
+        //    $("#b_answer3").html(answer3);
+        //    $("#b_answer4").html(answer4);
+        //    $("#b_answer5").html(answer5);
+        //    $("#p_explanation").html(explanation);
+        //    $("#p_bundletext").html(bundleText);
+        //    $("#img_image").attr("src", image);
+        //    $("#img_bundleimage").attr("src", bundleImage);
+        //    if (answer5 == "") {
+        //        $("#b_answer5").hide();
+        //    }
+        //    else {
+        //        $("#b_answer5").show();
+        //    }
+        //    $("#b_answer1").removeClass("btn-success").addClass("btn-danger");
+        //    $("#b_answer2").removeClass("btn-success").addClass("btn-danger");
+        //    $("#b_answer3").removeClass("btn-success").addClass("btn-danger");
+        //    $("#b_answer4").removeClass("btn-success").addClass("btn-danger");
+        //    $("#b_answer5").removeClass("btn-success").addClass("btn-danger");
+        //    $("#b_answer" + correctAnswer).removeClass("btn-danger").addClass("btn-success");
+        //    MathJax.Hub.Queue(["Typeset", MathJax.Hub, "MathExample"]);
+        //    $("#detailedData").show();
+        //});
     
 
-        $(document).on('mouseleave', ".row_dd", function (e) {
-            $("#detailedData").hide();
-        });
+        //$(document).on('mouseleave', ".row_dd", function (e) {
+        //    $("#detailedData").hide();
+        //});
 
-        $(document).mousemove(function (e) {
-            $("#detailedData").position({
-                my: "left+10 top+10",
-                of: e,
-                collision: "flipfit"
-            });
-        });
+        //$(document).mousemove(function (e) {
+        //    $("#detailedData").position({
+        //        my: "left+10 top+10",
+        //        of: e,
+        //        collision: "flipfit"
+        //    });
+        //});
     </script>
+    
+<script>
+    function showCorrect(outer, explanation) {
+        $('#' + outer + ' > a').each(function (i) {
+            $(this).removeClass('btn-default');
+            if ($(this).attr('correct') == 'True') {
+                $(this).addClass('btn-success');
+            }
+            else {
+                $(this).addClass('btn-danger');
+            }
+        });
+        $('#' + explanation).removeClass('hidden');
+    }
+</script>
 
 </head>
 
@@ -131,6 +146,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <div id="wrapper">
+
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <asp:Panel runat="server" class="alert alert-success" ID="pnlSuccess" Visible="false">
+                              <strong>Success!</strong> You have successfully assigned the question to your student(s).
+                            </asp:Panel>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
 
                     <div id="page-wrapper">
                         
@@ -175,7 +198,7 @@
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="">
                                                         <ItemTemplate>
-                                                            <asp:Button CssClass="btn btn-default center-block" CommandName="Assign" runat="server" Text="Assign" id="btnAssign"
+                                                            <asp:Button CssClass="btn btn-default center-block" CommandName="View" runat="server" Text="View" id="btnView"
                                                                 CommandArgument='<%# Eval("ObjectId") %>'
                                                                 />
                                                         </ItemTemplate>
@@ -206,7 +229,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="row">
-                                                            <div class="col-lg-6 col-lg-offset-3">
+                                                            <div class="col-lg-10 col-lg-offset-1">
                                                                 <br />
                                                                 <img id="img_bundleimage" style="max-width:100%; max-height:100%;"/>
                                                                 <p id="p_bundletext"></p>
@@ -243,14 +266,29 @@
                                                 </div>
                                             </div>
                                             
-                                            <asp:Panel ID="pnlSend" runat="server" CssClass="modalPopup row" style = "display:none">
+                                            <asp:Panel ID="pnlSend" runat="server" CssClass="modalPopup row" style = "display:none" ScrollBars="Vertical" Width="1000" Height="500">
+                                                <div class="row">
+                                                    <div class="col-lg-11 col-lg-offset-1">
+                                                        <asp:Panel runat="server" ID="pnlBundle" class="row">
+                                                            <div class="col-lg-2"></div>
+                                                            <div class="col-lg-8">
+                                                                <h3 class="text-center">Passage</h3><br />
+                                                                <asp:Image runat="server" ID="Image1" class="center-block" style="max-width:100%; max-height:100%;" />
+                                                                <asp:Label runat="server" ID="lbBundleText"></asp:Label>
+                                                                <hr />
+                                                            </div>
+                                                        </asp:Panel>
+                                                        <asp:Panel runat="server" id="pnlQuestions"></asp:Panel>
+                                                    </div>
+                                                </div>
                                                 <div class="col-lg-3">
                                                 </div>
                                                 <div class="col-lg-6">
+                                                    <h3 class="text-center">Send to Students</h3><br />
                                                     <asp:CheckBoxList CssClass="" runat="server" ID="cblMyStudents" DataTextField="DisplayName" DataValueField="ObjectId"></asp:CheckBoxList>
                                                     <br />
-                                                    <asp:Button CssClass="btn btn-success" runat="server" ID="btnSend" Text="Send to students" OnClick="btnSend_Click" />
-                                                    <asp:Button CssClass="btn btn-default" ID="btnCancel" runat="server" Text="Cancel" OnClientClick = "return Hidepopup()"/>
+                                                    <asp:Button CssClass="btn btn-success align-center" runat="server" ID="btnSend" Text="Send to students" OnClick="btnSend_Click" />
+                                                    <asp:Button CssClass="btn btn-default align-center" ID="btnCancel" runat="server" Text="Cancel" OnClientClick = "return Hidepopup()"/>
                                                 </div>
                                             </asp:Panel>
                                             <asp:Button id="btnFake" runat="server" CssClass="hidden" />

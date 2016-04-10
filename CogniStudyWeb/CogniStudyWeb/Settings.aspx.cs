@@ -20,6 +20,14 @@ namespace CogniTutor
         {
             if (UserType != Constants.UserType.ADMIN)
                 Response.Redirect("Dashboard");
+            if (!IsPostBack)
+            {
+                await LoadEverything();
+            }
+        }
+
+        protected async Task LoadEverything() 
+        {
             grdTutors.DataSource = await PublicUserData.AllTutors();
             grdTutors.DataBind();
         }
@@ -49,6 +57,7 @@ namespace CogniTutor
                     pud.UserType = Constants.UserType.TUTOR;
                 AsyncHelpers.RunSync(() => pud.SaveAsync());
             }
+            AsyncHelpers.RunSync(LoadEverything);
         }
     }
 }

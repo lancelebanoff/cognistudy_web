@@ -196,6 +196,7 @@ namespace CogniTutor
             q3["questionData"] = qd3;
             q3["bundle"] = bundle;
             q3["isActive"] = false;
+            q3["test"] = false;
             return q3;
         }
 
@@ -233,6 +234,7 @@ namespace CogniTutor
             q2["questionData"] = qd2;
             q2["bundle"] = bundle;
             q2["isActive"] = false;
+            q2["test"] = false;
             return q2;
         }
 
@@ -269,6 +271,7 @@ namespace CogniTutor
             q["questionContents"] = qc;
             q["questionData"] = qd;
             q["isActive"] = false;
+            q["test"] = false;
             return q;
         }
 

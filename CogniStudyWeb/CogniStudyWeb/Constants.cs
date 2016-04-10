@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Parse;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace CogniTutor
@@ -85,6 +87,30 @@ namespace CogniTutor
             public static readonly String TUTOR_APPROVED = "TUTOR_APPROVED";
             public static readonly String APPROVED = "APPROVED";
             public static readonly String DENIED = "DENIED";
+        }
+
+        public static class Role
+        {
+            public static async Task<ParseRole> Tutor()
+            {
+                return await GetParseRole("TUTOR");
+            }
+            public static async Task<ParseRole> Moderator()
+            {
+                return await GetParseRole("MODERATOR");
+            }
+            public static async Task<ParseRole> Admin()
+            {
+                return await GetParseRole("ADMIN");
+            }
+
+            public static async Task<ParseRole> GetParseRole(string name)
+            {
+                var moderators = await(from role in ParseRole.Query
+                                       where role.Name == name
+                                       select role).FirstAsync();
+                return moderators;
+            }
         }
 	
     }

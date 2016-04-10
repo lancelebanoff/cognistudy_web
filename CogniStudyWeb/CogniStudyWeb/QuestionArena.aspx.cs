@@ -24,8 +24,8 @@ namespace CogniTutor
             foreach (ParseObject question in myQuestions)
             {
                 await question.FetchIfNeededAsync();
-                ParseObject contents = await question.Get<ParseObject>("questionContents").FetchIfNeededAsync();
-                ParseObject data = await question.Get<ParseObject>("questionData").FetchIfNeededAsync();
+                ParseObject contents = question.Get<ParseObject>("questionContents");
+                ParseObject data = question.Get<ParseObject>("questionData");
                 IList<ParseObject> reviews = (await data.Get<IList<ParseObject>>("reviews").FetchAllIfNeededAsync()).ToList();
                 DataRow dr = dt.NewRow();
                 dr["subject"] = question.Get<string>("subject");
@@ -51,17 +51,23 @@ namespace CogniTutor
         {
         }
 
-        protected async Task<IEnumerable<ParseObject>> GetMyQuestions()
+        protected async Task<IList<Question>> GetMyQuestions()
         {
-            var contentsQuery = from contents in new ParseQuery<QuestionContents>()
-                                where contents.Author == PublicUserData
-                                select contents;
-            var questionQuery = from question in new ParseQuery<Question>()
-                                orderby question.CreatedAt descending
-                                //join data in dataQuery on question["questionData"] equals data
-                                join contents in contentsQuery on question["questionContents"] equals contents
-                                select question;
-            return await questionQuery.FindAsync();
+            //var contentsQuery = from contents in new ParseQuery<QuestionContents>()
+            //                    where contents.Author == PublicUserData
+            //                    select contents;
+            //var questionQuery = from question in new ParseQuery<Question>()
+            //                    orderby question.CreatedAt descending
+            //                    //join data in dataQuery on question["questionData"] equals data
+            //                    join contents in contentsQuery on question["questionContents"] equals contents
+            //                    select question;
+            //return await questionQuery.FindAsync();
+            IDictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "author", PublicUserData.ObjectId }
+            };
+            IList<Question> questions = await ParseCloud.CallFunctionAsync<IList<Question>>("questionsByTutor", parameters);
+            return questions;
         }
 
         protected DataTable CreateStatusTable()

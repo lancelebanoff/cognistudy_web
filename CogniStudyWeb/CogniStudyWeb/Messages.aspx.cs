@@ -26,8 +26,12 @@ namespace CogniTutor
         {
             if (!this.IsPostBack)
             {
-
+                await LoadEverything();
             }
+        }
+
+        private async Task LoadEverything()
+        {
             //ScriptManager.RegisterStartupScript(this, this.GetType(), "scrollPanel", "scrollPanel();", true);
             IEnumerable<ParseObject> conversations = await GetConversations();
             DataTable dt = InitConversationTable();
@@ -81,6 +85,7 @@ namespace CogniTutor
                     repMessages.DataBind();
                 }
             }
+            testlabel.Text = DateTime.Now.ToString();
         }
 
         public DataTable InitConversationTable()
@@ -114,6 +119,7 @@ namespace CogniTutor
         {
             var query = from conv in ParseObject.GetQuery("Conversation")
                         where (conv.Get<string>("baseUserId1") == UserID || conv.Get<string>("baseUserId2") == UserID)
+                        orderby conv.Get<DateTime>("lastSent")
                         select conv;
             return await query.FindAsync();
         }
@@ -141,6 +147,7 @@ namespace CogniTutor
             //Task t = SendMessage();
             //t.Wait();
             AsyncHelpers.RunSync(SendMessage);
+            AsyncHelpers.RunSync(LoadEverything);
         }
 
         protected async Task SendMessage()
@@ -175,7 +182,7 @@ namespace CogniTutor
             message["text"] = tbType.Text;
             message["receiverBaseUserId"] = RecipientPublicData.Get<string>("baseUserId");
             message["senderBaseUserId"] = UserID;
-            message["sentAt"] = DateTime.Now;
+            message["sentAt"] = DateTime.UtcNow;
             await message.SaveAsync();
             return message;
         }
@@ -205,8 +212,14 @@ namespace CogniTutor
             {
                 Session["ConversationUserId"] = e.CommandArgument.ToString();
             }
+            AsyncHelpers.RunSync(LoadEverything);
         }
 
+        protected void Timer1_Tick(object sender, EventArgs e)
+        {
+            AsyncHelpers.RunSync(LoadEverything);
+            tbType.Focus();
+        }
 
 
     }

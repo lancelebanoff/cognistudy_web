@@ -33,7 +33,7 @@ namespace CogniTutor.UserControls
             {
                 int start = s.IndexOf("<img alt=\"");
                 int end = s.IndexOf("/>", start);
-                string imgtag = s.Substring(start, end - start);
+                string imgtag = s.Substring(start, end + 2 - start);
                 string latex = imgtag.Replace("<img alt=\"", "");
                 latex = latex.Substring(0, latex.IndexOf("\" src=\""));
                 s = s.Replace(imgtag, "\\(" + latex + "\\)");
