@@ -89,6 +89,13 @@ namespace CogniTutor
             public static readonly String DENIED = "DENIED";
         }
 
+        public static class NotificationType
+        {
+            public static readonly String MESSAGE = "MESSAGE";
+            public static readonly String REQUEST_FROM_STUDENT = "REQUEST_FROM_STUDENT";
+            public static readonly String ACCEPT_FROM_STUDENT = "ACCEPT_FROM_STUDENT";
+        }
+
         public static class Role
         {
             public static async Task<ParseRole> Tutor()

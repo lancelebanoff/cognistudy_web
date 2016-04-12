@@ -201,7 +201,6 @@ div.fill{
                                     <br />
                             <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                                 <ContentTemplate>
-                            <asp:Label runat="server" Text="the time" ID="testlabel"></asp:Label>
                                     <asp:TextBox runat="server" ID="tbType" CssClass="form-control"></asp:TextBox>
                                     <asp:Button runat="server" ID="btnSend" Text="Send" OnClick="btnSend_Click" CssClass="btn btn-default pull-right" UseSubmitBehavior="true" />
                                     

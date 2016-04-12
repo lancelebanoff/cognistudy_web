@@ -72,7 +72,7 @@ body{
 /*---End-Header-----*/
 /*----start-image-banner-----*/
 .img-banner{
-	padding: 7em 0 0 0;
+	padding: 5em 0 0 0;
 	background-size: 100%;
 	position: relative;
 	margin: 2px 0;
@@ -443,10 +443,14 @@ body{
 		width: 53%;
 	}
 	.mid-grid-top-pic {
-		width: 31%;
+	    float: left;
+	    width: 50%;
+	    text-align: right;
+	    background: url(../images/img-sprit.png) no-repeat -100px -1000px;
+	    height: 598px;
 	}
 	.mid-grid-top-info {
-		width: 67%;
+		width: 50%;
 	}
 }
 @media only screen and (max-width: 1024px) and (min-width: 768px) {
@@ -466,10 +470,14 @@ body{
 		width: 53%;
 	}
 	.mid-grid-top-pic {
-		width: 39%;
+	    float: left;
+	    width: 50%;
+	    text-align: right;
+	    background: url(../images/img-sprit.png) no-repeat -200px -1000px;
+	    height: 598px;
 	}
 	.mid-grid-top-info {
-		width: 59%;
+		width: 50%;
 	}
 	.mid-grids-bottom h3 {
 		font-size: 2em;
@@ -496,7 +504,7 @@ body{
 		float: none;
 		margin: 2em auto;
 		text-align: center;
-		width: 300px;
+		width: 530px;
 	}
 	.img-banner-info p {
 		width:90%;
@@ -514,10 +522,11 @@ body{
 		padding: 0em 0 0 0;
 	}
 	.mid-grid-top-pic {
-		width:396px;
+		width:330px;
 		float:none;
 		text-align:center;
 		margin:0 auto;
+	    background: url(../images/img-sprit.png) no-repeat -200px -1000px;
 	}
 	.mid-grid-top-info {
 		width: 100%;
@@ -569,7 +578,7 @@ body{
 		float: none;
 		margin: 2em auto;
 		text-align: center;
-		width: 300px;
+		width: 530px;
 	}
 	.img-banner-info p {
 		width:90%;
@@ -587,10 +596,11 @@ body{
 		padding: 0em 0 0 0;
 	}
 	.mid-grid-top-pic {
-		width:396px;
+		width:330px;
 		float:none;
 		text-align:center;
 		margin:0 auto;
+	    background: url(../images/img-sprit.png) no-repeat -200px -1000px;
 	}
 	.mid-grid-top-info {
 		width: 100%;
@@ -642,7 +652,7 @@ body{
 		float: none;
 		margin: 2em auto;
 		text-align: center;
-		width: 300px;
+		width: 530px;
 	}
 	.img-banner-info p {
 		width:90%;
@@ -660,10 +670,11 @@ body{
 		padding: 0em 0 0 0;
 	}
 	.mid-grid-top-pic {
-		width:396px;
+		width:330px;
 		float:none;
 		text-align:center;
 		margin:0 auto;
+	    background: url(../images/img-sprit.png) no-repeat -200px -1000px;
 	}
 	.mid-grid-top-info {
 		width: 100%;
@@ -721,7 +732,7 @@ body{
 		float: none;
 		margin: 2em auto;
 		text-align: center;
-		width: 278px;
+		width: 530px;
 	}
 	.mid-grid-top {
 		padding: 0em 0;
@@ -748,7 +759,11 @@ body{
 		padding: 0em 0 0 0;
 	}
 	.mid-grid-top-pic {
-		display:none;
+		width:330px;
+		float:none;
+		text-align:center;
+		margin:0 auto;
+	    background: url(../images/img-sprit.png) no-repeat -200px -1000px;
 	}
 	.mid-grid-top-info {
 		width: 100%;

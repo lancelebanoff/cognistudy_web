@@ -91,12 +91,20 @@ namespace CogniTutor
 
         public static async Task<IEnumerable<PublicUserData>> Search(string searchText)
         {
-            System.Diagnostics.Debug.WriteLine("search");
-            var query = from data in new ParseQuery<PublicUserData>()
-                        where data.SearchableDisplayName.StartsWith(searchText.ToLower())
+            searchText = searchText.ToLower().Replace(" ", "");
+            //System.Diagnostics.Debug.WriteLine("search");
+            var queryStarts = from data in new ParseQuery<PublicUserData>()
+                        where data.SearchableDisplayName.StartsWith(searchText)
                         select data;
-            System.Diagnostics.Debug.WriteLine("searchabout done");
-            return await query.FindAsync();
+            Task<IEnumerable<PublicUserData>> starts = queryStarts.FindAsync();
+            var queryContains = new ParseQuery<PublicUserData>()
+                                    .WhereContains("searchableDisplayName", searchText);
+            Task<IEnumerable<PublicUserData>> contains = queryContains.FindAsync();
+            //System.Diagnostics.Debug.WriteLine("searchabout done");
+            IEnumerable<PublicUserData> start = await starts;
+            IEnumerable<PublicUserData> contain =  await contains;
+            contain = contain.Where(x => !Common.ParseContains(start, x));
+            return start.Concat(contain);
         }
 
         public static async Task<IEnumerable<PublicUserData>> AllTutors()

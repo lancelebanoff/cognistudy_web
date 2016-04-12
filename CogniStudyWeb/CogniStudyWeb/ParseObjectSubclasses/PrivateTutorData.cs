@@ -40,12 +40,16 @@ namespace CogniTutor
             get { return GetProperty<IList<ParseUser>>(); }
             set { SetProperty<IList<ParseUser>>(value); }
         }
+        [ParseFieldName("notifications")]
+        public ParseRelation<NotificationTutor> Notifications
+        {
+            get { return GetRelationProperty<NotificationTutor>(); }
+            set { SetProperty<ParseRelation<NotificationTutor>>(value); }
+        }
 
         public async Task AcceptStudentRequest(PublicUserData StudentPublicData, PublicUserData TutorPublicData)
         {
-            IList<PublicUserData> requests = (await RequestsFromStudents.FetchAllIfNeededAsync()).ToList();
-            requests.Remove(StudentPublicData);
-            RequestsFromStudents = requests;
+            RequestsFromStudents = Common.RemoveFromList(RequestsFromStudents, StudentPublicData);
 
             IList<PublicUserData> students = Students;
             students.Add(StudentPublicData);

@@ -5,6 +5,18 @@
         margin:0px;
         padding:0px;
     }
+
+.notification-counter {   
+    position: absolute;
+    top: 7px;
+    left: 25px;
+
+    background-color: rgba(212, 19, 13, 1);
+    color: #fff;
+    border-radius: 3px;
+    padding: 1px 3px;
+    font: 8px Verdana;
+}
 </style>
 
 <!-- Navigation -->
@@ -27,11 +39,12 @@
                 <li>
                     <!-- Changed because incomplete-->
                     <a style="cursor:pointer;" href="../Register.aspx">
-                        REGISTER
+                        REGISTER AS TUTOR
                     </a>
                 </li>
                 <li>
-                    <a style="cursor:pointer;" id="loginpopup">
+                    <%--<a style="cursor:pointer;" id="loginpopup">--%>
+                    <a style="cursor:pointer;" href="../Login.aspx">
                         LOGIN
                     </a>
                 </li>
@@ -52,8 +65,23 @@
                 <li>
                     <a href="Messages"><i class="fa fa-fw fa-envelope"></i></a>
                 </li>
-                <li class="hidden">
-                    <a href="#"><i class="fa fa-fw fa-bell"></i></a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle notification-container" data-toggle="dropdown"><i class="fa fa-bell"></i>
+                        <asp:Label runat="server" id="lblNumNotifications" Cssclass="notification-counter" Visible="false"></asp:Label> 
+                        <b class="caret"></b>
+                    </a>
+                    
+                    <ul class="dropdown-menu alert-dropdown">
+                        <asp:Repeater ID="listNotifications" runat="server" OnItemCommand="listNotifications_ItemCommand">
+                            <ItemTemplate>
+                                <li>
+                                    <asp:LinkButton runat="server" CommandName='<%# Eval("ObjectId") %>'>
+                                        <p><%# Eval("NotificationMessage") %></p>
+                                    </asp:LinkButton>
+                                </li>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= mPage.Name %> <b class="caret"></b></a>
@@ -65,7 +93,7 @@
                                 <a href="Profile.aspx?tutorId=<%= mPage.PublicUserData.ObjectId %>"><i class="fa fa-fw fa-user"></i> Edit Profile</a>
                         </li>
                         <li>
-                            <a href="Settings" class="<%= mPage.UserType == CogniTutor.Constants.UserType.ADMIN ? "" : "hidden" %>"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            <a href="Settings" class="<%= mPage.UserType == CogniTutor.Constants.UserType.ADMIN ? "" : "hidden" %>"><i class="fa fa-fw fa-gear"></i> Admin Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li>

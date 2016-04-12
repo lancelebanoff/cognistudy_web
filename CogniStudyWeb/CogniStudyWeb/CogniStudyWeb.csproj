@@ -191,7 +191,7 @@
     <Content Include="homepage\css\style.css" />
     <Content Include="homepage\images\divice-off.png" />
     <Content Include="homepage\images\img-sprit.png" />
-    <Content Include="index.html" />
+    <Content Include="indexa.html" />
     <Content Include="homepage\js\easing.js" />
     <Content Include="homepage\js\move-top.js" />
     <Content Include="homepage\w3layouts-license.txt" />
@@ -2721,6 +2721,7 @@
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="ParseObjectSubclasses\PrivateStudentData.cs" />
+    <Compile Include="ParseObjectSubclasses\NotificationTutor.cs" />
     <Compile Include="ParseObjectSubclasses\SuggestedQuestion.cs" />
     <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentTotalMonthStats.cs" />
     <Compile Include="ParseObjectSubclasses\StatsSubclasses\StudentTotalTridayStats.cs" />

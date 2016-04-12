@@ -26,7 +26,8 @@ namespace CogniTutor
                 await question.FetchIfNeededAsync();
                 ParseObject contents = question.Get<ParseObject>("questionContents");
                 ParseObject data = question.Get<ParseObject>("questionData");
-                IList<ParseObject> reviews = (await data.Get<IList<ParseObject>>("reviews").FetchAllIfNeededAsync()).ToList();
+                //IList<ParseObject> reviews = (await data.Get<IList<ParseObject>>("reviews").FetchAllIfNeededAsync()).ToList();
+                IList<ParseObject> reviews = data.Get<IList<ParseObject>>("reviews");
                 DataRow dr = dt.NewRow();
                 dr["subject"] = question.Get<string>("subject");
                 dr["category"] = question.Get<string>("category");

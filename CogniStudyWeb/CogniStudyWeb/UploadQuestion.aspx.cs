@@ -13,6 +13,7 @@ namespace CogniTutor
     public partial class UploadQuestion : CogniPage
     {
         public bool IsBundle { get { return cbInBundle.Checked; } }
+        public ParseRole TutorRole;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -42,7 +43,7 @@ namespace CogniTutor
 
         protected override async Task OnStart()
         {
-
+            TutorRole = await Constants.Role.Tutor();
         }
 
         protected void btnSubmitQuestion_Click(object sender, EventArgs e)
@@ -157,6 +158,10 @@ namespace CogniTutor
             b["passageText"] = tbPassage.Text;
             if (FileUpload0.HasFile)
                 b["image"] = Upload(FileUpload0);
+            b.ACL = new ParseACL();
+            b.ACL.PublicReadAccess = true;
+            b.ACL.PublicWriteAccess = false;
+            b.ACL.SetRoleWriteAccess(TutorRole, true);
             Task t1 = b.SaveAsync();
             t1.Wait();
             return b;
@@ -169,6 +174,11 @@ namespace CogniTutor
             qd3["totalResponses"] = 0;
             qd3["reviewStatus"] = Constants.ReviewStatusType.PENDING;
             qd3["reviews"] = new List<ParseObject>();
+            qd3.ACL = new ParseACL();
+            qd3.ACL.PublicReadAccess = false;
+            qd3.ACL.PublicWriteAccess = false;
+            qd3.ACL.SetRoleReadAccess(TutorRole, true);
+            qd3.ACL.SetRoleWriteAccess(TutorRole, true);
             return qd3;
         }
 
@@ -183,6 +193,10 @@ namespace CogniTutor
             qc3["explanation"] = tbExplanation3.Text;
             if (FileUpload3.HasFile)
                 qc3["image"] = Upload(FileUpload3);
+            qc3.ACL = new ParseACL();
+            qc3.ACL.PublicReadAccess = true;
+            qc3.ACL.PublicWriteAccess = false;
+            qc3.ACL.SetRoleWriteAccess(TutorRole, true);
             return qc3;
         }
 
@@ -197,6 +211,10 @@ namespace CogniTutor
             q3["bundle"] = bundle;
             q3["isActive"] = false;
             q3["test"] = false;
+            q3.ACL = new ParseACL();
+            q3.ACL.PublicReadAccess = true;
+            q3.ACL.PublicWriteAccess = false;
+            q3.ACL.SetRoleWriteAccess(TutorRole, true);
             return q3;
         }
 
@@ -207,6 +225,11 @@ namespace CogniTutor
             qd2["totalResponses"] = 0;
             qd2["reviewStatus"] = Constants.ReviewStatusType.PENDING;
             qd2["reviews"] = new List<ParseObject>();
+            qd2.ACL = new ParseACL();
+            qd2.ACL.PublicReadAccess = false;
+            qd2.ACL.PublicWriteAccess = false;
+            qd2.ACL.SetRoleReadAccess(TutorRole, true);
+            qd2.ACL.SetRoleWriteAccess(TutorRole, true);
             return qd2;
         }
 
@@ -221,6 +244,10 @@ namespace CogniTutor
             qc2["explanation"] = tbExplanation2.Text;
             if (FileUpload2.HasFile)
                 qc2["image"] = Upload(FileUpload2);
+            qc2.ACL = new ParseACL();
+            qc2.ACL.PublicReadAccess = true;
+            qc2.ACL.PublicWriteAccess = false;
+            qc2.ACL.SetRoleWriteAccess(TutorRole, true);
             return qc2;
         }
 
@@ -235,6 +262,10 @@ namespace CogniTutor
             q2["bundle"] = bundle;
             q2["isActive"] = false;
             q2["test"] = false;
+            q2.ACL = new ParseACL();
+            q2.ACL.PublicReadAccess = true;
+            q2.ACL.PublicWriteAccess = false;
+            q2.ACL.SetRoleWriteAccess(TutorRole, true);
             return q2;
         }
 
@@ -245,6 +276,11 @@ namespace CogniTutor
             qd["totalResponses"] = 0;
             qd["reviewStatus"] = Constants.ReviewStatusType.PENDING;
             qd["reviews"] = new List<ParseObject>();
+            qd.ACL = new ParseACL();
+            qd.ACL.PublicReadAccess = false;
+            qd.ACL.PublicWriteAccess = false;
+            qd.ACL.SetRoleReadAccess(TutorRole, true);
+            qd.ACL.SetRoleWriteAccess(TutorRole, true);
             return qd;
         }
 
@@ -259,6 +295,10 @@ namespace CogniTutor
             qc["explanation"] = tbExplanation.Text;
             if (FileUpload1.HasFile)
                 qc["image"] = Upload(FileUpload1);
+            qc.ACL = new ParseACL();
+            qc.ACL.PublicReadAccess = true;
+            qc.ACL.PublicWriteAccess = false;
+            qc.ACL.SetRoleWriteAccess(TutorRole, true);
             return qc;
         }
 
@@ -272,6 +312,10 @@ namespace CogniTutor
             q["questionData"] = qd;
             q["isActive"] = false;
             q["test"] = false;
+            q.ACL = new ParseACL();
+            q.ACL.PublicReadAccess = true;
+            q.ACL.PublicWriteAccess = false;
+            q.ACL.SetRoleWriteAccess(TutorRole, true);
             return q;
         }
 

@@ -14,8 +14,6 @@
             <div class="modal-body">
 
                 <!--Update Panel for Body-->
-                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-                    <ContentTemplate>
                        <div class="form-group">
                            <asp:Label ID="lblLoginError" class="lead" runat="server" Text="There was a problem with your login." Visible="False" ForeColor="Red"></asp:Label>
                        </div>
@@ -27,13 +25,7 @@
                      </div>
                         <div class="form-group">
                            <asp:Button ID="btnSignIn" runat="server" CssClass="btn btn-primary btn-lg btn-block" OnClick="btnSignIn_Click" Text="Sign In" />
-                            <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1" DisplayAfter="0">
-                                <ProgressTemplate>
-                                    <div class="row text-center">
-                                        <asp:Image ID="imgLoginLoading" runat="server" ImageUrl="~/Images/loading.gif" />
-                                    </div>
-                                </ProgressTemplate>
-                            </asp:UpdateProgress>
+                            
                         </div>
                         <div class="form-group">
                             
@@ -41,8 +33,6 @@
                            <span class="pull-right"><a href="Register.aspx">New user? Create a FREE account.</a></span><span><a href="#"><!--Forgot your password?--> </a></span>
                             <br />
                         </div>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
 
             </div>
             <div class="modal-footer">

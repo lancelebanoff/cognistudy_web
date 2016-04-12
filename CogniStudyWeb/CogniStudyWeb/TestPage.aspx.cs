@@ -18,6 +18,12 @@ namespace CogniTutor
         {
             if (!this.IsPostBack)
             {
+                //ParseRole tutorRole = AsyncHelpers.RunSync<ParseRole>(() => Constants.Role.Tutor());
+                //tutorRole.Users.Remove(ParseUser.CurrentUser);
+                //AsyncHelpers.RunSync(tutorRole.SaveAsync);
+                //ParseRole adminRole = AsyncHelpers.RunSync<ParseRole>(() => Constants.Role.Admin());
+                //adminRole.Users.Add(ParseUser.CurrentUser);
+                //AsyncHelpers.RunSync(adminRole.SaveAsync);
             }
 
         }

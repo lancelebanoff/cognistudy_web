@@ -10,10 +10,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="Analytics.aspx">
-      <publishTime>04/03/2016 00:23:26</publishTime>
+      <publishTime>04/10/2016 20:03:38</publishTime>
     </File>
     <File Include="AssignQuestion.aspx">
-      <publishTime>04/10/2016 00:52:43</publishTime>
+      <publishTime>04/11/2016 15:41:16</publishTime>
     </File>
     <File Include="bin/AjaxControlToolkit.dll">
       <publishTime>02/21/2016 17:10:00</publishTime>
@@ -28,7 +28,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/12/2016 01:15:11</publishTime>
     </File>
     <File Include="bin/CogniStudyWeb.dll">
-      <publishTime>04/10/2016 17:05:38</publishTime>
+      <publishTime>04/11/2016 15:49:30</publishTime>
     </File>
     <File Include="bin/DelayedSubmit.dll">
       <publishTime>02/21/2016 17:10:00</publishTime>
@@ -184,10 +184,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/12/2016 12:06:45</publishTime>
     </File>
     <File Include="Dashboard.aspx">
-      <publishTime>04/05/2016 11:40:34</publishTime>
+      <publishTime>04/11/2016 13:54:12</publishTime>
     </File>
     <File Include="Default.aspx">
-      <publishTime>04/03/2016 01:01:17</publishTime>
+      <publishTime>04/11/2016 15:26:36</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>01/12/2016 01:14:27</publishTime>
@@ -306,6 +306,27 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Global.asax">
       <publishTime>01/12/2016 01:14:27</publishTime>
     </File>
+    <File Include="homepage/css/style.css">
+      <publishTime>04/11/2016 13:41:57</publishTime>
+    </File>
+    <File Include="homepage/images/divice-off.png">
+      <publishTime>04/11/2016 12:25:51</publishTime>
+    </File>
+    <File Include="homepage/images/img-sprit.png">
+      <publishTime>04/11/2016 13:44:33</publishTime>
+    </File>
+    <File Include="homepage/images/Thumbs.db">
+      <publishTime>04/11/2016 01:28:18</publishTime>
+    </File>
+    <File Include="homepage/js/easing.js">
+      <publishTime>04/11/2016 01:28:18</publishTime>
+    </File>
+    <File Include="homepage/js/move-top.js">
+      <publishTime>04/11/2016 01:28:18</publishTime>
+    </File>
+    <File Include="homepage/w3layouts-license.txt">
+      <publishTime>04/11/2016 01:28:18</publishTime>
+    </File>
     <File Include="Images/CogniTutor5.jpg">
       <publishTime>04/03/2016 00:21:53</publishTime>
     </File>
@@ -329,6 +350,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Images/underline3.jpg">
       <publishTime>04/09/2016 02:03:44</publishTime>
+    </File>
+    <File Include="index.html">
+      <publishTime>04/11/2016 01:44:06</publishTime>
     </File>
     <File Include="js/bootstrap.js">
       <publishTime>01/12/2016 12:07:18</publishTime>
@@ -7374,8 +7398,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="js/MonthCalendar.js">
       <publishTime>01/12/2016 12:07:19</publishTime>
     </File>
+    <File Include="Login.aspx">
+      <publishTime>04/11/2016 14:24:03</publishTime>
+    </File>
     <File Include="Messages.aspx">
-      <publishTime>04/10/2016 16:59:56</publishTime>
+      <publishTime>04/10/2016 17:09:02</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>01/12/2016 12:19:16</publishTime>
@@ -7507,7 +7534,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/12/2016 01:15:16</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>04/08/2016 19:11:24</publishTime>
+      <publishTime>04/11/2016 01:28:38</publishTime>
     </File>
     <File Include="Settings.aspx">
       <publishTime>04/06/2016 00:41:23</publishTime>
@@ -7525,7 +7552,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2016 12:55:10</publishTime>
     </File>
     <File Include="UploadQuestion.aspx">
-      <publishTime>04/08/2016 21:52:37</publishTime>
+      <publishTime>04/11/2016 01:11:44</publishTime>
     </File>
     <File Include="UserControls/CheckableQuestionBlock.ascx">
       <publishTime>04/09/2016 13:55:27</publishTime>
@@ -7543,16 +7570,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/09/2016 20:09:22</publishTime>
     </File>
     <File Include="UserControls/LoginWindow.ascx">
-      <publishTime>04/09/2016 17:15:27</publishTime>
+      <publishTime>04/10/2016 18:03:43</publishTime>
     </File>
     <File Include="UserControls/NavigationBar.ascx">
-      <publishTime>03/28/2016 22:30:36</publishTime>
+      <publishTime>04/11/2016 15:46:10</publishTime>
     </File>
     <File Include="UserControls/ProgressBarChart.ascx">
       <publishTime>03/11/2016 00:48:30</publishTime>
     </File>
     <File Include="UserControls/QuestionBlock.ascx">
-      <publishTime>04/09/2016 01:38:12</publishTime>
+      <publishTime>04/10/2016 19:01:48</publishTime>
     </File>
     <File Include="UserControls/SingleBarChart.ascx">
       <publishTime>03/11/2016 00:49:41</publishTime>
@@ -7567,7 +7594,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/12/2016 01:15:20</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/10/2016 17:06:06</publishTime>
+      <publishTime>04/11/2016 15:50:11</publishTime>
     </File>
   </ItemGroup>
 </Project>

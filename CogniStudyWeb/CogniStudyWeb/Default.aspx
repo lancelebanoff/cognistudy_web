@@ -121,7 +121,7 @@
 			</div>
 			<div class="mid-grid-top-info">
 				<h3>Make studying <strong>addicting</strong>!</h3>
-				<p>Challenge your friends in a battle to answer the most questions correctly!</p>
+				<p>Challenge your friends in a battle to answer the most questions correctly! Then try to destroy their school supplies in an interactive game!</p>
 			</div>
 			<div class="clear"> </div>
 		</div>

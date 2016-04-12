@@ -13,6 +13,24 @@ namespace CogniTutor {
     public partial class NavigationBar {
         
         /// <summary>
+        /// lblNumNotifications control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNumNotifications;
+        
+        /// <summary>
+        /// listNotifications control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater listNotifications;
+        
+        /// <summary>
         /// btnLogout control.
         /// </summary>
         /// <remarks>

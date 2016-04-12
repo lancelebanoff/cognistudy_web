@@ -109,21 +109,17 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <h4 class="h4">Search Users</h4>
-                                    <cc1:DelayedSubmitExtender ID="DisableButtonExtender1" runat="server" Timeout="1" TargetControlID="TextBox1"/>
-                                    <asp:TextBox ID="TextBox1" CssClass="form-control input-lg fill-parent-width" placeholder="Type Student's Name..." runat="server" AutoPostBack="True" OnTextChanged="TextBox1_TextChanged" Columns="50" AutoCompleteType="Disabled"></asp:TextBox>        
+                                    <cc1:DelayedSubmitExtender ID="DisableButtonExtender1" runat="server" Timeout="500" TargetControlID="TextBox1"/>
+                                    <asp:TextBox onchange="$('#imgLoading').removeClass('hidden')" ID="TextBox1" CssClass="form-control input-lg fill-parent-width" placeholder="Type Student's Name..." runat="server" AutoPostBack="True" OnTextChanged="TextBox1_TextChanged" Columns="50" AutoCompleteType="Disabled"></asp:TextBox>        
                                     <br />
                                     <asp:UpdatePanel ID="pnlSearch" runat="server" UpdateMode="Conditional">
                                         <Triggers>
                                             <asp:AsyncPostBackTrigger ControlID="TextBox1" />
                                         </Triggers>
                                         <ContentTemplate>
-                                            <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="pnlSearch" DisplayAfter="0">
-                                                <ProgressTemplate>
-                                                    <div class="row text-center">
-                                                        <asp:Image ID="imgLoginLoading" runat="server" ImageUrl="Images/loading.gif" />
-                                                    </div>
-                                                </ProgressTemplate>
-                                            </asp:UpdateProgress>
+                                            <div class="row text-center">
+                                                <asp:Image runat="server" ImageUrl="Images/loading.gif" class="hidden" id="imgLoading" />
+                                            </div>
                                             <asp:Repeater ID="Repeater1" runat="server">
                                                 <HeaderTemplate><table class="table"></HeaderTemplate>
                                                 <ItemTemplate>

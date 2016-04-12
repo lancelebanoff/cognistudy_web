@@ -128,7 +128,9 @@
                                             </div>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
-                                    <asp:CheckBox runat="server" CssClass="" ID="cbInBundle" onclick="$('#divPassage').toggleClass('hidden'); $('#divPassageExtraQuestions').toggleClass('hidden');" Text="Make 3-question bundle"/><br /><br />
+                                    <asp:CheckBox runat="server" CssClass="" ID="cbInBundle" 
+                                        onclick="$('#divPassage').toggleClass('hidden'); $('#divPassageExtraQuestions').toggleClass('hidden');" 
+                                        Text="Make this a 3-question bundle (if all 3 questions are based on the same passage, image, graph, etc.)"/><br /><br />
 
 
                                     <div id="divPassage" class='<%= cbInBundle.Checked ? "" : "hidden" %>'>

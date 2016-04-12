@@ -36,8 +36,12 @@ namespace CogniTutor
         }
         protected async Task StartPage()
         {
-            RegisterParseSubclasses();
-            ParseClient.Initialize("iT8NyJO0dChjLyfVsHUTM8UZQLSBBJLxd43AX9IY", "SvmmmluPjmLblmNrgqnUmylInkyiXzoWBk9ZxeZH");
+            if (NewSession)
+            {
+                RegisterParseSubclasses();
+                ParseClient.Initialize("iT8NyJO0dChjLyfVsHUTM8UZQLSBBJLxd43AX9IY", "SvmmmluPjmLblmNrgqnUmylInkyiXzoWBk9ZxeZH");
+                NewSession = false;
+            }
             if (IsTestMode)
             {
                 Session["Email"] = "loganlebanoff@yahoo.com";
@@ -45,13 +49,14 @@ namespace CogniTutor
             }
             if (LoggedIn)
             {
-                await ParseUser.LogInAsync(Session["Email"].ToString(), Session["Password"].ToString());
-                PublicUserData = ParseUser.CurrentUser.Get<PublicUserData>("publicUserData");
-                await PublicUserData.FetchAsync();
-                Tutor = PublicUserData.Tutor;
-                await Tutor.FetchAsync();
-                PrivateTutorData = Tutor.PrivateTutorData;
-                await PrivateTutorData.FetchAsync();
+                //PublicUserData = ParseUser.CurrentUser.Get<PublicUserData>("publicUserData");
+                //await PublicUserData.FetchAsync();
+                //Tutor = PublicUserData.Tutor;
+                //await Tutor.FetchAsync();
+                //PrivateTutorData = Tutor.PrivateTutorData;
+                //await PrivateTutorData.FetchAsync();
+                ParseObject[] data = new ParseObject[] {PublicUserData, Tutor, PrivateTutorData};
+                await data.FetchAllAsync();
             }
             else
             {
@@ -75,6 +80,7 @@ namespace CogniTutor
             ParseObject.RegisterSubclass<SuggestedQuestion>();
             ParseObject.RegisterSubclass<Student>();
             ParseObject.RegisterSubclass<Tutor>();
+            ParseObject.RegisterSubclass<NotificationTutor>();
 
             ParseObject.RegisterSubclass<StudentCategoryDayStats>();
             ParseObject.RegisterSubclass<StudentCategoryMonthStats>();
@@ -154,6 +160,17 @@ namespace CogniTutor
             System.Configuration.AppSettingsReader configurationAppSettings;
             configurationAppSettings = new System.Configuration.AppSettingsReader();
             return (configurationAppSettings.GetValue(conf, typeof(string)) as string);
+        }
+        public bool NewSession
+        {
+            get
+            {
+                return Session["NewSession"] == null;
+            }
+            set
+            {
+                Session["NewSession"] = value;
+            }
         }
         public string UserID
         {

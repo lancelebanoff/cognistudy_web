@@ -84,8 +84,14 @@ namespace CogniTutor
                     repMessages.DataSource = messageData;
                     repMessages.DataBind();
                 }
+                tbType.Enabled = true;
+                btnSend.Enabled = true;
             }
-            testlabel.Text = DateTime.Now.ToString();
+            else
+            {
+                tbType.Enabled = false;
+                btnSend.Enabled = false;
+            }
         }
 
         public DataTable InitConversationTable()
@@ -119,7 +125,7 @@ namespace CogniTutor
         {
             var query = from conv in ParseObject.GetQuery("Conversation")
                         where (conv.Get<string>("baseUserId1") == UserID || conv.Get<string>("baseUserId2") == UserID)
-                        orderby conv.Get<DateTime>("lastSent")
+                        orderby conv.Get<DateTime>("lastSent") descending
                         select conv;
             return await query.FindAsync();
         }

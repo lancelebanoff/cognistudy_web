@@ -50,7 +50,7 @@ namespace CogniTutor
             {
                 System.Diagnostics.Debug.WriteLine("hello again");
                 IEnumerable<PublicUserData> data = (await PublicUserData.Search(TextBox1.Text)).Take(5);
-                await data.FetchAllIfNeededAsync();
+                //await data.FetchAllIfNeededAsync();
                 System.Diagnostics.Debug.WriteLine("hello agaiagainn");
                 Repeater1.DataSource = data;
                 Repeater1.DataBind();
