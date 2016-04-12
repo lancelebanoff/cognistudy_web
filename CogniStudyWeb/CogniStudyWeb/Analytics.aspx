@@ -136,7 +136,7 @@
                                             
                                             <div class="row">
                                                 <div class="col-lg-6">
-
+                                                    <asp:Label runat="server" ID="lbNoResults" Text="No analytics to show" Visible="false" CssClass="medium-text"></asp:Label>
                                                     <asp:Panel ID="pnlTest" runat="server"></asp:Panel>
                                                     <asp:UpdatePanel ID="UpdatePanel1" runat="server"></asp:UpdatePanel>
                                                     <asp:UpdatePanel ID="UpdatePanel2" runat="server"></asp:UpdatePanel>

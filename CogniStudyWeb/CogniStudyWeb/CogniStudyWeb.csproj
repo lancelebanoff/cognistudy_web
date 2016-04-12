@@ -188,6 +188,13 @@
     <Content Include="font-awesome\css\font-awesome.min.css" />
     <Content Include="font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="homepage\css\style.css" />
+    <Content Include="homepage\images\divice-off.png" />
+    <Content Include="homepage\images\img-sprit.png" />
+    <Content Include="index.html" />
+    <Content Include="homepage\js\easing.js" />
+    <Content Include="homepage\js\move-top.js" />
+    <Content Include="homepage\w3layouts-license.txt" />
     <Content Include="Images\CogniTutor5.jpg" />
     <Content Include="Images\default_prof_pic.png" />
     <Content Include="Images\edit.png" />
@@ -2498,6 +2505,7 @@
     <Content Include="js\jqBootstrapValidation.js" />
     <Content Include="js\jquery.js" />
     <Content Include="js\MonthCalendar.js" />
+    <Content Include="Login.aspx" />
     <Content Include="Messages.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="packages.config" />
@@ -2580,6 +2588,7 @@
     <Content Include="js\ckeditor\skins\bootstrapck\scss\config\_config.scss" />
     <Content Include="js\ckeditor\skins\bootstrapck\scss\config\_defaults.scss" />
     <Content Include="js\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
+    <Content Include="homepage\images\Thumbs.db" />
     <None Include="Properties\PublishProfiles\CogniStudy Published.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Profile.aspx" />
@@ -2688,6 +2697,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Messages.aspx.cs">
       <DependentUpon>Messages.aspx</DependentUpon>

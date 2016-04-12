@@ -369,6 +369,16 @@ namespace CogniTutor
                 else
                     catUpdatePanels[catUpdatePanelCounter++].ContentTemplateContainer.Controls.Add(progressChart);
             }
+            DoughnutChart chart1 = UpdatePanel1.ContentTemplateContainer.Controls[0] as DoughnutChart;
+            if (chart1.NumCorrect + chart1.NumIncorrect == 0)
+            {
+                ClearCharts();
+                lbNoResults.Visible = true;
+            }
+            else
+            {
+                lbNoResults.Visible = false;
+            }
         }
 
         private string FigureBlockStatsSelection()

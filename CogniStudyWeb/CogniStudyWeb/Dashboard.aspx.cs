@@ -20,8 +20,17 @@ namespace CogniTutor
 
         protected override async Task OnStart()
         {
-            grdMyStudents.DataSource = await PrivateTutorData.Students.FetchAllIfNeededAsync();
+            IList<PublicUserData> students = (await PrivateTutorData.Students.FetchAllIfNeededAsync()).ToList();
+            grdMyStudents.DataSource = students;
             grdMyStudents.DataBind();
+            if (students.Count == 0)
+            {
+                lbNoStudents.Visible = true;
+            }
+            else 
+            {
+                lbNoStudents.Visible = false;
+            }
         }
 
         protected void TextBox1_TextChanged(object sender, EventArgs e)

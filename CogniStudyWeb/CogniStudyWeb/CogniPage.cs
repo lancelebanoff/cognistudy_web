@@ -55,7 +55,7 @@ namespace CogniTutor
             }
             else
             {
-                if (!(this is _Default || this is Register || this is RegistrationTest || this is RegisterSuccess || this is RegisterFailure))
+                if (!(this is _Default || this is Register || this is RegistrationTest || this is RegisterSuccess || this is RegisterFailure || this is Login))
                 {
                     Response.Redirect("Default");
                 }

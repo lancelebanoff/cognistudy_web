@@ -91,7 +91,7 @@
                             
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <asp:Label ID="lblText" runat="server" Text=""></asp:Label>
+                                    <asp:Label ID="lbNoStudents" runat="server" Text="You currently have no students. Find students by using the search bar on the right."></asp:Label>
                                     <br />
                                     <p class="medium-text">
                                         

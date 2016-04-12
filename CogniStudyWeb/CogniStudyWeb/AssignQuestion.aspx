@@ -171,6 +171,7 @@
                                     
                             <div class="row">
                                 <div class="col-lg-8">
+                                    <p>Assign specific questions to your students to answer. You can see their responses on their profile.</p>
                                     <asp:UpdatePanel runat="server">
                                         <ContentTemplate>
                                             <asp:Button CssClass="hidden" runat="server" ID="btnUpdatePanels" OnClick="btnUpdatePanels_Click" />
@@ -284,11 +285,12 @@
                                                 <div class="col-lg-3">
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <h3 class="text-center">Send to Students</h3><br />
+                                                    <h3 class="">Send to Students</h3><br />
                                                     <asp:CheckBoxList CssClass="" runat="server" ID="cblMyStudents" DataTextField="DisplayName" DataValueField="ObjectId"></asp:CheckBoxList>
                                                     <br />
-                                                    <asp:Button CssClass="btn btn-success align-center" runat="server" ID="btnSend" Text="Send to students" OnClick="btnSend_Click" />
-                                                    <asp:Button CssClass="btn btn-default align-center" ID="btnCancel" runat="server" Text="Cancel" OnClientClick = "return Hidepopup()"/>
+
+                                                    <asp:Button CssClass="btn btn-success" runat="server" ID="btnSend" Text="Send to students" OnClick="btnSend_Click" />
+                                                    <asp:Button CssClass="btn btn-default" ID="btnCancel" runat="server" Text="Cancel" OnClientClick = "return Hidepopup()"/>
                                                 </div>
                                             </asp:Panel>
                                             <asp:Button id="btnFake" runat="server" CssClass="hidden" />
