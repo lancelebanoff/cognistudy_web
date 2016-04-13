@@ -109,6 +109,18 @@ div.fill{
         }).resize();
     </script>
 
+    <script>
+        function NewMessage() {
+            $('#tbMessage').val($('#tbType').val());
+            $('#newMessage').removeClass('hidden');
+            $('#newText').html($('#tbType').val());
+            $('#tbType').val('');
+            var div = document.getElementById("<%=pnlMessages.ClientID%>");
+            div.scrollTop = div.scrollHeight - div.clientHeight;
+            //$('#newMessage').html(new Date());
+        }
+    </script>
+
 </head>
 
 <body>
@@ -189,10 +201,16 @@ div.fill{
                                                         <asp:Repeater runat="server" ID="repMessages">
                                                             <ItemTemplate>
                                                                 <div class="bubble <%# Convert.ToBoolean(Eval("WasSentByMe")) ? "me" : "you" %>">
-                                                                    <%# Eval("Text") %>
+                                                                    <span class="medium-text"><%# Eval("Text") %></span><br />
+                                                                    <span class="small"><%# Eval("sentAt") %></span>
                                                                 </div>
+                                                                
                                                             </ItemTemplate>
                                                         </asp:Repeater>
+                                                        <div class="bubble me hidden" id="newMessage">
+                                                            <span class="medium-text" id="newText"></span><br />
+                                                            <span class="small" id="newTime"></span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </asp:Panel>
@@ -202,8 +220,9 @@ div.fill{
                             <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                                 <ContentTemplate>
                                     <asp:TextBox runat="server" ID="tbType" CssClass="form-control"></asp:TextBox>
-                                    <asp:Button runat="server" ID="btnSend" Text="Send" OnClick="btnSend_Click" CssClass="btn btn-default pull-right" UseSubmitBehavior="true" />
+                                    <asp:Button runat="server" ID="btnSend" Text="Send" OnClick="btnSend_Click" CssClass="btn btn-default pull-right" UseSubmitBehavior="true" OnClientClick="NewMessage();" />
                                     
+                                    <asp:TextBox runat="server" ID="tbMessage" class="hidden"></asp:TextBox>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
 

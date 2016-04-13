@@ -67,6 +67,11 @@ namespace CogniTutor
                 lblError.Text = "Password is required";
                 lblError.Visible = true;
             }
+            else if (tbPassword.Text != tbPasswordRetype.Text)
+            {
+                lblError.Text = "Passwords do not match";
+                lblError.Visible = true;
+            }
             //else if (tbPhoneNumber.Text == "")
             //{
             //    lblError.Text = "Phone Number is required";
@@ -90,11 +95,6 @@ namespace CogniTutor
             //else if (ddState.SelectedValue == "")
             //{
             //    lblError.Text = "State is required";
-            //    lblError.Visible = true;
-            //}
-            //else if (tbPassword.Text != tbPasswordRetype.Text)
-            //{
-            //    lblError.Text = "Passwords do not match";
             //    lblError.Visible = true;
             //}
             //else if (!cbTerms.Checked)

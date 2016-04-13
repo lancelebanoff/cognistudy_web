@@ -31,20 +31,23 @@ namespace CogniTutor
                 var query = mPage.PrivateTutorData.Notifications.Query.OrderByDescending("createdAt").Include("userFrom");
                 List<NotificationTutor> Notifications = (await query.FindAsync()).ToList();
                 int unseen = 0;
+                List<NotificationTutor> FilteredNotifications = new List<NotificationTutor>();
                 for (int i = 0; i < Notifications.Count; i++)
                 {
-                    if (Notifications[i].FirstSeenAt == null)
-                        unseen++;
                     // If notification is old, remove it
-                    else if (DateTime.Now.Subtract((DateTime)Notifications[i].FirstSeenAt).TotalHours > 1)
+                    if ( (Notifications[i].FirstSeenAt != null && DateTime.Now.Subtract((DateTime)Notifications[i].FirstSeenAt).TotalHours > 1 )
+                        || IsDuplicateMessage(FilteredNotifications, Notifications[i]))
                     {
-                        //mPage.PrivateTutorData.Notifications.Remove(Notifications[i]);
                         await Notifications[i].DeleteAsync();
-                        Notifications.RemoveAt(i);
-                        i--;
+                    }
+                    else
+                    {
+                        if (Notifications[i].FirstSeenAt == null)
+                            unseen++;
+                        FilteredNotifications.Add(Notifications[i]);
                     }
                 }
-                listNotifications.DataSource = Notifications;
+                listNotifications.DataSource = FilteredNotifications;
                 if (unseen > 0)
                 {
                     lblNumNotifications.Text = unseen.ToString();
@@ -56,6 +59,14 @@ namespace CogniTutor
                 }
                 DataBind();
             }
+        }
+
+        private bool IsDuplicateMessage(List<NotificationTutor> list, NotificationTutor candidate)
+        {
+            foreach (NotificationTutor notification in list)
+                if (notification.Type == Constants.NotificationType.MESSAGE && notification.UserFrom.ObjectId == candidate.UserFrom.ObjectId)
+                    return true;
+            return false;
         }
 
         protected override void OnInit(EventArgs e)

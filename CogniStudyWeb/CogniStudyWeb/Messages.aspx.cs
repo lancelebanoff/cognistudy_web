@@ -32,6 +32,7 @@ namespace CogniTutor
 
         private async Task LoadEverything()
         {
+
             //ScriptManager.RegisterStartupScript(this, this.GetType(), "scrollPanel", "scrollPanel();", true);
             IEnumerable<ParseObject> conversations = await GetConversations();
             DataTable dt = InitConversationTable();
@@ -79,10 +80,12 @@ namespace CogniTutor
                         DataRow dr = messageData.NewRow();
                         dr["Text"] = mes.Get<string>("text");
                         dr["WasSentByMe"] = mes.Get<string>("senderBaseUserId") == UserID;
+                        dr["SentAt"] = mes.Get<DateTime>("sentAt").ToString();
                         messageData.Rows.Add(dr);
                     }
                     repMessages.DataSource = messageData;
                     repMessages.DataBind();
+                    await RemoveNotificationsForConversation();
                 }
                 tbType.Enabled = true;
                 btnSend.Enabled = true;
@@ -91,6 +94,17 @@ namespace CogniTutor
             {
                 tbType.Enabled = false;
                 btnSend.Enabled = false;
+            }
+        }
+
+        private async Task RemoveNotificationsForConversation()
+        {
+            var query = PrivateTutorData.Notifications.Query.OrderByDescending("createdAt").Include("userFrom");
+            List<NotificationTutor> Notifications = (await query.FindAsync()).ToList();
+            foreach (NotificationTutor notification in Notifications)
+            {
+                if (notification.UserFrom.ObjectId == RecipientPublicData.ObjectId)
+                    await notification.DeleteAsync();
             }
         }
 
@@ -109,6 +123,7 @@ namespace CogniTutor
             DataTable dt = new DataTable();
             dt.Columns.Add("Text");
             dt.Columns.Add("WasSentByMe");
+            dt.Columns.Add("SentAt");
             return dt;
         }
 
@@ -175,17 +190,18 @@ namespace CogniTutor
                 { "senderBaseUserId", PublicUserData.BaseUserId },
                 { "receiverBaseUserId", RecipientPublicData.Get<string>("baseUserId") },
                 { "senderName", PublicUserData.DisplayName },
-                { "messageText", tbType.Text }
+                { "messageText", tbMessage.Text }
             };
             await ParseCloud.CallFunctionAsync<string>("sendMessageNotification", parameters);
 
-            tbType.Text = "";
+            tbMessage.Text = "";
+            tbType.Focus();
         }
 
         protected async Task<ParseObject> CreateNewMessage()
         {
             ParseObject message = new ParseObject("Message");
-            message["text"] = tbType.Text;
+            message["text"] = tbMessage.Text;
             message["receiverBaseUserId"] = RecipientPublicData.Get<string>("baseUserId");
             message["senderBaseUserId"] = UserID;
             message["sentAt"] = DateTime.UtcNow;
