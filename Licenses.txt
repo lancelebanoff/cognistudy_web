@@ -10,3 +10,5 @@ http://www.codeproject.com/Articles/25173/See-search-results-as-you-type-An-ASP-
 					Open license
 
 https://w3layouts.com/preview/?l=/mobile-cloud-app-based-mobile-website-template
+
+http://piczard.com/docs/license/

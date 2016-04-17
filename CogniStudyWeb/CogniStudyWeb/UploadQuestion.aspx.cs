@@ -12,6 +12,11 @@ namespace CogniTutor
 {
     public partial class UploadQuestion : CogniPage
     {
+        public bool IsEditMode { get { return Session["Question"] != null; } }
+        public Question Question { get { return (Question)Session["Question"]; } set { Session["Question"] = value; } }
+        public QuestionContents QuestionContents { get { return Question.QuestionContents; } set { Question.QuestionContents = value; } }
+        public QuestionData QuestionData { get { return Question.QuestionData; } set { Question.QuestionData = value; } }
+        public QuestionBundle Bundle { get { return Question.Bundle; } set { Question.Bundle = value; } }
         public bool IsBundle { get { return cbInBundle.Checked; } }
         public ParseRole TutorRole;
 
@@ -34,16 +39,98 @@ namespace CogniTutor
             }
         }
 
+        protected override async Task OnStart()
+        {
+            TutorRole = await Constants.Role.Tutor();
+
+            if (!IsPostBack)
+            {
+                if (Session["QuestionObjectId"] != null)
+                {
+                    Question = await Question.GetFullQuestionById(Session["QuestionObjectId"].ToString());
+                    FillWithQuestionInfo();
+                }
+                else
+                {
+                    cbInBundle.Enabled = true;
+                    pnlExtraQuestions.Visible = true;
+                }
+            }
+
+        }
+
+        private void FillWithQuestionInfo()
+        {
+            lbPassageImageUploaded.Visible = false;
+            lbImageUploaded.Visible = false;
+            lbImageUploaded2.Visible = false;
+            lbImageUploaded3.Visible = false;
+            cbInBundle.Enabled = false;
+            pnlExtraQuestions.Visible = false;
+
+            ddlSubject.SelectedValue = Question.Subject;
+            FillCategoryDropdown(Question.Subject);
+            ddlCategory.SelectedValue = Question.Category;
+
+            tbQuestion.Text = QuestionContents.QuestionText;
+            tbAnswer1.Text = QuestionContents.Answer1;
+            tbAnswer2.Text = QuestionContents.Answer2;
+            tbAnswer3.Text = QuestionContents.Answer3;
+            tbAnswer4.Text = QuestionContents.Answer4;
+            if (QuestionContents.Answers.Count == 5)
+            {
+                cbAnswer5.Checked = true;
+                tbAnswer5.Text = QuestionContents.Answer5;
+            }
+            else
+            {
+                cbAnswer5.Checked = false;
+            }
+            SetCorrectAnswer();
+            tbExplanation.Text = QuestionContents.Explanation;
+
+            if (Question.InBundle)
+            {
+                cbInBundle.Checked = true;
+                tbPassage.Text = Bundle.PassageText;
+                if (Bundle.Image != null)
+                {
+                    lbPassageImageUploaded.Visible = true;
+                }
+            }
+        }
+
+        private void SetCorrectAnswer()
+        {
+            if (QuestionContents.CorrectAnswer == 0)
+                rbAnswer1.Checked = true;
+            else if (QuestionContents.CorrectAnswer == 1)
+                rbAnswer2.Checked = true;
+            else if (QuestionContents.CorrectAnswer == 2)
+                rbAnswer3.Checked = true;
+            else if (QuestionContents.CorrectAnswer == 3)
+                rbAnswer4.Checked = true;
+            else if (QuestionContents.CorrectAnswer == 4)
+                rbAnswer5.Checked = true;
+        }
+
         protected void ddlSubject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillCategoryDropdown();
+        }
+
+        private void FillCategoryDropdown()
         {
             ddlCategory.DataSource = Constants.SubjectToCategory[ddlSubject.Text];
             ddlCategory.DataBind();
             ddlCategory.Items.Insert(0, "");
         }
 
-        protected override async Task OnStart()
+        private void FillCategoryDropdown(string subject)
         {
-            TutorRole = await Constants.Role.Tutor();
+            ddlCategory.DataSource = Constants.SubjectToCategory[subject];
+            ddlCategory.DataBind();
+            ddlCategory.Items.Insert(0, "");
         }
 
         protected void btnSubmitQuestion_Click(object sender, EventArgs e)
@@ -55,45 +142,63 @@ namespace CogniTutor
             }
             pnlError.Visible = false;
 
-            List<Task> tasks = new List<Task>();
-            QuestionContents contents1 = CreateContents1();
-            QuestionData data1 = CreateData1();
-            Question question1 = CreateQuestion1(contents1, data1);
-
-            if (IsBundle)
+            if (IsEditMode)
             {
-                QuestionBundle bundle = SaveBundle();
-                question1["inBundle"] = true;
-                question1["bundle"] = bundle;
-                QuestionContents contents2 = CreateContents2();
-                QuestionData data2 = CreateData2();
-                Question question2 = CreateQuestion2(contents2, data2, bundle);
-                QuestionContents contents3 = CreateContents3();
-                QuestionData data3 = CreateData3();
-                Question question3 = CreateQuestion3(contents3, data3, bundle);
-                tasks.Add(contents1.SaveAsync());
-                tasks.Add(contents2.SaveAsync());
-                tasks.Add(contents3.SaveAsync());
-                tasks.Add(data1.SaveAsync());
-                tasks.Add(data1.SaveAsync());
-                tasks.Add(data1.SaveAsync());
-                foreach (Task t in tasks) t.Wait();
-                Task t1 = question1.SaveAsync();
-                Task t2 = question2.SaveAsync();
-                Task t3 = question3.SaveAsync();
-                t1.Wait(); t2.Wait(); t3.Wait();
-                bundle["questions"] = new ParseObject[] { question1, question2, question3 };
-                Task t4 = bundle.SaveAsync();
-                t4.Wait();
+                List<Task> tasks = new List<Task>();
+                QuestionContents contents1 = CreateContents1();
+                QuestionData data1 = CreateData1();
+                Question question1 = CreateQuestion1(contents1, data1);
+                if (IsBundle)
+                {
+                    QuestionBundle bundle = SaveBundle();
+                }
+                AsyncHelpers.RunSync(contents1.SaveAsync);
+                AsyncHelpers.RunSync(data1.SaveAsync);
+                AsyncHelpers.RunSync(question1.SaveAsync);
             }
             else
             {
-                Task t1 = contents1.SaveAsync();
-                Task t2 = data1.SaveAsync();
-                t1.Wait(); t2.Wait();
-                Task t3 = question1.SaveAsync();
-                t3.Wait();
+                List<Task> tasks = new List<Task>();
+                QuestionContents contents1 = CreateContents1();
+                QuestionData data1 = CreateData1();
+                Question question1 = CreateQuestion1(contents1, data1);
+
+                if (IsBundle)
+                {
+                    QuestionBundle bundle = SaveBundle();
+                    question1["inBundle"] = true;
+                    question1["bundle"] = bundle;
+                    QuestionContents contents2 = CreateContents2();
+                    QuestionData data2 = CreateData2();
+                    Question question2 = CreateQuestion2(contents2, data2, bundle);
+                    QuestionContents contents3 = CreateContents3();
+                    QuestionData data3 = CreateData3();
+                    Question question3 = CreateQuestion3(contents3, data3, bundle);
+                    tasks.Add(contents1.SaveAsync());
+                    tasks.Add(contents2.SaveAsync());
+                    tasks.Add(contents3.SaveAsync());
+                    tasks.Add(data1.SaveAsync());
+                    tasks.Add(data1.SaveAsync());
+                    tasks.Add(data1.SaveAsync());
+                    foreach (Task t in tasks) t.Wait();
+                    Task t1 = question1.SaveAsync();
+                    Task t2 = question2.SaveAsync();
+                    Task t3 = question3.SaveAsync();
+                    t1.Wait(); t2.Wait(); t3.Wait();
+                    bundle["questions"] = new ParseObject[] { question1, question2, question3 };
+                    Task t4 = bundle.SaveAsync();
+                    t4.Wait();
+                }
+                else
+                {
+                    Task t1 = contents1.SaveAsync();
+                    Task t2 = data1.SaveAsync();
+                    t1.Wait(); t2.Wait();
+                    Task t3 = question1.SaveAsync();
+                    t3.Wait();
+                }
             }
+            Session["QuestionObjectId"] = null;
             Response.Redirect("UploadQuestion?success=true");
         }
 
@@ -126,6 +231,8 @@ namespace CogniTutor
             }
             if (cbInBundle.Checked)
             {
+                if (!IsEditMode)
+                {
                 if (tbQuestion2.Text == "" || tbQuestion3.Text == "")
                 {
                     lbError.Text = "Please fill in Question text.";
@@ -148,13 +255,18 @@ namespace CogniTutor
                     lbError.Text = "Please mark one of the answers as correct.";
                     return false;
                 }
+                }
             }
             return true;
         }
 
         private QuestionBundle SaveBundle()
         {
-            QuestionBundle b = new QuestionBundle();
+            QuestionBundle b;
+            if (IsEditMode)
+                b = Bundle;
+            else
+                b = new QuestionBundle();
             b["passageText"] = tbPassage.Text;
             if (FileUpload0.HasFile)
                 b["image"] = Upload(FileUpload0);
@@ -211,6 +323,7 @@ namespace CogniTutor
             q3["bundle"] = bundle;
             q3["isActive"] = false;
             q3["test"] = false;
+            q3["numberInBundle"] = 3;
             q3.ACL = new ParseACL();
             q3.ACL.PublicReadAccess = true;
             q3.ACL.PublicWriteAccess = false;
@@ -262,6 +375,7 @@ namespace CogniTutor
             q2["bundle"] = bundle;
             q2["isActive"] = false;
             q2["test"] = false;
+            q2["numberInBundle"] = 2;
             q2.ACL = new ParseACL();
             q2.ACL.PublicReadAccess = true;
             q2.ACL.PublicWriteAccess = false;
@@ -271,22 +385,34 @@ namespace CogniTutor
 
         private QuestionData CreateData1()
         {
-            QuestionData qd = new QuestionData();;
-            qd["correctResponses"] = 0;
-            qd["totalResponses"] = 0;
+            QuestionData qd;
+            if (IsEditMode)
+            {
+                qd = QuestionData;
+            }
+            else
+            {
+                qd = new QuestionData();
+                qd["correctResponses"] = 0;
+                qd["totalResponses"] = 0;
+                qd["reviews"] = new List<ParseObject>();
+                qd.ACL = new ParseACL();
+                qd.ACL.PublicReadAccess = false;
+                qd.ACL.PublicWriteAccess = false;
+                qd.ACL.SetRoleReadAccess(TutorRole, true);
+                qd.ACL.SetRoleWriteAccess(TutorRole, true);
+            }
             qd["reviewStatus"] = Constants.ReviewStatusType.PENDING;
-            qd["reviews"] = new List<ParseObject>();
-            qd.ACL = new ParseACL();
-            qd.ACL.PublicReadAccess = false;
-            qd.ACL.PublicWriteAccess = false;
-            qd.ACL.SetRoleReadAccess(TutorRole, true);
-            qd.ACL.SetRoleWriteAccess(TutorRole, true);
             return qd;
         }
 
         private QuestionContents CreateContents1()
         {
-            QuestionContents qc = new QuestionContents();
+            QuestionContents qc;
+            if (IsEditMode)
+                qc = QuestionContents;
+            else
+                qc = new QuestionContents();
             qc["correctAnswer"] = CorrectIndex(1);
             qc["author"] = PublicUserData;
             qc["questionText"] = tbQuestion.Text;
@@ -304,18 +430,27 @@ namespace CogniTutor
 
         private Question CreateQuestion1(QuestionContents qc, QuestionData qd)
         {
-            Question q = new Question();;
+            Question q;
+            if (IsEditMode)
+            {
+                q = Question;
+            }
+            else
+            {
+                q = new Question();
+                q["inBundle"] = false;
+                q["questionContents"] = qc;
+                q["questionData"] = qd;
+                q["test"] = false;
+                q["numberInBundle"] = cbInBundle.Checked ? (int?)1 : null;
+                q.ACL = new ParseACL();
+                q.ACL.PublicReadAccess = true;
+                q.ACL.PublicWriteAccess = false;
+                q.ACL.SetRoleWriteAccess(TutorRole, true);
+            }
             q["subject"] = ddlSubject.Text;
             q["category"] = ddlCategory.Text;
-            q["inBundle"] = false;
-            q["questionContents"] = qc;
-            q["questionData"] = qd;
             q["isActive"] = false;
-            q["test"] = false;
-            q.ACL = new ParseACL();
-            q.ACL.PublicReadAccess = true;
-            q.ACL.PublicWriteAccess = false;
-            q.ACL.SetRoleWriteAccess(TutorRole, true);
             return q;
         }
 

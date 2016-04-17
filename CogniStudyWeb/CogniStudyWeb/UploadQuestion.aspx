@@ -134,7 +134,7 @@
 
 
                                     <div id="divPassage" class='<%= cbInBundle.Checked ? "" : "hidden" %>'>
-                                        Image (Optional):<br /><asp:FileUpload ID="FileUpload0" runat="server" /><br />
+                                        Image (Optional): <asp:Label runat="server" ID="lbPassageImageUploaded" Text="Image uploaded" Visible="false"></asp:Label><br /><asp:FileUpload ID="FileUpload0" runat="server" /><br />
                                         <COG:SwitchEditor runat="server" OriginalText="Enter passage text here..." ID="tbPassage" />
                                     </div>
                                     <hr />
@@ -145,7 +145,7 @@
                                     <div class="row">
                                         <h3 class="align-center">Question</h3><br />
                                         <div class="col-lg-6" style="padding-right:20px; border-right: 1px solid #ccc;">
-                                            Image (Optional):<br /><asp:FileUpload ID="FileUpload1" runat="server" /><br />
+                                            Image (Optional):<asp:Label runat="server" ID="lbImageUploaded" Text="Image uploaded" Visible="false"></asp:Label><br /><asp:FileUpload ID="FileUpload1" runat="server" /><br />
                                             <COG:SwitchEditor runat="server" OriginalText="Enter question text here..." ID="tbQuestion" />
                                         </div>
                                         <div class="col-lg-6">
@@ -205,132 +205,134 @@
                                     <br /><hr />
 
                                     <div id="divPassageExtraQuestions" class='<%= cbInBundle.Checked ? "" : "hidden" %>'>
-                                        <hr />
-                                        <div class="row">
-                                            <h3 class="align-center">Question</h3><br />
-                                            <div class="col-lg-6" style="padding-right:20px; border-right: 1px solid #ccc;">
-                                                Image (Optional):<br /><asp:FileUpload ID="FileUpload2" runat="server" /><br />
-                                                <COG:SwitchEditor runat="server" OriginalText="Enter question text here..." ID="tbQuestion2" />
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="row">
-                                                    <div class="col-lg-9">
-                                                        <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb2Answer1" />
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <asp:RadioButton runat="server" ID="rb2Answer1" GroupName="Answers2" Text="Correct"/>
-                                                    </div>
+                                        <asp:Panel runat="server" ID="pnlExtraQuestions">
+                                            <hr />
+                                            <div class="row">
+                                                <h3 class="align-center">Question</h3><br />
+                                                <div class="col-lg-6" style="padding-right:20px; border-right: 1px solid #ccc;">
+                                                    Image (Optional):<asp:Label runat="server" ID="lbImageUploaded2" Text="Image uploaded" Visible="false"></asp:Label><br /><asp:FileUpload ID="FileUpload2" runat="server" /><br />
+                                                    <COG:SwitchEditor runat="server" OriginalText="Enter question text here..." ID="tbQuestion2" />
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-lg-9">
-                                                        <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb2Answer2" />
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-9">
+                                                            <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb2Answer1" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <asp:RadioButton runat="server" ID="rb2Answer1" GroupName="Answers2" Text="Correct"/>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-lg-3">
-                                                        <asp:RadioButton runat="server" ID="rb2Answer2" GroupName="Answers2" Text="Correct"/>
+                                                    <div class="row">
+                                                        <div class="col-lg-9">
+                                                            <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb2Answer2" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <asp:RadioButton runat="server" ID="rb2Answer2" GroupName="Answers2" Text="Correct"/>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-9">
-                                                        <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb2Answer3" />
+                                                    <div class="row">
+                                                        <div class="col-lg-9">
+                                                            <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb2Answer3" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <asp:RadioButton runat="server" ID="rb2Answer3" GroupName="Answers2" Text="Correct"/>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-lg-3">
-                                                        <asp:RadioButton runat="server" ID="rb2Answer3" GroupName="Answers2" Text="Correct"/>
+                                                    <div class="row">
+                                                        <div class="col-lg-9">
+                                                            <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb2Answer4" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <asp:RadioButton runat="server" ID="rb2Answer4" GroupName="Answers2" Text="Correct"/>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-9">
-                                                        <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb2Answer4" />
+                                                    <div id="div2ShowAnswer5" class='row <%= cb2Answer5.Checked ? "" : "hidden" %>'>
+                                                        <div class="col-lg-9">
+                                                            <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb2Answer5" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <asp:RadioButton runat="server" ID="rb2Answer5" GroupName="Answers2" Text="Correct"/>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-lg-3">
-                                                        <asp:RadioButton runat="server" ID="rb2Answer4" GroupName="Answers2" Text="Correct"/>
-                                                    </div>
-                                                </div>
-                                                <div id="div2ShowAnswer5" class='row <%= cb2Answer5.Checked ? "" : "hidden" %>'>
-                                                    <div class="col-lg-9">
-                                                        <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb2Answer5" />
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <asp:RadioButton runat="server" ID="rb2Answer5" GroupName="Answers2" Text="Correct"/>
-                                                    </div>
-                                                </div>
-                                                <asp:CheckBox id="cb2Answer5" runat="server" Text="Use 5 answers" onclick="$('#div2ShowAnswer5').toggleClass('hidden');"/><br /><br />
+                                                    <asp:CheckBox id="cb2Answer5" runat="server" Text="Use 5 answers" onclick="$('#div2ShowAnswer5').toggleClass('hidden');"/><br /><br />
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <br />
-                                        <div class="row" id="div2AllExplanation">
-                                            <div class="col-lg-2" style="padding-right:20px; border-right: 1px solid #ccc;">
-                                                <p class="align-center">Explanation</p>
+                                            <br />
+                                            <div class="row" id="div2AllExplanation">
+                                                <div class="col-lg-2" style="padding-right:20px; border-right: 1px solid #ccc;">
+                                                    <p class="align-center">Explanation</p>
+                                                </div>
+                                                <div class="col-lg-10">
+                                                    <COG:SwitchEditor runat="server" OriginalText="Enter explanation text here..." ID="tbExplanation2" />
+                                                </div>
                                             </div>
-                                            <div class="col-lg-10">
-                                                <COG:SwitchEditor runat="server" OriginalText="Enter explanation text here..." ID="tbExplanation2" />
-                                            </div>
-                                        </div>
-                                        <br /><hr />
+                                            <br /><hr />
 
-                                        <div class="row">
-                                            <h3 class="align-center">Question</h3><br />
-                                            <div class="col-lg-6" style="padding-right:20px; border-right: 1px solid #ccc;">
-                                                Image (Optional):<br /><asp:FileUpload ID="FileUpload3" runat="server" /><br />
-                                                <COG:SwitchEditor runat="server" OriginalText="Enter question text here..." ID="tbQuestion3" />
-                                            </div>
+                                            <div class="row">
+                                                <h3 class="align-center">Question</h3><br />
+                                                <div class="col-lg-6" style="padding-right:20px; border-right: 1px solid #ccc;">
+                                                    Image (Optional):<asp:Label runat="server" ID="lbImageUploaded3" Text="Image uploaded" Visible="false"></asp:Label><br /><asp:FileUpload ID="FileUpload3" runat="server" /><br />
+                                                    <COG:SwitchEditor runat="server" OriginalText="Enter question text here..." ID="tbQuestion3" />
+                                                </div>
                                             
-                                            <div class="col-lg-6">
-                                                <div class="row">
-                                                    <div class="col-lg-9">
-                                                        <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb3Answer1" />
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-9">
+                                                            <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb3Answer1" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <asp:RadioButton runat="server" ID="rb3Answer1" GroupName="Answers3" Text="Correct"/>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-lg-3">
-                                                        <asp:RadioButton runat="server" ID="rb3Answer1" GroupName="Answers3" Text="Correct"/>
+                                                    <div class="row">
+                                                        <div class="col-lg-9">
+                                                            <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb3Answer2" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <asp:RadioButton runat="server" ID="rb3Answer2" GroupName="Answers3" Text="Correct"/>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-9">
-                                                        <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb3Answer2" />
+                                                    <div class="row">
+                                                        <div class="col-lg-9">
+                                                            <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb3Answer3" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <asp:RadioButton runat="server" ID="rb3Answer3" GroupName="Answers3" Text="Correct"/>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-lg-3">
-                                                        <asp:RadioButton runat="server" ID="rb3Answer2" GroupName="Answers3" Text="Correct"/>
+                                                    <div class="row">
+                                                        <div class="col-lg-9">
+                                                            <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb3Answer4" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <asp:RadioButton runat="server" ID="rb3Answer4" GroupName="Answers3" Text="Correct"/>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-9">
-                                                        <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb3Answer3" />
+                                                    <div id="div3ShowAnswer5" class='row <%= cb3Answer5.Checked ? "" : "hidden" %>'>
+                                                        <div class="col-lg-9">
+                                                            <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb3Answer5" />
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <asp:RadioButton runat="server" ID="rb3Answer5" GroupName="Answers3" Text="Correct"/>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-lg-3">
-                                                        <asp:RadioButton runat="server" ID="rb3Answer3" GroupName="Answers3" Text="Correct"/>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-9">
-                                                        <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb3Answer4" />
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <asp:RadioButton runat="server" ID="rb3Answer4" GroupName="Answers3" Text="Correct"/>
-                                                    </div>
-                                                </div>
-                                                <div id="div3ShowAnswer5" class='row <%= cb3Answer5.Checked ? "" : "hidden" %>'>
-                                                    <div class="col-lg-9">
-                                                        <COG:SwitchEditor runat="server" OriginalText="Enter answer text here..." ID="tb3Answer5" />
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <asp:RadioButton runat="server" ID="rb3Answer5" GroupName="Answers3" Text="Correct"/>
-                                                    </div>
-                                                </div>
-                                                <asp:CheckBox id="cb3Answer5" runat="server" Text="Use 5 answers" onclick="$('#div3ShowAnswer5').toggleClass('hidden');"/><br /><br />
+                                                    <asp:CheckBox id="cb3Answer5" runat="server" Text="Use 5 answers" onclick="$('#div3ShowAnswer5').toggleClass('hidden');"/><br /><br />
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <br />
-                                        <div class="row" id="div3AllExplanation">
-                                            <div class="col-lg-2" style="padding-right:20px; border-right: 1px solid #ccc;">
-                                                <p class="align-center">Explanation</p>
+                                            <br />
+                                            <div class="row" id="div3AllExplanation">
+                                                <div class="col-lg-2" style="padding-right:20px; border-right: 1px solid #ccc;">
+                                                    <p class="align-center">Explanation</p>
+                                                </div>
+                                                <div class="col-lg-10">
+                                                    <COG:SwitchEditor runat="server" OriginalText="Enter explanation text here..." ID="tbExplanation3" />
+                                                </div>
                                             </div>
-                                            <div class="col-lg-10">
-                                                <COG:SwitchEditor runat="server" OriginalText="Enter explanation text here..." ID="tbExplanation3" />
-                                            </div>
-                                        </div>
-                                        <br /><hr />
+                                            <br /><hr />
 
+                                        </asp:Panel>
                                     </div>
 
                                 </div>

@@ -49,12 +49,16 @@ namespace CogniTutor
             }
             if (LoggedIn)
             {
-                //PublicUserData = ParseUser.CurrentUser.Get<PublicUserData>("publicUserData");
-                //await PublicUserData.FetchAsync();
-                //Tutor = PublicUserData.Tutor;
-                //await Tutor.FetchAsync();
-                //PrivateTutorData = Tutor.PrivateTutorData;
-                //await PrivateTutorData.FetchAsync();
+                if (ParseUser.CurrentUser == null)
+                {
+                    await ParseUser.LogInAsync(Session["Email"].ToString(), Session["Password"].ToString());
+                }
+                PublicUserData = ParseUser.CurrentUser.Get<PublicUserData>("publicUserData");
+                await PublicUserData.FetchAsync();
+                Tutor = PublicUserData.Tutor;
+                await Tutor.FetchAsync();
+                PrivateTutorData = Tutor.PrivateTutorData;
+                await PrivateTutorData.FetchAsync();
                 ParseObject[] data = new ParseObject[] {PublicUserData, Tutor, PrivateTutorData};
                 await data.FetchAllAsync();
             }

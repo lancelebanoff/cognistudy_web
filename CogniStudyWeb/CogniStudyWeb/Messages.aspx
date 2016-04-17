@@ -115,6 +115,7 @@ div.fill{
             $('#newMessage').removeClass('hidden');
             $('#newText').html($('#tbType').val());
             $('#tbType').val('');
+            $('#tbType').prop('disabled', true);
             var div = document.getElementById("<%=pnlMessages.ClientID%>");
             div.scrollTop = div.scrollHeight - div.clientHeight;
             //$('#newMessage').html(new Date());
@@ -193,7 +194,7 @@ div.fill{
                                             <script type="text/javascript">
                                                 Sys.Application.add_load(FixHeights);
                                             </script>
-                                            <asp:Timer runat="server" id="Timer1" Interval="5000" OnTick="Timer1_Tick"></asp:Timer>
+                                            <asp:Timer runat="server" id="Timer1" Interval="10000" OnTick="Timer1_Tick"></asp:Timer>
                                             <asp:Panel runat="server" ID="pnlMessages" CssClass="fill-height" ScrollBars="Vertical">
                                                 <div class="row fill-height fill-width">
                                                     <div class="col-lg-1"></div>

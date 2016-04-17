@@ -36,9 +36,14 @@ namespace CogniTutor
                 string strAnswers = String.Join("\r\n", answers);
                 dr["answers"] = strAnswers;
                 dr["reviewStatus"] = data.Get<string>("reviewStatus");
+                dr["objectId"] = question.ObjectId;
                 if (reviews.Count != 0)
                 {
-                    dr["comments"] = reviews[0].Get<string>("comment");
+                    ParseObject newestReview = reviews[0];
+                    foreach (ParseObject review in reviews)
+                        if (review.CreatedAt > newestReview.CreatedAt)
+                            newestReview = review;
+                    dr["comments"] = newestReview.Get<string>("comment");
                 }
                 dt.Rows.Add(dr);
             }
@@ -48,8 +53,15 @@ namespace CogniTutor
                 lblNoQuestions.Visible = true;
         }
 
-        protected void grdStatus_DataBinding(object sender, EventArgs e)
+        protected void grdStatus_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e.CommandName == "Edit")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                string QuestionObjectId = (string)grdStatus.DataKeys[index]["objectId"];
+                Session["QuestionObjectId"] = QuestionObjectId;
+                Response.Redirect("UploadQuestion");
+            }
         }
 
         protected async Task<IList<Question>> GetMyQuestions()
@@ -80,7 +92,14 @@ namespace CogniTutor
             dt.Columns.Add("answers", typeof(string));
             dt.Columns.Add("reviewStatus", typeof(string));
             dt.Columns.Add("comments", typeof(string));
+            dt.Columns.Add("objectId", typeof(string));
             return dt;
+        }
+
+        protected void btnUploadQuestion_Click(object sender, EventArgs e)
+        {
+            Session["QuestionObjectId"] = null;
+            Response.Redirect("UploadQuestion");
         }
 
 

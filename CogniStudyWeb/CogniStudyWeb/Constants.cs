@@ -87,6 +87,9 @@ namespace CogniTutor
             public static readonly String TUTOR_APPROVED = "TUTOR_APPROVED";
             public static readonly String APPROVED = "APPROVED";
             public static readonly String DENIED = "DENIED";
+            public static readonly String REPORTED_APPROVED = "REPORTED_APPROVED";
+            public static readonly String REPORTED_PENDING = "REPORTED_PENDING";
+            public static readonly String REPORTED_DENIED = "REPORTED_DENIED";
         }
 
         public static class NotificationType

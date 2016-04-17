@@ -82,7 +82,7 @@
                             
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <a href="UploadQuestion.aspx" class="btn btn-default">Upload New Question</a>
+                                    <asp:Button runat="server" ID="btnUploadQuestion" OnClick="btnUploadQuestion_Click" class="btn btn-default" Text="Upload New Question"></asp:Button>
                                     <a href="ReviewQuestion.aspx" class="btn btn-default <%= CogniTutor.Constants.UserType.IsQualifiedToReviewQuestions(UserType) ? "" : "hidden" %>">
                                         Review Questions</a>
                                 </div>
@@ -93,7 +93,8 @@
                                 <div class="col-lg-12">
                                     <h3 class="page-header">My Question Status</h3>
                                     <asp:Label runat="server" ID="lblNoQuestions" Text="No questions to show" CssClass="medium-text" Visible="false"></asp:Label>
-                                    <asp:GridView ID="grdStatus" runat="server" OnDataBinding="grdStatus_DataBinding" CssClass="table table-striped" AutoGenerateColumns="false">
+                                    <asp:GridView ID="grdStatus" runat="server" OnRowCommand="grdStatus_RowCommand" 
+                                        CssClass="table table-striped" AutoGenerateColumns="false" DataKeyNames="objectId">
                                         <Columns>
                                             <asp:TemplateField HeaderText="Subject/Category">
                                                 <ItemTemplate>
@@ -120,6 +121,7 @@
                                                     <%# Eval("comments") %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:ButtonField Text="Edit" CommandName="Edit" ButtonType="Button" ControlStyle-CssClass="btn btn-default align-center btn"/>
                                         </Columns>
                                     </asp:GridView>
                                 </div>

@@ -95,14 +95,28 @@ namespace CogniTutor
 
         private async Task<Question> GetQuestion()
         {
-            IDictionary<string, object> parameters = new Dictionary<string, object>
-            {
-                { "author", PublicUserData.ObjectId },
-                { "alreadyVisited", AlreadyVisited },
-                { "isAdmin", PublicUserData.UserType == Constants.UserType.ADMIN }
-            };
-            Question res = await ParseCloud.CallFunctionAsync<Question>("oldestPendingQuestion", parameters);
-            return res;
+            //IDictionary<string, object> parameters = new Dictionary<string, object>
+            //{
+            //    { "author", PublicUserData.ObjectId },
+            //    { "alreadyVisited", AlreadyVisited },
+            //    { "isAdmin", PublicUserData.UserType == Constants.UserType.ADMIN }
+            //};
+            //Question res = await ParseCloud.CallFunctionAsync<Question>("oldestReportedQuestion", parameters);
+            //if (res != null)
+            //{
+            //    return res;
+            //}
+            //else
+            //{
+                IDictionary<string, object> parameters2 = new Dictionary<string, object>
+                {
+                    { "author", PublicUserData.ObjectId },
+                    { "alreadyVisited", AlreadyVisited },
+                    { "isAdmin", PublicUserData.UserType == Constants.UserType.ADMIN }
+                };
+                Question res2 = await ParseCloud.CallFunctionAsync<Question>("oldestPendingQuestion", parameters2);
+                return res2;
+            //}
 
             ////var contentsQuery = from contents in new ParseQuery<QuestionContents>()
             ////                    where contents.Get<ParseObject>("author") != PublicUserData
@@ -191,7 +205,11 @@ namespace CogniTutor
                 review["comment"] = tbComments.Text;
                 review["reviewerId"] = PublicUserData.ObjectId;
                 tasks.Add(review.SaveAsync());
-                QuestionData[i]["reviewStatus"] = Constants.ReviewStatusType.DENIED;
+                if (Questions[i]["reviewStatus"] == Constants.ReviewStatusType.REPORTED_APPROVED
+                    || Questions[i]["reviewStatus"] == Constants.ReviewStatusType.REPORTED_PENDING)
+                    QuestionData[i]["reviewStatus"] = Constants.ReviewStatusType.REPORTED_DENIED;
+                else
+                    QuestionData[i]["reviewStatus"] = Constants.ReviewStatusType.DENIED;
                 QuestionData[i].AddToList("reviews", review);
                 tasks.Add(QuestionData[i].SaveAsync());
                 Questions[i]["isActive"] = false;

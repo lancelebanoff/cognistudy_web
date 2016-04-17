@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Threading.Tasks;
 using System.IO;
 using Parse;
+using CodeCarvings.Piczard;
 
 namespace CogniTutor
 {
@@ -64,7 +65,27 @@ namespace CogniTutor
                 FileInfo Finfo = new FileInfo(FileUpload1.PostedFile.FileName);
                 string extension = Finfo.Extension.ToLower();
                 byte[] data = FileUpload1.FileBytes;
-                ParseFile file = new ParseFile("profile_picture" + extension, data);
+                byte[] square;
+
+                var sourceImage = CodeCarvings.Piczard.ImageArchiver.LoadImage(data);
+                if (sourceImage.Size.Width == sourceImage.Size.Height)
+                {
+                    square = data;
+                }
+                else
+                {
+                    // Calculate the square size
+                    int imageSize = sourceImage.Size.Width < sourceImage.Size.Height ? sourceImage.Size.Width : sourceImage.Size.Height;
+
+                    // Get a fixed resize filter (square)
+                    //var filter = new CodeCarvings.Piczard.FixedResizeConstraint(imageSize, imageSize);
+                    var filter = new CodeCarvings.Piczard.FixedCropConstraint(imageSize, imageSize);
+                    // Force white background
+                    filter.CanvasColor = BackgroundColor.GetStatic(System.Drawing.Color.White);
+                    square = filter.SaveProcessedImageToByteArray(sourceImage, new CodeCarvings.Piczard.JpegFormatEncoderParams(82));
+                }
+
+                ParseFile file = new ParseFile("profile_picture" + extension, square);
                 Task t = file.SaveAsync();
                 t.Wait();
 

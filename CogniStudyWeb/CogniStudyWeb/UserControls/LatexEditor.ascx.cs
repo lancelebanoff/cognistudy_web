@@ -9,7 +9,7 @@ namespace CogniTutor.UserControls
 {
     public partial class LatexEditor : System.Web.UI.UserControl
     {
-        public string Text { get { return FixCKEditorText(tb.Text); } }
+        public string Text { get { return FixCKEditorText(tb.Text); } set { tb.Text = value;  } }
         public string AcutalID { get { return tb.ClientID; } }
         public Unit Height
         {
