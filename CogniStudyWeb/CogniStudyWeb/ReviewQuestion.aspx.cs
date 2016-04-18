@@ -95,19 +95,19 @@ namespace CogniTutor
 
         private async Task<Question> GetQuestion()
         {
-            //IDictionary<string, object> parameters = new Dictionary<string, object>
-            //{
-            //    { "author", PublicUserData.ObjectId },
-            //    { "alreadyVisited", AlreadyVisited },
-            //    { "isAdmin", PublicUserData.UserType == Constants.UserType.ADMIN }
-            //};
-            //Question res = await ParseCloud.CallFunctionAsync<Question>("oldestReportedQuestion", parameters);
-            //if (res != null)
-            //{
-            //    return res;
-            //}
-            //else
-            //{
+            IDictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "author", PublicUserData.ObjectId },
+                { "alreadyVisited", AlreadyVisited },
+                { "isAdmin", PublicUserData.UserType == Constants.UserType.ADMIN }
+            };
+            Question res = await ParseCloud.CallFunctionAsync<Question>("oldestReportedQuestion", parameters);
+            if (res != null)
+            {
+                return res;
+            }
+            else
+            {
                 IDictionary<string, object> parameters2 = new Dictionary<string, object>
                 {
                     { "author", PublicUserData.ObjectId },
@@ -116,7 +116,7 @@ namespace CogniTutor
                 };
                 Question res2 = await ParseCloud.CallFunctionAsync<Question>("oldestPendingQuestion", parameters2);
                 return res2;
-            //}
+            }
 
             ////var contentsQuery = from contents in new ParseQuery<QuestionContents>()
             ////                    where contents.Get<ParseObject>("author") != PublicUserData
@@ -175,47 +175,43 @@ namespace CogniTutor
 
         protected void btnApprove_Click(object sender, EventArgs e)
         {
-            List<Task> tasks = new List<Task>();
             for (int i = 0; i < Questions.Length; i++)
             {
                 ParseObject review = new ParseObject("Review");
                 review["approved"] = true;
                 review["comment"] = tbComments.Text;
                 review["reviewerId"] = PublicUserData.ObjectId;
-                tasks.Add(review.SaveAsync());
+                AsyncHelpers.RunSync(review.SaveAsync);
                 QuestionData[i]["reviewStatus"] = Constants.ReviewStatusType.APPROVED;
                 QuestionData[i]["newlyApproved"] = true;
                 QuestionData[i].AddToList("reviews", review);
-                tasks.Add(QuestionData[i].SaveAsync());
+                AsyncHelpers.RunSync(QuestionData[i].SaveAsync); 
                 Questions[i]["isActive"] = true;
-                tasks.Add(Questions[i].SaveAsync());
+                AsyncHelpers.RunSync(Questions[i].SaveAsync);
             }
-            Task.WaitAll(tasks.ToArray());
             RegisterAsyncTask(new PageAsyncTask(NewQuestion));
             pnlSuccess.Visible = true;
         }
 
         protected void btnDeny_Click(object sender, EventArgs e)
         {
-            List<Task> tasks = new List<Task>();
             for (int i = 0; i < Questions.Length; i++)
             {
                 ParseObject review = new ParseObject("Review");
                 review["approved"] = false;
                 review["comment"] = tbComments.Text;
                 review["reviewerId"] = PublicUserData.ObjectId;
-                tasks.Add(review.SaveAsync());
-                if (Questions[i]["reviewStatus"] == Constants.ReviewStatusType.REPORTED_APPROVED
-                    || Questions[i]["reviewStatus"] == Constants.ReviewStatusType.REPORTED_PENDING)
+                AsyncHelpers.RunSync(review.SaveAsync);
+                if (Questions[i]["reviewStatus"].ToString() == Constants.ReviewStatusType.REPORTED_APPROVED
+                    || Questions[i]["reviewStatus"].ToString() == Constants.ReviewStatusType.REPORTED_PENDING)
                     QuestionData[i]["reviewStatus"] = Constants.ReviewStatusType.REPORTED_DENIED;
                 else
                     QuestionData[i]["reviewStatus"] = Constants.ReviewStatusType.DENIED;
                 QuestionData[i].AddToList("reviews", review);
-                tasks.Add(QuestionData[i].SaveAsync());
+                AsyncHelpers.RunSync(QuestionData[i].SaveAsync);
                 Questions[i]["isActive"] = false;
-                tasks.Add(Questions[i].SaveAsync());
+                AsyncHelpers.RunSync(Questions[i].SaveAsync);
             }
-            Task.WaitAll(tasks.ToArray());
             RegisterAsyncTask(new PageAsyncTask(NewQuestion));
             pnlSuccess.Visible = true;
         }

@@ -388,7 +388,7 @@ namespace CogniTutor
             else if (ddlFilterSubject.Text != "All Subjects")
                 return ddlFilterSubject.Text;
             else
-                throw new Exception("Total block stats should not have a selection");
+                return "Total";
         }
 
         private string FigureBlockStatsType()
@@ -398,7 +398,7 @@ namespace CogniTutor
             else if (ddlFilterSubject.Text != "All Subjects")
                 return "Subject";
             else
-                return "";
+                return "Total";
         }
 
         private string FigureMostSpecificType()
