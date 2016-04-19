@@ -64,7 +64,14 @@ namespace CogniTutor
         {
             get
             {
-                string strAnswers = String.Join("\r\n", Answers);
+                string strAnswers = "";
+                for (int i = 0; i < Answers.Count; i++)
+                {
+                    //strAnswers += (char)(i + 'A') + ". " + Answers[i];
+                    strAnswers += "<u>" + (char)(i + 'A') + ")</u>" + Answers[i];
+                    if (i != Answers.Count - 1)
+                        strAnswers += "\r\n";
+                }
                 return strAnswers;
             }
         }

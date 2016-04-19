@@ -128,6 +128,15 @@
         });
         $('#' + explanation).removeClass('hidden');
     }
+
+    function pageLoad() {
+        var mpe = $find("MPE");
+        mpe.add_shown(onShown);
+    }
+    function onShown() {
+        var background = $find("MPE")._backgroundElement;
+        background.onclick = function () { $find("MPE").hide(); }
+    }
 </script>
 
 </head>
@@ -296,7 +305,7 @@
                                             <asp:Button id="btnFake" runat="server" CssClass="hidden" />
                                             <ajax:ModalPopupExtender ID="popup" runat="server" DropShadow="false"
                                             PopupControlID="pnlSend" TargetControlID = "btnFake"
-                                            BackgroundCssClass="modalBackground">
+                                            BackgroundCssClass="modalBackground" BehaviorID="MPE">
                                             </ajax:ModalPopupExtender>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>

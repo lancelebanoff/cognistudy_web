@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LoginWindow.ascx.cs" Inherits="CogniTutor.UserControls.LoginWindow" %>
 
+<% if(mPage is CogniTutor.Login) { %>
 <!--Login modal-->
-
 <div id="login" aria-hidden="true" class="modal fade" role="dialog" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -44,4 +44,4 @@
         </div>
     </div>
 </div>
-
+<% } %>

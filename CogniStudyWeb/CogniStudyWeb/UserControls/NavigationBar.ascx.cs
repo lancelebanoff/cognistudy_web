@@ -57,6 +57,14 @@ namespace CogniTutor
                 {
                     lblNumNotifications.Visible = false;
                 }
+                if (FilteredNotifications.Count == 0)
+                {
+                    lbNoNotifications.Visible = true;
+                }
+                else
+                {
+                    lbNoNotifications.Visible = false;
+                }
                 DataBind();
             }
         }

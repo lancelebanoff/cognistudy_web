@@ -149,9 +149,9 @@ div.fill{
                     <div class="row fill-height">
                 
                         <div class="col-lg-5 fill-height" style="padding-right:20px; border-right: 1px solid #ccc;">
-                            <h3 id="hConversations" class="page-header center-block">
+                            <p id="hConversations" class="large-text text-center">
                                 Conversations
-                            </h3>
+                            </p>
                     
                                     <asp:UpdatePanel runat="server">
                                         <ContentTemplate>
@@ -188,36 +188,36 @@ div.fill{
                         </div>
 
                         <div class="col-lg-7 fill-height" style="border-left: 1px solid #ccc;">
-                                    <p id="pName" class="large-text text-center"><%= TheirName %></p>
-                                    <asp:UpdatePanel runat="server">
-                                        <ContentTemplate>
-                                            <script type="text/javascript">
-                                                Sys.Application.add_load(FixHeights);
-                                            </script>
-                                            <asp:Timer runat="server" id="Timer1" Interval="10000" OnTick="Timer1_Tick"></asp:Timer>
-                                            <asp:Panel runat="server" ID="pnlMessages" CssClass="fill-height" ScrollBars="Vertical">
-                                                <div class="row fill-height fill-width">
-                                                    <div class="col-lg-1"></div>
-                                                    <div class="col-lg-10 chat fill-height">
-                                                        <asp:Repeater runat="server" ID="repMessages">
-                                                            <ItemTemplate>
-                                                                <div class="bubble <%# Convert.ToBoolean(Eval("WasSentByMe")) ? "me" : "you" %>">
-                                                                    <span class="medium-text"><%# Eval("Text") %></span><br />
-                                                                    <span class="small"><%# Eval("sentAt") %></span>
-                                                                </div>
-                                                                
-                                                            </ItemTemplate>
-                                                        </asp:Repeater>
-                                                        <div class="bubble me hidden" id="newMessage">
-                                                            <span class="medium-text" id="newText"></span><br />
-                                                            <span class="small" id="newTime"></span>
+                            <p id="pName" class="large-text text-center"><%= TheirName %></p>
+                            <asp:UpdatePanel runat="server">
+                                <ContentTemplate>
+                                    <script type="text/javascript">
+                                        Sys.Application.add_load(FixHeights);
+                                    </script>
+                                    <asp:Timer runat="server" id="Timer1" Interval="10000" OnTick="Timer1_Tick"></asp:Timer>
+                                    <asp:Panel runat="server" ID="pnlMessages" CssClass="fill-height" ScrollBars="Vertical">
+                                        <div class="row fill-height fill-width">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-10 chat fill-height">
+                                                <asp:Repeater runat="server" ID="repMessages">
+                                                    <ItemTemplate>
+                                                        <div class="bubble <%# Convert.ToBoolean(Eval("WasSentByMe")) ? "me" : "you" %>">
+                                                            <span class="medium-text"><%# Eval("Text") %></span><br />
+                                                            <span class="small"><%# Eval("sentAt") %></span>
                                                         </div>
-                                                    </div>
+                                                                
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                                <div class="bubble me hidden" id="newMessage">
+                                                    <span class="medium-text" id="newText"></span><br />
+                                                    <span class="small" id="newTime"></span>
                                                 </div>
-                                            </asp:Panel>
-                                        </ContentTemplate>
-                                    </asp:UpdatePanel>
-                                    <br />
+                                            </div>
+                                        </div>
+                                    </asp:Panel>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                            <br />
                             <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                                 <ContentTemplate>
                                     <asp:TextBox runat="server" ID="tbType" CssClass="form-control"></asp:TextBox>
@@ -230,10 +230,7 @@ div.fill{
                         </div>
 
                     </div>
-                </div>           
-        
-
-        <hr>
+                </div>         
     </div>
             
     </form>

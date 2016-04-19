@@ -34,11 +34,17 @@ namespace CogniTutor
             get { return GetProperty<PublicUserData>(); }
             set { SetProperty<PublicUserData>(value); }
         }
-        [ParseFieldName("answered")]
+        [ParseFieldName("answeredInt")]
+        public int AnsweredInt
+        {
+            get { return GetProperty<int>(); }
+            set { SetProperty<int>(value); }
+        }
+
         public bool Answered
         {
-            get { return GetProperty<bool>(); }
-            set { SetProperty<bool>(value); }
+            get { return AnsweredInt == 1; }
+            set { AnsweredInt = value ? 1 : 0; }
         }
 
         public static async Task<IList<SuggestedQuestion>> GetAssignedQuestionsBetweenStudentTutor(PublicUserData studentPublicData, PublicUserData tutorPublicData)

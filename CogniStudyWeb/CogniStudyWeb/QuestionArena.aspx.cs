@@ -33,7 +33,7 @@ namespace CogniTutor
                 dr["category"] = question.Get<string>("category");
                 dr["questionText"] = contents.Get<string>("questionText");
                 List<object> answers = contents.Get<List<object>>("answers");
-                string strAnswers = String.Join("\r\n", answers);
+                string strAnswers = ((QuestionContents)contents).FriendlyAnswers;
                 dr["answers"] = strAnswers;
                 dr["reviewStatus"] = data.Get<string>("reviewStatus");
                 dr["objectId"] = question.ObjectId;

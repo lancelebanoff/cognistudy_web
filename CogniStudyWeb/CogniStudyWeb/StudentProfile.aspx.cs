@@ -35,12 +35,14 @@ namespace CogniTutor
             if (Common.ParseContains(PrivateTutorData.Students, StudentPublicData))
             {
                 pnlAssignedQuestions.Visible = true;
+                pnlAnalyticsHolder.Visible = true;
                 grdAssignedQuestions.DataSource = await SuggestedQuestion.GetAssignedQuestionsBetweenStudentTutor(StudentPublicData, PublicUserData);
                 grdAssignedQuestions.DataBind();
             }
             else
             {
                 pnlAssignedQuestions.Visible = false;
+                pnlAnalyticsHolder.Visible = false;
             }
         }
 

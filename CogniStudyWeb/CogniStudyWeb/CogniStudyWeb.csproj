@@ -2645,6 +2645,7 @@
     <Content Include="AssignQuestion.aspx" />
     <Content Include="TestPage.aspx" />
     <Content Include="UploadQuestion.aspx" />
+    <Content Include="UserControls\AnalyticsPanel.ascx" />
     <Content Include="UserControls\CheckableQuestionBlock.ascx" />
     <Content Include="UserControls\ConversationPanel.ascx" />
     <Content Include="UserControls\DoughnutChart.ascx" />
@@ -2848,6 +2849,13 @@
     </Compile>
     <Compile Include="UploadQuestion.aspx.designer.cs">
       <DependentUpon>UploadQuestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AnalyticsPanel.ascx.cs">
+      <DependentUpon>AnalyticsPanel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\AnalyticsPanel.ascx.designer.cs">
+      <DependentUpon>AnalyticsPanel.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\CheckableQuestionBlock.ascx.cs">
       <DependentUpon>CheckableQuestionBlock.ascx</DependentUpon>

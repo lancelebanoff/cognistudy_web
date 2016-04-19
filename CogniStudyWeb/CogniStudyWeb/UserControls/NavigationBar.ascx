@@ -30,7 +30,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../Default.aspx">CogniStudy</a>
+            <a class="navbar-brand" href='<%= mPage.LoggedIn ? "../Dashboard.aspx" : "../Default.aspx"  %>'>CogniStudy</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -72,6 +72,7 @@
                     </a>
                     
                     <ul class="dropdown-menu alert-dropdown">
+                        <li><asp:LinkButton runat="server" ID="lbNoNotifications" Enabled="false"><p>No notifications to show</p></asp:LinkButton></li>
                         <asp:Repeater ID="listNotifications" runat="server" OnItemCommand="listNotifications_ItemCommand">
                             <ItemTemplate>
                                 <li>

@@ -155,6 +155,7 @@ namespace CogniTutor
                     error["user"] = ParseUser.CurrentUser;
                 }
                 error.SaveAsync();
+                Response.Redirect("Error");
             }
             catch
             { }

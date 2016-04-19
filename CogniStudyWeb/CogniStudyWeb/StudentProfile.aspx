@@ -3,6 +3,7 @@
 <%@ Register TagPrefix="COG" TagName="NavigationBar" Src="~/UserControls/NavigationBar.ascx" %>
 <%@ Register TagPrefix="COG" TagName="Footer" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="COG" TagName="LoginWindow" Src="~/UserControls/LoginWindow.ascx" %>
+<%@ Register TagPrefix="COG" TagName="AnalyticsPanel" Src="~/UserControls/AnalyticsPanel.ascx" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -103,6 +104,21 @@
                     </div>
                 </div>
 
+                <asp:Panel class="row" runat="server" Visible="false" ID="pnlAnalyticsHolder">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title-bold">
+                                    Analytics
+                                </div>
+                            </div>
+                            <div class="panel-body" id="div5" runat="server">
+                                <COG:AnalyticsPanel runat="server" id="pnlAnalytics" ShowStudentDropdown="false"></COG:AnalyticsPanel>
+                            </div>
+                        </div>
+                    </div>
+                </asp:Panel>
+
                 <asp:Panel class="row" runat="server" Visible="false" ID="pnlAssignedQuestions">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
@@ -132,12 +148,12 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Student Response">
                                                 <ItemTemplate>
-                                                    <%# Convert.ToBoolean(Eval("answered")) ? (((int)Eval("response.selectedAnswer")) + 'A' + "") : "Not answered" %>
+                                                    <%# Convert.ToBoolean(Eval("answered")) ? (char)(((Parse.ParseObject)Eval("response")).Get<int>("selectedAnswer") + 'A') + "" : "Not answered" %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Correct Answer">
                                                 <ItemTemplate>
-                                                    <%# Eval("question.questionContents.correctAnswer") %>
+                                                    <%# (char)((int)Eval("question.questionContents.correctAnswer") + 'A') + "" %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
