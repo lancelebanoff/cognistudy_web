@@ -56,21 +56,23 @@ namespace CogniTutor.UserControls
             try
             {
                 await ParseUser.LogInAsync(tbLoginEmail.Text.ToLower(), tbLoginPassword.Text);
+                ParseUser CurrentUser = ParseUser.CurrentUser;
+                PublicUserData publicUserData = await CurrentUser.Get<PublicUserData>("publicUserData").FetchAsync();
 
                 // Email not verified
-                if (!ParseUser.CurrentUser.Get<bool>("emailVerified"))
+                if (!CurrentUser.Get<bool>("emailVerified"))
                 {
                     Session["LoginError"] = "Please check your email to verify your account.";
                     return false;
                 }
                 // Not tutor
-                else if (!Constants.UserType.IsTutor((await ParseUser.CurrentUser.Get<PublicUserData>("publicUserData").FetchAsync()).UserType))
+                else if (!Constants.UserType.IsTutor(publicUserData.UserType))
                 {
                     Session["LoginError"] = "Only tutors may use the website. If you are a student, then you can open CogniStudy through your mobile device.";
                     return false;
                 }
                 // Didn't pass registration test
-                else if (ParseUser.CurrentUser.Get<int>("registrationTestScore") < 7)
+                else if (CurrentUser.Get<int>("registrationTestScore") < 7)
                 {
                     Session["LoginError"] = "You failed to acheive a sufficient score on the registration test.";
                     return false;
@@ -78,12 +80,12 @@ namespace CogniTutor.UserControls
                 // Login was successful.
                 else
                 {
-                    mPage.PublicUserData = ParseUser.CurrentUser.Get<PublicUserData>("publicUserData");
-                    await mPage.PublicUserData.FetchAsync();
-                    mPage.Tutor = mPage.PublicUserData.Tutor;
-                    await mPage.Tutor.FetchAsync();
-                    mPage.PrivateTutorData = mPage.Tutor.PrivateTutorData;
-                    await mPage.PrivateTutorData.FetchAsync();
+                    mPage.PublicUserData = publicUserData;
+                    //await mPage.PublicUserData.FetchAsync();
+                    //mPage.Tutor = mPage.PublicUserData.Tutor;
+                    //await mPage.Tutor.FetchAsync();
+                    //mPage.PrivateTutorData = mPage.Tutor.PrivateTutorData;
+                    //await mPage.PrivateTutorData.FetchAsync();
                     return true;
                 }
             }

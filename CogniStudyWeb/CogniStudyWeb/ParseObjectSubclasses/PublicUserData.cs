@@ -89,6 +89,12 @@ namespace CogniTutor
             return await query.GetAsync(objectId);
         }
 
+        public static async Task<PublicUserData> GetTutorDataById(string objectId)
+        {
+            var query = new ParseQuery<PublicUserData>().Include("tutor.privateTutorData");
+            return await query.GetAsync(objectId);
+        }
+
         public static async Task<IEnumerable<PublicUserData>> Search(string searchText)
         {
             searchText = searchText.ToLower().Replace(" ", "");

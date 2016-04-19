@@ -1,0 +1,12 @@
+nav bar different for assign question
+					make cognistudy button go to dashboard
+email verfication not being sent, also no resend
+category drop down enabling is weird
+					student analytics should also show on their profile
+LOGGING IN AS OTHER USERS
+					no notifications to show
+					abcd for answers
+					correct answer should be letter for assigned questions
+refresh of page causes tutor request to be sent again
+					assign question modal no x
+edit question needs to make it inactive

@@ -49,18 +49,20 @@ namespace CogniTutor
             }
             if (LoggedIn)
             {
-                if (ParseUser.CurrentUser == null)
-                {
-                    await ParseUser.LogInAsync(Session["Email"].ToString(), Session["Password"].ToString());
-                }
-                PublicUserData = ParseUser.CurrentUser.Get<PublicUserData>("publicUserData");
-                await PublicUserData.FetchAsync();
-                Tutor = PublicUserData.Tutor;
-                await Tutor.FetchAsync();
-                PrivateTutorData = Tutor.PrivateTutorData;
-                await PrivateTutorData.FetchAsync();
-                ParseObject[] data = new ParseObject[] {PublicUserData, Tutor, PrivateTutorData};
-                await data.FetchAllAsync();
+                //if (ParseUser.CurrentUser == null)
+                //{
+                await ParseUser.LogInAsync(Session["Email"].ToString(), Session["Password"].ToString());
+                //}
+                //PublicUserData = ParseUser.CurrentUser.Get<PublicUserData>("publicUserData");
+                //await PublicUserData.FetchAsync();
+                //Tutor = PublicUserData.Tutor;
+                //await Tutor.FetchAsync();
+                //PrivateTutorData = Tutor.PrivateTutorData;
+                //await PrivateTutorData.FetchAsync();
+
+                //ParseObject[] data = new ParseObject[] {PublicUserData, Tutor, PrivateTutorData};
+                //await data.FetchAllAsync();
+                PublicUserData = await PublicUserData.GetTutorDataById(PublicUserData.ObjectId);
             }
             else
             {
@@ -152,7 +154,7 @@ namespace CogniTutor
                 error["errorMessage"] = ErrorMessage;
                 if (LoggedIn)
                 {
-                    error["user"] = ParseUser.CurrentUser;
+                    error["user"] = PublicUserData.ObjectId;
                 }
                 error.SaveAsync();
                 Response.Redirect("Error");
@@ -181,7 +183,7 @@ namespace CogniTutor
         {
             get
             {
-                return ParseUser.CurrentUser.ObjectId;
+                return PublicUserData.BaseUserId;
             }
         }
         public string UserType
@@ -206,22 +208,14 @@ namespace CogniTutor
         {
             get
             {
-                return (Tutor)Session["Tutor"];
-            }
-            set
-            {
-                Session["Tutor"] = value;
+                return PublicUserData.Tutor;
             }
         }
         public PrivateTutorData PrivateTutorData
         {
             get
             {
-                return (PrivateTutorData)Session["PrivateTutorData"];
-            }
-            set
-            {
-                Session["PrivateTutorData"] = value;
+                return Tutor.PrivateTutorData;
             }
         }
         public bool LoggedIn
