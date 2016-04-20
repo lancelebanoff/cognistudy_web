@@ -1,12 +1,14 @@
-nav bar different for assign question
+					nav bar different for assign question
 					make cognistudy button go to dashboard
 email verfication not being sent, also no resend
 category drop down enabling is weird
 					student analytics should also show on their profile
-LOGGING IN AS OTHER USERS
+		LOGGING IN AS OTHER USERS (hopefully fixed)
 					no notifications to show
 					abcd for answers
 					correct answer should be letter for assigned questions
 refresh of page causes tutor request to be sent again
 					assign question modal no x
 edit question needs to make it inactive
+messages, it scrolls back down every few seconds
+need to show comments for reported question in review question

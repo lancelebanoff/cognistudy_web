@@ -28,11 +28,11 @@ namespace CogniTutor
             get { return GetProperty<ParseFile>(); }
             set { SetProperty<ParseFile>(value); }
         }
-        [ParseFieldName("author")]
-        public PublicUserData Author
+        [ParseFieldName("authorId")]
+        public string AuthorId
         {
-            get { return GetProperty<PublicUserData>(); }
-            set { SetProperty<PublicUserData>(value); }
+            get { return GetProperty<string>(); }
+            set { SetProperty<string>(value); }
         }
         [ParseFieldName("answers")]
         public IList<string> Answers
@@ -67,8 +67,14 @@ namespace CogniTutor
                 string strAnswers = "";
                 for (int i = 0; i < Answers.Count; i++)
                 {
-                    //strAnswers += (char)(i + 'A') + ". " + Answers[i];
-                    strAnswers += "<u>" + (char)(i + 'A') + ")</u>" + Answers[i];
+                    if (Answers[i].StartsWith("<p>") && Answers[i].Length > 3)
+                    {
+                        strAnswers += "<p>" + (char)(i + 'A') + ") " + Answers[i].Substring(3);
+                    }
+                    else
+                    {
+                        strAnswers += "" + (char)(i + 'A') + ") " + Answers[i];
+                    }
                     if (i != Answers.Count - 1)
                         strAnswers += "\r\n";
                 }

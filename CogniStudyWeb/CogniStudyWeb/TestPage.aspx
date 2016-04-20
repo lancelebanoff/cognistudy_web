@@ -12,7 +12,6 @@
         </asp:ScriptManager>
         <asp:UpdatePanel runat="server" id="UpdatePanel1">
 <ContentTemplate>
-<asp:Timer runat="server" id="Timer1" Interval="2000" OnTick="Timer1_Tick"></asp:Timer>
 <asp:Label runat="server" Text="Page not refreshed yet." id="Label1">
 </asp:Label>
 </ContentTemplate>

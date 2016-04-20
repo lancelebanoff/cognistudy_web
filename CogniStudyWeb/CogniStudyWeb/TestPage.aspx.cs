@@ -45,12 +45,14 @@ namespace CogniTutor
             //await tutors.SaveAsync();
             //administrators.Users.Add(ParseUser.CurrentUser);
             //await administrators.SaveAsync();
+
+            //List<Question> questions = Question.QueryQuestions(null, null);
+            //foreach (Question question in questions)
+            //{
+            //    question.QuestionContents.AuthorId = question.QuestionContents.Author.ObjectId;
+            //}
+            //await questions.SaveAllAsync();
         }
 
-        protected void Timer1_Tick(object sender, EventArgs e)
-    {
-        Label1.Text = "Panel refreshed at: " +
-DateTime.Now.ToLongTimeString();
-    }
     }
 }

@@ -202,11 +202,7 @@ namespace CogniTutor
                 review["comment"] = tbComments.Text;
                 review["reviewerId"] = PublicUserData.ObjectId;
                 AsyncHelpers.RunSync(review.SaveAsync);
-                if (Questions[i]["reviewStatus"].ToString() == Constants.ReviewStatusType.REPORTED_APPROVED
-                    || Questions[i]["reviewStatus"].ToString() == Constants.ReviewStatusType.REPORTED_PENDING)
-                    QuestionData[i]["reviewStatus"] = Constants.ReviewStatusType.REPORTED_DENIED;
-                else
-                    QuestionData[i]["reviewStatus"] = Constants.ReviewStatusType.DENIED;
+                QuestionData[i]["reviewStatus"] = Constants.ReviewStatusType.DENIED;
                 QuestionData[i].AddToList("reviews", review);
                 AsyncHelpers.RunSync(QuestionData[i].SaveAsync);
                 Questions[i]["isActive"] = false;

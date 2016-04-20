@@ -298,7 +298,7 @@ namespace CogniTutor
         {
             QuestionContents qc3 = new QuestionContents();;
             qc3["correctAnswer"] = CorrectIndex(3);
-            qc3["author"] = PublicUserData;
+            qc3["authorId"] = PublicUserData.ObjectId;
             qc3["questionText"] = tbQuestion3.Text;
             if (cb3Answer5.Checked) qc3["answers"] = new string[] { tb3Answer1.Text, tb3Answer2.Text, tb3Answer3.Text, tb3Answer4.Text, tb3Answer5.Text };
             else qc3["answers"] = new string[] { tb3Answer1.Text, tb3Answer2.Text, tb3Answer3.Text, tb3Answer4.Text };
@@ -350,7 +350,7 @@ namespace CogniTutor
         {
             QuestionContents qc2 = new QuestionContents();;
             qc2["correctAnswer"] = CorrectIndex(2);
-            qc2["author"] = PublicUserData;
+            qc2["authorId"] = PublicUserData.ObjectId;
             qc2["questionText"] = tbQuestion2.Text;
             if(cb2Answer5.Checked) qc2["answers"] = new string[] { tb2Answer1.Text, tb2Answer2.Text, tb2Answer3.Text, tb2Answer4.Text, tb2Answer5.Text };
             else qc2["answers"] = new string[] { tb2Answer1.Text, tb2Answer2.Text, tb2Answer3.Text, tb2Answer4.Text };
@@ -414,7 +414,7 @@ namespace CogniTutor
             else
                 qc = new QuestionContents();
             qc["correctAnswer"] = CorrectIndex(1);
-            qc["author"] = PublicUserData;
+            qc["authorId"] = PublicUserData.ObjectId;
             qc["questionText"] = tbQuestion.Text;
             if (cbAnswer5.Checked) qc["answers"] = new string[] { tbAnswer1.Text, tbAnswer2.Text, tbAnswer3.Text, tbAnswer4.Text, tbAnswer5.Text };
             else qc["answers"] = new string[] { tbAnswer1.Text, tbAnswer2.Text, tbAnswer3.Text, tbAnswer4.Text };

@@ -16,6 +16,7 @@ namespace CogniTutor
     public partial class SuggestQuestion : CogniPage
     {
         public string SelectedQuestionId { get { return Session["SelectedQuestionId"].ToString(); } set { Session["SelectedQuestionId"] = value; } }
+        public bool alreadyAddedPagingArrows = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -35,6 +36,7 @@ namespace CogniTutor
                 cblMyStudents.DataSource = await ParseObject.FetchAllIfNeededAsync(PrivateTutorData.Students);
                 cblMyStudents.DataBind();
             }
+            //EnableNextPrevNavigationForNumericPagedGrid(grdQuestions);
         }
 
         //public static List<Question> GetQuestions(out int totalCount)
@@ -126,16 +128,49 @@ namespace CogniTutor
             //ScriptManager.GetCurrent(this).RegisterAsyncPostBackControl(lb);  
         }
 
-    }
-
-    public class TwoString
-    {
-        public string questionObjectId;
-        public string studentObjectId;
-        public TwoString(string questionObjectId, string studentObjectId)
+        protected void grdQuestions_DataBound(object sender, EventArgs e)
         {
-            this.questionObjectId = questionObjectId;
-            this.studentObjectId = studentObjectId;
+            //EnableNextPrevNavigationForNumericPagedGrid(grdQuestions);
         }
+
+        private void EnableNextPrevNavigationForNumericPagedGrid(GridView gv)
+        {
+            if (gv.BottomPagerRow == null)
+                return;
+            Table pagerTable = (Table)gv.BottomPagerRow.Controls[0].Controls[0];
+
+            bool prevAdded = false;
+            if (true)
+            {
+                if (gv.PageIndex != 0)
+                {
+                    TableCell prevCell = new TableCell();
+                    LinkButton prevLink = new LinkButton
+                    {
+                        Text = "<",
+                        CommandName = "Page",
+                        CommandArgument = ((LinkButton)pagerTable.Rows[0].Cells[gv.PageIndex - 1].Controls[0]).CommandArgument
+                    };
+                    prevCell.Controls.Add(prevLink);
+                    pagerTable.Rows[0].Cells.AddAt(0, prevCell);
+                    prevAdded = true;
+                }
+
+                if (gv.PageIndex != gv.PageCount - 1)
+                {
+                    TableCell nextCell = new TableCell();
+                    LinkButton nextLink = new LinkButton
+                    {
+                        Text = ">",
+                        CommandName = "Page",
+                        CommandArgument = ((LinkButton)pagerTable.Rows[0].Cells[gv.PageIndex +
+                            (prevAdded ? 2 : 1)].Controls[0]).CommandArgument
+                    };
+                    nextCell.Controls.Add(nextLink);
+                    pagerTable.Rows[0].Cells.Add(nextCell);
+                }
+            }
+        }
+
     }
 }
